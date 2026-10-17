@@ -1,0 +1,753 @@
+{
+ "viewer_id": "U-00429",
+ "arm": "holdout",
+ "event_count": 37,
+ "profile_versions": [
+  {
+   "notifications_opt_in": true,
+   "plan_ends_at": "2026-10-02T19:08:01.569Z",
+   "plan_started_at": null,
+   "platform": "android",
+   "preferred_dialect": "d4",
+   "preferred_language": "hin",
+   "signup_at": "2026-01-27T01:29:38.858Z",
+   "snapshot_at": "2026-09-30T00:00:00.000Z",
+   "subscription_status": "active",
+   "updated_at": "2026-09-29T09:57:32.031Z",
+   "user_id": "U-00429",
+   "whatsapp_opt_in": false
+  }
+ ],
+ "goals": [
+  {
+   "goal_instance_id": "GI-00652",
+   "user_id": "U-00429",
+   "goal_id": "G07",
+   "status": "failed",
+   "started_at": "2026-10-01T05:20:44.356Z",
+   "deadline": "2026-10-04T05:20:44.356Z",
+   "success_spec": {
+    "condition": "same content_slug as the unfinished series",
+    "event": "play_started",
+    "goal_id": "G07",
+    "rule_version": 1,
+    "target": {
+     "content_slug": "tiko-subava-d4",
+     "episodes_completed": 2,
+     "episodes_total": 31,
+     "furthest_episode": 2,
+     "idle_days": 13.6,
+     "last_played_at": "2026-09-17T14:26:16.062Z",
+     "next_episode_id": "tiko-subava-d4-s1e3",
+     "title_ids": [
+      "T0932"
+     ]
+    },
+    "window_hours": 72
+   },
+   "rule_version": 1,
+   "decision_id": "D-00652",
+   "evidence": [
+    "event:3c79c993-2000-444b-af99-9276ac9438f7",
+    "event:4f7bb25c-5164-4af4-b721-0900edf66ebf",
+    "catalogue:tiko-subava-d4",
+    "goal_rule:G07-elig-v1"
+   ],
+   "closed_at": "2026-10-15T18:30:00.000Z",
+   "judgement": {
+    "attribution": "holdout",
+    "reason": "no qualifying play_started by 2026-10-04T05:20:44.356Z",
+    "rule_version": 1,
+    "signal": null,
+    "status": "failed"
+   },
+   "history": [
+    {
+     "at": "2026-10-01T05:20:44.356Z",
+     "change": "opened",
+     "rule_version": 1
+    }
+   ]
+  }
+ ],
+ "decisions": [
+  {
+   "action": "NONE",
+   "action_ids": [],
+   "arm": "holdout",
+   "assumptions": [],
+   "budget": {
+    "model_calls": 1,
+    "tool_calls": 6,
+    "tool_retries": 0,
+    "tool_timeouts": 0
+   },
+   "checks": {
+    "failed": [],
+    "passed": [
+     "duplicate_trigger",
+     "evidence",
+     "eligibility",
+     "single_goal",
+     "budget"
+    ]
+   },
+   "confidence": 0.9,
+   "confidence_reason": "weakest deciding fact: unfinished_series (high, source derived)",
+   "conflicts": [],
+   "content": [],
+   "created_at": "2026-10-01T05:20:44.356Z",
+   "decided_in_ms": 403.5,
+   "decision_id": "D-00652",
+   "dialect": {
+    "conflicts": [],
+    "rule": "R-dialect-1",
+    "source": "app_setting",
+    "used": "d4"
+   },
+   "evidence": [
+    {
+     "age_s": 1157319.7,
+     "event": "episode_completed",
+     "received_at": "2026-09-17T19:52:04.614Z",
+     "ref": "event:3c79c993-2000-444b-af99-9276ac9438f7"
+    },
+    {
+     "age_s": 2211754.2,
+     "event": "episode_completed",
+     "received_at": "2026-09-05T14:58:10.180Z",
+     "ref": "event:4f7bb25c-5164-4af4-b721-0900edf66ebf"
+    },
+    {
+     "ref": "catalogue:tiko-subava-d4"
+    },
+    {
+     "ref": "goal_rule:G07-elig-v1"
+    }
+   ],
+   "goal": {
+    "considered": [
+     {
+      "eligible": false,
+      "goal_id": "G01",
+      "why": "signed up more than 7 days ago (2026-01-27T01:29:38.858Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G02",
+      "why": "has completed an episode"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G03",
+      "why": "signed up more than 2 days ago (2026-01-27T01:29:38.858Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G04",
+      "why": "subscription_status=active (profile)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G05",
+      "why": "subscription_status=active, ever_paid=True"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G06",
+      "why": "subscription_status=active; recent lapse event: none"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G07",
+      "why": "1 unfinished series idle 3+ days"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G08",
+      "why": "36 available releases from the last 30 days in dialect d4"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G09",
+      "why": "plays on 1 IST day(s) in the last 14 days"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G10",
+      "why": "success event is null ('engages meaningfully' cannot be measured)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G11",
+      "why": "success event tv_app_open never appears in the event stream"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G12",
+      "why": "last app_open 0 days before this visit"
+     }
+    ],
+    "continuing": false,
+    "deadline": "2026-10-04T05:20:44.356Z",
+    "id": "G07",
+    "instance": "GI-00652",
+    "shadow": true,
+    "success_signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    },
+    "target": {
+     "content_slug": "tiko-subava-d4",
+     "episodes_completed": 2,
+     "episodes_total": 31,
+     "furthest_episode": 2,
+     "idle_days": 13.6,
+     "last_played_at": "2026-09-17T14:26:16.062Z",
+     "next_episode_id": "tiko-subava-d4-s1e3",
+     "title_ids": [
+      "T0932"
+     ]
+    },
+    "why": "1 unfinished series idle 3+ days"
+   },
+   "judged_by": {
+    "deadline": "2026-10-04T05:20:44.356Z",
+    "signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    }
+   },
+   "latency_ms": 403.5,
+   "lessons_applied": {
+    "avoid_goals": [],
+    "push_ok": true
+   },
+   "model": {
+    "called": true,
+    "calls": 1,
+    "claim": {
+     "confidence": 0.6,
+     "eligible": true,
+     "goal_id": "G07",
+     "reason": "agrees with rule ranking: 1 unfinished series idle 3+ days"
+    },
+    "elapsed_s": 0.4,
+    "outcome": "agreed",
+    "provider": "mock"
+   },
+   "no_action_reason": "viewer is in the 'holdout' arm: shadow decision only, no action of any kind",
+   "processing_ms": 3.45,
+   "published_at": null,
+   "queue_wait_ms": 0.0,
+   "rows_explained": [],
+   "status": "SHADOW_NO_ACTION",
+   "trigger": {
+    "copies_seen": 1,
+    "deliver_at": "2026-10-01T05:20:44.356Z",
+    "event": "app_open",
+    "event_age_s": 0.0,
+    "event_id": "7bfc298f-2ddc-4f5e-a9b8-2105bbc6d318",
+    "received_at": "2026-10-01T05:20:44.356Z"
+   },
+   "viewer_id": "U-00429",
+   "waited_on_dependencies_ms": 400.0,
+   "within_budget": true
+  },
+  {
+   "action": "NONE",
+   "action_ids": [],
+   "arm": "holdout",
+   "assumptions": [],
+   "budget": {
+    "model_calls": 1,
+    "tool_calls": 6,
+    "tool_retries": 0,
+    "tool_timeouts": 0
+   },
+   "checks": {
+    "failed": [],
+    "passed": [
+     "duplicate_trigger",
+     "evidence",
+     "single_goal",
+     "budget"
+    ]
+   },
+   "confidence": 0.9,
+   "confidence_reason": "goal already committed; window still open",
+   "conflicts": [],
+   "content": [],
+   "created_at": "2026-10-01T13:59:53.718Z",
+   "decided_in_ms": 403.0,
+   "decision_id": "D-01785",
+   "dialect": {
+    "conflicts": [],
+    "rule": "R-dialect-1",
+    "source": "app_setting",
+    "used": "d4"
+   },
+   "evidence": [
+    {
+     "age_s": 1188469.1,
+     "event": "episode_completed",
+     "received_at": "2026-09-17T19:52:04.614Z",
+     "ref": "event:3c79c993-2000-444b-af99-9276ac9438f7"
+    },
+    {
+     "age_s": 2242903.5,
+     "event": "episode_completed",
+     "received_at": "2026-09-05T14:58:10.180Z",
+     "ref": "event:4f7bb25c-5164-4af4-b721-0900edf66ebf"
+    },
+    {
+     "ref": "catalogue:tiko-subava-d4"
+    },
+    {
+     "ref": "goal_rule:G07-elig-v1"
+    }
+   ],
+   "goal": {
+    "considered": [
+     {
+      "eligible": false,
+      "goal_id": "G01",
+      "why": "signed up more than 7 days ago (2026-01-27T01:29:38.858Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G02",
+      "why": "has completed an episode"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G03",
+      "why": "signed up more than 2 days ago (2026-01-27T01:29:38.858Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G04",
+      "why": "subscription_status=active (profile)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G05",
+      "why": "subscription_status=active, ever_paid=True"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G06",
+      "why": "subscription_status=active; recent lapse event: none"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G07",
+      "why": "1 unfinished series idle 3+ days"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G08",
+      "why": "36 available releases from the last 30 days in dialect d4"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G09",
+      "why": "plays on 1 IST day(s) in the last 14 days"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G10",
+      "why": "success event is null ('engages meaningfully' cannot be measured)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G11",
+      "why": "success event tv_app_open never appears in the event stream"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G12",
+      "why": "last app_open 0 days before this visit"
+     }
+    ],
+    "continuing": true,
+    "deadline": "2026-10-04T05:20:44.356Z",
+    "id": "G07",
+    "instance": "GI-00652",
+    "shadow": true,
+    "success_signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    },
+    "target": {
+     "content_slug": "tiko-subava-d4",
+     "episodes_completed": 2,
+     "episodes_total": 31,
+     "furthest_episode": 2,
+     "idle_days": 13.6,
+     "last_played_at": "2026-09-17T14:26:16.062Z",
+     "next_episode_id": "tiko-subava-d4-s1e3",
+     "title_ids": [
+      "T0932"
+     ]
+    },
+    "why": "continuing open goal GI-00652 (one active plan per viewer)"
+   },
+   "judged_by": {
+    "deadline": "2026-10-04T05:20:44.356Z",
+    "signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    }
+   },
+   "latency_ms": 403.0,
+   "lessons_applied": {
+    "avoid_goals": [],
+    "push_ok": true
+   },
+   "model": {
+    "called": true,
+    "calls": 1,
+    "claim": {
+     "confidence": 0.6,
+     "eligible": true,
+     "goal_id": "G07",
+     "reason": "keep the goal already in progress"
+    },
+    "elapsed_s": 0.4,
+    "outcome": "agreed",
+    "provider": "mock"
+   },
+   "no_action_reason": "viewer is in the 'holdout' arm: shadow decision only, no action of any kind",
+   "processing_ms": 2.95,
+   "published_at": null,
+   "queue_wait_ms": 0.0,
+   "rows_explained": [],
+   "status": "SHADOW_NO_ACTION",
+   "trigger": {
+    "copies_seen": 1,
+    "deliver_at": "2026-10-01T13:59:53.718Z",
+    "event": "app_open",
+    "event_age_s": 0.0,
+    "event_id": "4ca1901b-1f78-42dd-9873-f8867d595d46",
+    "received_at": "2026-10-01T13:59:53.718Z"
+   },
+   "viewer_id": "U-00429",
+   "waited_on_dependencies_ms": 400.0,
+   "within_budget": true
+  }
+ ],
+ "facts_at_last_decision": [
+  {
+   "id": 26117,
+   "user_id": "U-00429",
+   "decision_id": "D-01785",
+   "name": "profile",
+   "value": {
+    "stale": true,
+    "versions": 1
+   },
+   "source": "profile",
+   "refs": [
+    "profile:U-00429@2026-09-29T09:57:32.031Z"
+   ],
+   "as_of": "2026-09-29T09:57:32.031Z",
+   "age_s": 187341.7,
+   "confidence": "medium",
+   "conflicts": [],
+   "rule": null,
+   "note": "snapshot is a daily export; newer events override status fields",
+   "recorded_at": "2026-10-01T13:59:53.718Z"
+  },
+  {
+   "id": 26118,
+   "user_id": "U-00429",
+   "decision_id": "D-01785",
+   "name": "signup_at",
+   "value": "2026-01-27T01:29:38.858Z",
+   "source": "profile",
+   "refs": [
+    "profile:U-00429@2026-09-29T09:57:32.031Z"
+   ],
+   "as_of": "2026-09-29T09:57:32.031Z",
+   "age_s": 187341.7,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-signup-1",
+   "note": null,
+   "recorded_at": "2026-10-01T13:59:53.718Z"
+  },
+  {
+   "id": 26119,
+   "user_id": "U-00429",
+   "decision_id": "D-01785",
+   "name": "subscription_status",
+   "value": "active",
+   "source": "profile",
+   "refs": [
+    "profile:U-00429@2026-09-29T09:57:32.031Z"
+   ],
+   "as_of": "2026-09-29T09:57:32.031Z",
+   "age_s": 187341.7,
+   "confidence": "medium",
+   "conflicts": [],
+   "rule": "R-status-2",
+   "note": null,
+   "recorded_at": "2026-10-01T13:59:53.718Z"
+  },
+  {
+   "id": 26120,
+   "user_id": "U-00429",
+   "decision_id": "D-01785",
+   "name": "ever_paid",
+   "value": true,
+   "source": "event",
+   "refs": [
+    "event:b915a55e-c940-45e3-8169-c236bb03745f"
+   ],
+   "as_of": "2026-09-02T19:08:01.569Z",
+   "age_s": 2487112.1,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-paid-1",
+   "note": null,
+   "recorded_at": "2026-10-01T13:59:53.718Z"
+  },
+  {
+   "id": 26121,
+   "user_id": "U-00429",
+   "decision_id": "D-01785",
+   "name": "dialect",
+   "value": "d4",
+   "source": "app_setting",
+   "refs": [
+    "event:4ca1901b-1f78-42dd-9873-f8867d595d46"
+   ],
+   "as_of": "2026-10-01T13:59:53.718Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-dialect-1",
+   "note": "the app requests the home page of its current dialect",
+   "recorded_at": "2026-10-01T13:59:53.718Z"
+  },
+  {
+   "id": 26122,
+   "user_id": "U-00429",
+   "decision_id": "D-01785",
+   "name": "language",
+   "value": "hin",
+   "source": "app_setting",
+   "refs": [
+    "event:4ca1901b-1f78-42dd-9873-f8867d595d46"
+   ],
+   "as_of": "2026-10-01T13:59:53.718Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T13:59:53.718Z"
+  },
+  {
+   "id": 26123,
+   "user_id": "U-00429",
+   "decision_id": "D-01785",
+   "name": "consent_push",
+   "value": true,
+   "source": "profile",
+   "refs": [
+    "profile:U-00429@2026-09-29T09:57:32.031Z"
+   ],
+   "as_of": "2026-09-29T09:57:32.031Z",
+   "age_s": 187341.7,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-consent-1",
+   "note": null,
+   "recorded_at": "2026-10-01T13:59:53.718Z"
+  },
+  {
+   "id": 26124,
+   "user_id": "U-00429",
+   "decision_id": "D-01785",
+   "name": "consent_whatsapp",
+   "value": false,
+   "source": "profile",
+   "refs": [
+    "profile:U-00429@2026-09-29T09:57:32.031Z"
+   ],
+   "as_of": "2026-09-29T09:57:32.031Z",
+   "age_s": 187341.7,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-consent-1",
+   "note": null,
+   "recorded_at": "2026-10-01T13:59:53.718Z"
+  },
+  {
+   "id": 26125,
+   "user_id": "U-00429",
+   "decision_id": "D-01785",
+   "name": "has_played",
+   "value": true,
+   "source": "event",
+   "refs": [
+    "event:3ff64cdd-faa2-46cb-94b4-76316ef210df"
+   ],
+   "as_of": "2026-09-04T05:06:03.111Z",
+   "age_s": 2364830.6,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T13:59:53.718Z"
+  },
+  {
+   "id": 26126,
+   "user_id": "U-00429",
+   "decision_id": "D-01785",
+   "name": "has_completed_episode",
+   "value": true,
+   "source": "event",
+   "refs": [
+    "event:4f7bb25c-5164-4af4-b721-0900edf66ebf"
+   ],
+   "as_of": "2026-09-05T14:58:10.180Z",
+   "age_s": 2242903.5,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T13:59:53.718Z"
+  },
+  {
+   "id": 26127,
+   "user_id": "U-00429",
+   "decision_id": "D-01785",
+   "name": "play_days_14d",
+   "value": 1,
+   "source": "derived",
+   "refs": [
+    "event:cd2fa5e0-d28b-4101-a0d1-d261b600b1b7"
+   ],
+   "as_of": "2026-10-01T13:59:53.718Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T13:59:53.718Z"
+  },
+  {
+   "id": 26128,
+   "user_id": "U-00429",
+   "decision_id": "D-01785",
+   "name": "last_open_before_trigger",
+   "value": "2026-10-01T05:20:44.356Z",
+   "source": "event",
+   "refs": [
+    "event:7bfc298f-2ddc-4f5e-a9b8-2105bbc6d318"
+   ],
+   "as_of": "2026-10-01T05:20:44.356Z",
+   "age_s": 31149.4,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "excludes the trigger itself; uses clock-corrected time",
+   "recorded_at": "2026-10-01T13:59:53.718Z"
+  },
+  {
+   "id": 26129,
+   "user_id": "U-00429",
+   "decision_id": "D-01785",
+   "name": "recent_lapse",
+   "value": null,
+   "source": "derived",
+   "refs": [
+    "absence:subscription_lapsed_30d"
+   ],
+   "as_of": "2026-10-01T13:59:53.718Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "G06 'recently lapsed' = lapse event within 30 days (our definition)",
+   "recorded_at": "2026-10-01T13:59:53.718Z"
+  },
+  {
+   "id": 26130,
+   "user_id": "U-00429",
+   "decision_id": "D-01785",
+   "name": "unfinished_series",
+   "value": [
+    {
+     "content_slug": "tiko-subava-d4",
+     "episodes_completed": 2,
+     "episodes_total": 31,
+     "furthest_episode": 2,
+     "idle_days": 14.0,
+     "last_played_at": "2026-09-17T14:26:16.062Z",
+     "next_episode_id": "tiko-subava-d4-s1e3",
+     "title_ids": [
+      "T0932"
+     ]
+    }
+   ],
+   "source": "derived",
+   "refs": [
+    "event:3c79c993-2000-444b-af99-9276ac9438f7",
+    "event:4f7bb25c-5164-4af4-b721-0900edf66ebf",
+    "catalogue:tiko-subava-d4"
+   ],
+   "as_of": "2026-10-01T13:59:53.718Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "show/micro_drama with episodes left, no play for 3+ days, and at least 1 episode completed (sampling one episode is not an unfinished series)",
+   "recorded_at": "2026-10-01T13:59:53.718Z"
+  },
+  {
+   "id": 26131,
+   "user_id": "U-00429",
+   "decision_id": "D-01785",
+   "name": "trigger_age_s",
+   "value": 0.0,
+   "source": "derived",
+   "refs": [
+    "event:4ca1901b-1f78-42dd-9873-f8867d595d46"
+   ],
+   "as_of": "2026-10-01T13:59:53.718Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T13:59:53.718Z"
+  }
+ ],
+ "actions": [],
+ "learnings": [
+  {
+   "goal_instance_id": "GI-00652",
+   "at": "2026-10-15T18:30:00.000Z",
+   "note": {
+    "attribution": "holdout",
+    "effects": {},
+    "goal_id": "G07",
+    "goal_instance_id": "GI-00652",
+    "notes": [],
+    "result": "failed"
+   }
+  }
+ ]
+}

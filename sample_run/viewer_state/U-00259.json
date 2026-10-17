@@ -1,0 +1,570 @@
+{
+ "viewer_id": "U-00259",
+ "arm": "holdout",
+ "event_count": 98,
+ "profile_versions": [
+  {
+   "notifications_opt_in": true,
+   "plan_ends_at": "2026-10-05T00:59:37.253Z",
+   "plan_started_at": "2026-09-05T00:59:37.253Z",
+   "platform": "android",
+   "preferred_dialect": "d5",
+   "preferred_language": "hin",
+   "signup_at": "2026-01-07T05:09:00.147Z",
+   "snapshot_at": "2026-09-30T00:00:00.000Z",
+   "subscription_status": "active",
+   "updated_at": "2026-09-29T02:03:19.095Z",
+   "user_id": "U-00259",
+   "whatsapp_opt_in": true
+  }
+ ],
+ "goals": [
+  {
+   "goal_instance_id": "GI-00940",
+   "user_id": "U-00259",
+   "goal_id": "G07",
+   "status": "failed",
+   "started_at": "2026-10-01T07:36:24.862Z",
+   "deadline": "2026-10-04T07:36:24.862Z",
+   "success_spec": {
+    "condition": "same content_slug as the unfinished series",
+    "event": "play_started",
+    "goal_id": "G07",
+    "rule_version": 1,
+    "target": {
+     "content_slug": "jamo-hasa-d5",
+     "episodes_completed": 7,
+     "episodes_total": 33,
+     "furthest_episode": 7,
+     "idle_days": 3.7,
+     "last_played_at": "2026-09-27T15:36:14.975Z",
+     "next_episode_id": "jamo-hasa-d5-s1e8",
+     "title_ids": [
+      "T1179"
+     ]
+    },
+    "window_hours": 72
+   },
+   "rule_version": 1,
+   "decision_id": "D-00940",
+   "evidence": [
+    "event:1660330f-3cd3-4148-9e4e-1572e9747679",
+    "event:1fc264d4-236e-4421-a936-92dff27e1d9e",
+    "catalogue:jamo-hasa-d5",
+    "goal_rule:G07-elig-v1"
+   ],
+   "closed_at": "2026-10-15T18:30:00.000Z",
+   "judgement": {
+    "attribution": "holdout",
+    "reason": "no qualifying play_started by 2026-10-04T07:36:24.862Z",
+    "rule_version": 1,
+    "signal": null,
+    "status": "failed"
+   },
+   "history": [
+    {
+     "at": "2026-10-01T07:36:24.862Z",
+     "change": "opened",
+     "rule_version": 1
+    }
+   ]
+  }
+ ],
+ "decisions": [
+  {
+   "action": "NONE",
+   "action_ids": [],
+   "arm": "holdout",
+   "assumptions": [],
+   "budget": {
+    "model_calls": 1,
+    "tool_calls": 6,
+    "tool_retries": 0,
+    "tool_timeouts": 0
+   },
+   "checks": {
+    "failed": [],
+    "passed": [
+     "duplicate_trigger",
+     "evidence",
+     "eligibility",
+     "single_goal",
+     "budget"
+    ]
+   },
+   "confidence": 0.9,
+   "confidence_reason": "weakest deciding fact: unfinished_series (high, source derived)",
+   "conflicts": [],
+   "content": [],
+   "created_at": "2026-10-01T07:36:24.862Z",
+   "decided_in_ms": 403.7,
+   "decision_id": "D-00940",
+   "dialect": {
+    "conflicts": [],
+    "rule": "R-dialect-1",
+    "source": "app_setting",
+    "used": "d5"
+   },
+   "evidence": [
+    {
+     "age_s": 316809.9,
+     "event": "episode_completed",
+     "received_at": "2026-09-27T15:36:14.975Z",
+     "ref": "event:1660330f-3cd3-4148-9e4e-1572e9747679"
+    },
+    {
+     "age_s": 2464341.1,
+     "event": "episode_completed",
+     "received_at": "2026-09-02T19:04:03.803Z",
+     "ref": "event:1fc264d4-236e-4421-a936-92dff27e1d9e"
+    },
+    {
+     "ref": "catalogue:jamo-hasa-d5"
+    },
+    {
+     "ref": "goal_rule:G07-elig-v1"
+    }
+   ],
+   "goal": {
+    "considered": [
+     {
+      "eligible": false,
+      "goal_id": "G01",
+      "why": "signed up more than 7 days ago (2026-01-07T05:09:00.147Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G02",
+      "why": "has completed an episode"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G03",
+      "why": "signed up more than 2 days ago (2026-01-07T05:09:00.147Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G04",
+      "why": "subscription_status=active (profile)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G05",
+      "why": "subscription_status=active, ever_paid=True"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G06",
+      "why": "subscription_status=active; recent lapse event: none"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G07",
+      "why": "1 unfinished series idle 3+ days"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G08",
+      "why": "28 available releases from the last 30 days in dialect d5"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G09",
+      "why": "plays on 4 IST day(s) in the last 14 days"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G10",
+      "why": "success event is null ('engages meaningfully' cannot be measured)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G11",
+      "why": "success event tv_app_open never appears in the event stream"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G12",
+      "why": "last app_open 2 days before this visit"
+     }
+    ],
+    "continuing": false,
+    "deadline": "2026-10-04T07:36:24.862Z",
+    "id": "G07",
+    "instance": "GI-00940",
+    "shadow": true,
+    "success_signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    },
+    "target": {
+     "content_slug": "jamo-hasa-d5",
+     "episodes_completed": 7,
+     "episodes_total": 33,
+     "furthest_episode": 7,
+     "idle_days": 3.7,
+     "last_played_at": "2026-09-27T15:36:14.975Z",
+     "next_episode_id": "jamo-hasa-d5-s1e8",
+     "title_ids": [
+      "T1179"
+     ]
+    },
+    "why": "1 unfinished series idle 3+ days"
+   },
+   "judged_by": {
+    "deadline": "2026-10-04T07:36:24.862Z",
+    "signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    }
+   },
+   "latency_ms": 403.7,
+   "lessons_applied": {
+    "avoid_goals": [],
+    "push_ok": true
+   },
+   "model": {
+    "called": true,
+    "calls": 1,
+    "claim": {
+     "confidence": 0.6,
+     "eligible": true,
+     "goal_id": "G07",
+     "reason": "agrees with rule ranking: 1 unfinished series idle 3+ days"
+    },
+    "elapsed_s": 0.4,
+    "outcome": "agreed",
+    "provider": "mock"
+   },
+   "no_action_reason": "viewer is in the 'holdout' arm: shadow decision only, no action of any kind",
+   "processing_ms": 3.69,
+   "published_at": null,
+   "queue_wait_ms": 0.0,
+   "rows_explained": [],
+   "status": "SHADOW_NO_ACTION",
+   "trigger": {
+    "copies_seen": 1,
+    "deliver_at": "2026-10-01T07:36:24.862Z",
+    "event": "app_open",
+    "event_age_s": 0.0,
+    "event_id": "c032891d-9881-4acb-b7d8-09404a52d7d9",
+    "received_at": "2026-10-01T07:36:24.862Z"
+   },
+   "viewer_id": "U-00259",
+   "waited_on_dependencies_ms": 400.0,
+   "within_budget": true
+  }
+ ],
+ "facts_at_last_decision": [
+  {
+   "id": 13742,
+   "user_id": "U-00259",
+   "decision_id": "D-00940",
+   "name": "profile",
+   "value": {
+    "stale": true,
+    "versions": 1
+   },
+   "source": "profile",
+   "refs": [
+    "profile:U-00259@2026-09-29T02:03:19.095Z"
+   ],
+   "as_of": "2026-09-29T02:03:19.095Z",
+   "age_s": 192785.8,
+   "confidence": "medium",
+   "conflicts": [],
+   "rule": null,
+   "note": "snapshot is a daily export; newer events override status fields",
+   "recorded_at": "2026-10-01T07:36:24.862Z"
+  },
+  {
+   "id": 13743,
+   "user_id": "U-00259",
+   "decision_id": "D-00940",
+   "name": "signup_at",
+   "value": "2026-01-07T05:09:00.147Z",
+   "source": "profile",
+   "refs": [
+    "profile:U-00259@2026-09-29T02:03:19.095Z"
+   ],
+   "as_of": "2026-09-29T02:03:19.095Z",
+   "age_s": 192785.8,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-signup-1",
+   "note": null,
+   "recorded_at": "2026-10-01T07:36:24.862Z"
+  },
+  {
+   "id": 13744,
+   "user_id": "U-00259",
+   "decision_id": "D-00940",
+   "name": "subscription_status",
+   "value": "active",
+   "source": "profile",
+   "refs": [
+    "profile:U-00259@2026-09-29T02:03:19.095Z"
+   ],
+   "as_of": "2026-09-29T02:03:19.095Z",
+   "age_s": 192785.8,
+   "confidence": "medium",
+   "conflicts": [],
+   "rule": "R-status-2",
+   "note": null,
+   "recorded_at": "2026-10-01T07:36:24.862Z"
+  },
+  {
+   "id": 13745,
+   "user_id": "U-00259",
+   "decision_id": "D-00940",
+   "name": "ever_paid",
+   "value": true,
+   "source": "event",
+   "refs": [
+    "event:44d438ef-a07b-48c7-8a18-6e2f94261453"
+   ],
+   "as_of": "2026-09-05T00:59:37.253Z",
+   "age_s": 2270207.6,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-paid-1",
+   "note": null,
+   "recorded_at": "2026-10-01T07:36:24.862Z"
+  },
+  {
+   "id": 13746,
+   "user_id": "U-00259",
+   "decision_id": "D-00940",
+   "name": "dialect",
+   "value": "d5",
+   "source": "app_setting",
+   "refs": [
+    "event:c032891d-9881-4acb-b7d8-09404a52d7d9"
+   ],
+   "as_of": "2026-10-01T07:36:24.862Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-dialect-1",
+   "note": "the app requests the home page of its current dialect",
+   "recorded_at": "2026-10-01T07:36:24.862Z"
+  },
+  {
+   "id": 13747,
+   "user_id": "U-00259",
+   "decision_id": "D-00940",
+   "name": "language",
+   "value": "hin",
+   "source": "app_setting",
+   "refs": [
+    "event:c032891d-9881-4acb-b7d8-09404a52d7d9"
+   ],
+   "as_of": "2026-10-01T07:36:24.862Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T07:36:24.862Z"
+  },
+  {
+   "id": 13748,
+   "user_id": "U-00259",
+   "decision_id": "D-00940",
+   "name": "consent_push",
+   "value": true,
+   "source": "profile",
+   "refs": [
+    "profile:U-00259@2026-09-29T02:03:19.095Z"
+   ],
+   "as_of": "2026-09-29T02:03:19.095Z",
+   "age_s": 192785.8,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-consent-1",
+   "note": null,
+   "recorded_at": "2026-10-01T07:36:24.862Z"
+  },
+  {
+   "id": 13749,
+   "user_id": "U-00259",
+   "decision_id": "D-00940",
+   "name": "consent_whatsapp",
+   "value": true,
+   "source": "profile",
+   "refs": [
+    "profile:U-00259@2026-09-29T02:03:19.095Z"
+   ],
+   "as_of": "2026-09-29T02:03:19.095Z",
+   "age_s": 192785.8,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-consent-1",
+   "note": null,
+   "recorded_at": "2026-10-01T07:36:24.862Z"
+  },
+  {
+   "id": 13750,
+   "user_id": "U-00259",
+   "decision_id": "D-00940",
+   "name": "has_played",
+   "value": true,
+   "source": "event",
+   "refs": [
+    "event:6e29c6b0-cc8f-4d0e-b253-7a5a54c43142"
+   ],
+   "as_of": "2026-09-02T19:01:18.483Z",
+   "age_s": 2464506.4,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T07:36:24.862Z"
+  },
+  {
+   "id": 13751,
+   "user_id": "U-00259",
+   "decision_id": "D-00940",
+   "name": "has_completed_episode",
+   "value": true,
+   "source": "event",
+   "refs": [
+    "event:1fc264d4-236e-4421-a936-92dff27e1d9e"
+   ],
+   "as_of": "2026-09-02T19:04:03.803Z",
+   "age_s": 2464341.1,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T07:36:24.862Z"
+  },
+  {
+   "id": 13752,
+   "user_id": "U-00259",
+   "decision_id": "D-00940",
+   "name": "play_days_14d",
+   "value": 4,
+   "source": "derived",
+   "refs": [
+    "event:7952f36f-5b45-4dd8-906b-8dee43bec72a",
+    "event:7a04314d-65f9-4554-9652-a6726e85c388",
+    "event:f4715f21-c7be-4dfc-8602-58e1d83c94a6",
+    "event:1f09db66-05ea-4edd-9f96-618c87ec9074"
+   ],
+   "as_of": "2026-10-01T07:36:24.862Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T07:36:24.862Z"
+  },
+  {
+   "id": 13753,
+   "user_id": "U-00259",
+   "decision_id": "D-00940",
+   "name": "last_open_before_trigger",
+   "value": "2026-09-28T09:38:34.250Z",
+   "source": "event",
+   "refs": [
+    "event:c323a50a-a610-465f-afb5-b4892e3f5db6"
+   ],
+   "as_of": "2026-09-28T09:38:34.250Z",
+   "age_s": 251870.6,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "excludes the trigger itself; uses clock-corrected time",
+   "recorded_at": "2026-10-01T07:36:24.862Z"
+  },
+  {
+   "id": 13754,
+   "user_id": "U-00259",
+   "decision_id": "D-00940",
+   "name": "recent_lapse",
+   "value": null,
+   "source": "derived",
+   "refs": [
+    "absence:subscription_lapsed_30d"
+   ],
+   "as_of": "2026-10-01T07:36:24.862Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "G06 'recently lapsed' = lapse event within 30 days (our definition)",
+   "recorded_at": "2026-10-01T07:36:24.862Z"
+  },
+  {
+   "id": 13755,
+   "user_id": "U-00259",
+   "decision_id": "D-00940",
+   "name": "unfinished_series",
+   "value": [
+    {
+     "content_slug": "jamo-hasa-d5",
+     "episodes_completed": 7,
+     "episodes_total": 33,
+     "furthest_episode": 7,
+     "idle_days": 3.7,
+     "last_played_at": "2026-09-27T15:36:14.975Z",
+     "next_episode_id": "jamo-hasa-d5-s1e8",
+     "title_ids": [
+      "T1179"
+     ]
+    }
+   ],
+   "source": "derived",
+   "refs": [
+    "event:1660330f-3cd3-4148-9e4e-1572e9747679",
+    "event:1fc264d4-236e-4421-a936-92dff27e1d9e",
+    "catalogue:jamo-hasa-d5"
+   ],
+   "as_of": "2026-10-01T07:36:24.862Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "show/micro_drama with episodes left, no play for 3+ days, and at least 1 episode completed (sampling one episode is not an unfinished series)",
+   "recorded_at": "2026-10-01T07:36:24.862Z"
+  },
+  {
+   "id": 13756,
+   "user_id": "U-00259",
+   "decision_id": "D-00940",
+   "name": "trigger_age_s",
+   "value": 0.0,
+   "source": "derived",
+   "refs": [
+    "event:c032891d-9881-4acb-b7d8-09404a52d7d9"
+   ],
+   "as_of": "2026-10-01T07:36:24.862Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T07:36:24.862Z"
+  }
+ ],
+ "actions": [],
+ "learnings": [
+  {
+   "goal_instance_id": "GI-00940",
+   "at": "2026-10-15T18:30:00.000Z",
+   "note": {
+    "attribution": "holdout",
+    "effects": {},
+    "goal_id": "G07",
+    "goal_instance_id": "GI-00940",
+    "notes": [],
+    "result": "failed"
+   }
+  }
+ ]
+}

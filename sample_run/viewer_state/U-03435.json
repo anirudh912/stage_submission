@@ -1,0 +1,792 @@
+{
+ "viewer_id": "U-03435",
+ "arm": "holdout",
+ "event_count": 58,
+ "profile_versions": [
+  {
+   "notifications_opt_in": true,
+   "plan_ends_at": null,
+   "plan_started_at": null,
+   "platform": "ios",
+   "preferred_dialect": "d4",
+   "preferred_language": "hin",
+   "signup_at": "2026-01-13T22:42:35.526Z",
+   "snapshot_at": "2026-09-30T00:00:00.000Z",
+   "subscription_status": "never",
+   "updated_at": "2026-09-29T15:36:31.657Z",
+   "user_id": "U-03435",
+   "whatsapp_opt_in": true
+  }
+ ],
+ "goals": [
+  {
+   "goal_instance_id": "GI-00772",
+   "user_id": "U-03435",
+   "goal_id": "G07",
+   "status": "failed",
+   "started_at": "2026-10-01T06:17:04.476Z",
+   "deadline": "2026-10-04T06:17:04.476Z",
+   "success_spec": {
+    "condition": "same content_slug as the unfinished series",
+    "event": "play_started",
+    "goal_id": "G07",
+    "rule_version": 1,
+    "target": {
+     "content_slug": "gidha-sudhako-d1",
+     "episodes_completed": 2,
+     "episodes_total": 59,
+     "furthest_episode": 2,
+     "idle_days": 4.5,
+     "last_played_at": "2026-09-26T17:14:16.810Z",
+     "next_episode_id": "gidha-sudhako-d1-s1e3",
+     "title_ids": [
+      "T1505"
+     ]
+    },
+    "window_hours": 72
+   },
+   "rule_version": 1,
+   "decision_id": "D-00772",
+   "evidence": [
+    "event:c7662006-28b0-4ddd-ade4-4472b3d66c35",
+    "event:5d8c1230-d31b-4339-b454-85e087686423",
+    "catalogue:gidha-sudhako-d1",
+    "goal_rule:G07-elig-v1"
+   ],
+   "closed_at": "2026-10-15T18:30:00.000Z",
+   "judgement": {
+    "attribution": "holdout",
+    "reason": "no qualifying play_started by 2026-10-04T06:17:04.476Z",
+    "rule_version": 1,
+    "signal": null,
+    "status": "failed"
+   },
+   "history": [
+    {
+     "at": "2026-10-01T06:17:04.476Z",
+     "change": "opened",
+     "rule_version": 1
+    }
+   ]
+  }
+ ],
+ "decisions": [
+  {
+   "action": "NONE",
+   "action_ids": [],
+   "arm": "holdout",
+   "assumptions": [],
+   "budget": {
+    "model_calls": 1,
+    "tool_calls": 6,
+    "tool_retries": 0,
+    "tool_timeouts": 0
+   },
+   "checks": {
+    "failed": [],
+    "passed": [
+     "duplicate_trigger",
+     "evidence",
+     "eligibility",
+     "single_goal",
+     "budget"
+    ]
+   },
+   "confidence": 0.9,
+   "confidence_reason": "weakest deciding fact: unfinished_series (high, source derived)",
+   "conflicts": [
+    {
+     "conflicts": [
+      {
+       "ref": "profile:U-03435@2026-09-29T15:36:31.657Z",
+       "source": "profile",
+       "value": "d4"
+      }
+     ],
+     "fact": "dialect",
+     "rule": "R-dialect-1",
+     "source": "app_setting",
+     "used": "d1"
+    }
+   ],
+   "content": [],
+   "created_at": "2026-10-01T06:17:04.476Z",
+   "decided_in_ms": 402.3,
+   "decision_id": "D-00772",
+   "dialect": {
+    "conflicts": [
+     "profile:d4"
+    ],
+    "rule": "R-dialect-1",
+    "source": "app_setting",
+    "used": "d1"
+   },
+   "evidence": [
+    {
+     "age_s": 392567.7,
+     "event": "episode_completed",
+     "received_at": "2026-09-26T17:14:16.810Z",
+     "ref": "event:c7662006-28b0-4ddd-ade4-4472b3d66c35"
+    },
+    {
+     "age_s": 774488.4,
+     "event": "episode_completed",
+     "received_at": "2026-09-22T07:08:56.048Z",
+     "ref": "event:5d8c1230-d31b-4339-b454-85e087686423"
+    },
+    {
+     "ref": "catalogue:gidha-sudhako-d1"
+    },
+    {
+     "ref": "goal_rule:G07-elig-v1"
+    }
+   ],
+   "goal": {
+    "considered": [
+     {
+      "eligible": false,
+      "goal_id": "G01",
+      "why": "signed up more than 7 days ago (2026-01-13T22:42:35.526Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G02",
+      "why": "has completed an episode"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G03",
+      "why": "signed up more than 2 days ago (2026-01-13T22:42:35.526Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G04",
+      "why": "subscription_status=never (profile)"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G05",
+      "why": "subscription_status=never, ever_paid=False"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G06",
+      "why": "subscription_status=never; recent lapse event: none"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G07",
+      "why": "1 unfinished series idle 3+ days"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G08",
+      "why": "not an active subscriber (status=never)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G09",
+      "why": "not an active subscriber (status=never)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G10",
+      "why": "success event is null ('engages meaningfully' cannot be measured)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G11",
+      "why": "success event tv_app_open never appears in the event stream"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G12",
+      "why": "last app_open 4 days before this visit"
+     }
+    ],
+    "continuing": false,
+    "deadline": "2026-10-04T06:17:04.476Z",
+    "id": "G07",
+    "instance": "GI-00772",
+    "shadow": true,
+    "success_signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    },
+    "target": {
+     "content_slug": "gidha-sudhako-d1",
+     "episodes_completed": 2,
+     "episodes_total": 59,
+     "furthest_episode": 2,
+     "idle_days": 4.5,
+     "last_played_at": "2026-09-26T17:14:16.810Z",
+     "next_episode_id": "gidha-sudhako-d1-s1e3",
+     "title_ids": [
+      "T1505"
+     ]
+    },
+    "why": "1 unfinished series idle 3+ days"
+   },
+   "judged_by": {
+    "deadline": "2026-10-04T06:17:04.476Z",
+    "signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    }
+   },
+   "latency_ms": 402.3,
+   "lessons_applied": {
+    "avoid_goals": [],
+    "push_ok": true
+   },
+   "model": {
+    "called": true,
+    "calls": 1,
+    "claim": {
+     "confidence": 0.6,
+     "eligible": true,
+     "goal_id": "G07",
+     "reason": "agrees with rule ranking: 1 unfinished series idle 3+ days"
+    },
+    "elapsed_s": 0.4,
+    "outcome": "agreed",
+    "provider": "mock"
+   },
+   "no_action_reason": "viewer is in the 'holdout' arm: shadow decision only, no action of any kind",
+   "processing_ms": 2.29,
+   "published_at": null,
+   "queue_wait_ms": 0.0,
+   "rows_explained": [],
+   "status": "SHADOW_NO_ACTION",
+   "trigger": {
+    "copies_seen": 1,
+    "deliver_at": "2026-10-01T06:17:04.476Z",
+    "event": "app_open",
+    "event_age_s": 0.0,
+    "event_id": "63599bd6-664b-4327-b20f-cf525c9341bf",
+    "received_at": "2026-10-01T06:17:04.476Z"
+   },
+   "viewer_id": "U-03435",
+   "waited_on_dependencies_ms": 400.0,
+   "within_budget": true
+  },
+  {
+   "action": "NONE",
+   "action_ids": [],
+   "arm": "holdout",
+   "assumptions": [],
+   "budget": {
+    "model_calls": 1,
+    "tool_calls": 6,
+    "tool_retries": 0,
+    "tool_timeouts": 0
+   },
+   "checks": {
+    "failed": [],
+    "passed": [
+     "duplicate_trigger",
+     "evidence",
+     "single_goal",
+     "budget"
+    ]
+   },
+   "confidence": 0.9,
+   "confidence_reason": "goal already committed; window still open",
+   "conflicts": [
+    {
+     "conflicts": [
+      {
+       "ref": "profile:U-03435@2026-09-29T15:36:31.657Z",
+       "source": "profile",
+       "value": "d4"
+      }
+     ],
+     "fact": "dialect",
+     "rule": "R-dialect-1",
+     "source": "app_setting",
+     "used": "d1"
+    }
+   ],
+   "content": [],
+   "created_at": "2026-10-01T15:01:02.706Z",
+   "decided_in_ms": 401.8,
+   "decision_id": "D-02010",
+   "dialect": {
+    "conflicts": [
+     "profile:d4"
+    ],
+    "rule": "R-dialect-1",
+    "source": "app_setting",
+    "used": "d1"
+   },
+   "evidence": [
+    {
+     "age_s": 424005.9,
+     "event": "episode_completed",
+     "received_at": "2026-09-26T17:14:16.810Z",
+     "ref": "event:c7662006-28b0-4ddd-ade4-4472b3d66c35"
+    },
+    {
+     "age_s": 805926.7,
+     "event": "episode_completed",
+     "received_at": "2026-09-22T07:08:56.048Z",
+     "ref": "event:5d8c1230-d31b-4339-b454-85e087686423"
+    },
+    {
+     "ref": "catalogue:gidha-sudhako-d1"
+    },
+    {
+     "ref": "goal_rule:G07-elig-v1"
+    }
+   ],
+   "goal": {
+    "considered": [
+     {
+      "eligible": false,
+      "goal_id": "G01",
+      "why": "signed up more than 7 days ago (2026-01-13T22:42:35.526Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G02",
+      "why": "has completed an episode"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G03",
+      "why": "signed up more than 2 days ago (2026-01-13T22:42:35.526Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G04",
+      "why": "subscription_status=never (profile)"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G05",
+      "why": "subscription_status=never, ever_paid=False"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G06",
+      "why": "subscription_status=never; recent lapse event: none"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G07",
+      "why": "1 unfinished series idle 3+ days"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G08",
+      "why": "not an active subscriber (status=never)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G09",
+      "why": "not an active subscriber (status=never)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G10",
+      "why": "success event is null ('engages meaningfully' cannot be measured)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G11",
+      "why": "success event tv_app_open never appears in the event stream"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G12",
+      "why": "last app_open 0 days before this visit"
+     }
+    ],
+    "continuing": true,
+    "deadline": "2026-10-04T06:17:04.476Z",
+    "id": "G07",
+    "instance": "GI-00772",
+    "shadow": true,
+    "success_signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    },
+    "target": {
+     "content_slug": "gidha-sudhako-d1",
+     "episodes_completed": 2,
+     "episodes_total": 59,
+     "furthest_episode": 2,
+     "idle_days": 4.5,
+     "last_played_at": "2026-09-26T17:14:16.810Z",
+     "next_episode_id": "gidha-sudhako-d1-s1e3",
+     "title_ids": [
+      "T1505"
+     ]
+    },
+    "why": "continuing open goal GI-00772 (one active plan per viewer)"
+   },
+   "judged_by": {
+    "deadline": "2026-10-04T06:17:04.476Z",
+    "signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    }
+   },
+   "latency_ms": 401.8,
+   "lessons_applied": {
+    "avoid_goals": [],
+    "push_ok": true
+   },
+   "model": {
+    "called": true,
+    "calls": 1,
+    "claim": {
+     "confidence": 0.6,
+     "eligible": true,
+     "goal_id": "G07",
+     "reason": "keep the goal already in progress"
+    },
+    "elapsed_s": 0.4,
+    "outcome": "agreed",
+    "provider": "mock"
+   },
+   "no_action_reason": "viewer is in the 'holdout' arm: shadow decision only, no action of any kind",
+   "processing_ms": 1.82,
+   "published_at": null,
+   "queue_wait_ms": 0.0,
+   "rows_explained": [],
+   "status": "SHADOW_NO_ACTION",
+   "trigger": {
+    "copies_seen": 1,
+    "deliver_at": "2026-10-01T15:01:02.706Z",
+    "event": "app_open",
+    "event_age_s": 0.0,
+    "event_id": "58fce0df-f3fe-4012-ba0d-a7d37b06e601",
+    "received_at": "2026-10-01T15:01:02.706Z"
+   },
+   "viewer_id": "U-03435",
+   "waited_on_dependencies_ms": 400.0,
+   "within_budget": true
+  }
+ ],
+ "facts_at_last_decision": [
+  {
+   "id": 29447,
+   "user_id": "U-03435",
+   "decision_id": "D-02010",
+   "name": "profile",
+   "value": {
+    "stale": true,
+    "versions": 1
+   },
+   "source": "profile",
+   "refs": [
+    "profile:U-03435@2026-09-29T15:36:31.657Z"
+   ],
+   "as_of": "2026-09-29T15:36:31.657Z",
+   "age_s": 170671.0,
+   "confidence": "medium",
+   "conflicts": [],
+   "rule": null,
+   "note": "snapshot is a daily export; newer events override status fields",
+   "recorded_at": "2026-10-01T15:01:02.706Z"
+  },
+  {
+   "id": 29448,
+   "user_id": "U-03435",
+   "decision_id": "D-02010",
+   "name": "signup_at",
+   "value": "2026-01-13T22:42:35.526Z",
+   "source": "profile",
+   "refs": [
+    "profile:U-03435@2026-09-29T15:36:31.657Z"
+   ],
+   "as_of": "2026-09-29T15:36:31.657Z",
+   "age_s": 170671.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-signup-1",
+   "note": null,
+   "recorded_at": "2026-10-01T15:01:02.706Z"
+  },
+  {
+   "id": 29449,
+   "user_id": "U-03435",
+   "decision_id": "D-02010",
+   "name": "subscription_status",
+   "value": "never",
+   "source": "profile",
+   "refs": [
+    "profile:U-03435@2026-09-29T15:36:31.657Z"
+   ],
+   "as_of": "2026-09-29T15:36:31.657Z",
+   "age_s": 170671.0,
+   "confidence": "medium",
+   "conflicts": [],
+   "rule": "R-status-2",
+   "note": null,
+   "recorded_at": "2026-10-01T15:01:02.706Z"
+  },
+  {
+   "id": 29450,
+   "user_id": "U-03435",
+   "decision_id": "D-02010",
+   "name": "ever_paid",
+   "value": false,
+   "source": "profile",
+   "refs": [
+    "profile:U-03435@2026-09-29T15:36:31.657Z"
+   ],
+   "as_of": "2026-09-29T15:36:31.657Z",
+   "age_s": 170671.0,
+   "confidence": "medium",
+   "conflicts": [],
+   "rule": "R-paid-1",
+   "note": null,
+   "recorded_at": "2026-10-01T15:01:02.706Z"
+  },
+  {
+   "id": 29451,
+   "user_id": "U-03435",
+   "decision_id": "D-02010",
+   "name": "dialect",
+   "value": "d1",
+   "source": "app_setting",
+   "refs": [
+    "event:58fce0df-f3fe-4012-ba0d-a7d37b06e601"
+   ],
+   "as_of": "2026-10-01T15:01:02.706Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [
+    {
+     "ref": "profile:U-03435@2026-09-29T15:36:31.657Z",
+     "source": "profile",
+     "value": "d4"
+    }
+   ],
+   "rule": "R-dialect-1",
+   "note": "the app requests the home page of its current dialect",
+   "recorded_at": "2026-10-01T15:01:02.706Z"
+  },
+  {
+   "id": 29452,
+   "user_id": "U-03435",
+   "decision_id": "D-02010",
+   "name": "language",
+   "value": "hin",
+   "source": "app_setting",
+   "refs": [
+    "event:58fce0df-f3fe-4012-ba0d-a7d37b06e601"
+   ],
+   "as_of": "2026-10-01T15:01:02.706Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T15:01:02.706Z"
+  },
+  {
+   "id": 29453,
+   "user_id": "U-03435",
+   "decision_id": "D-02010",
+   "name": "consent_push",
+   "value": true,
+   "source": "profile",
+   "refs": [
+    "profile:U-03435@2026-09-29T15:36:31.657Z"
+   ],
+   "as_of": "2026-09-29T15:36:31.657Z",
+   "age_s": 170671.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-consent-1",
+   "note": null,
+   "recorded_at": "2026-10-01T15:01:02.706Z"
+  },
+  {
+   "id": 29454,
+   "user_id": "U-03435",
+   "decision_id": "D-02010",
+   "name": "consent_whatsapp",
+   "value": true,
+   "source": "profile",
+   "refs": [
+    "profile:U-03435@2026-09-29T15:36:31.657Z"
+   ],
+   "as_of": "2026-09-29T15:36:31.657Z",
+   "age_s": 170671.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-consent-1",
+   "note": null,
+   "recorded_at": "2026-10-01T15:01:02.706Z"
+  },
+  {
+   "id": 29455,
+   "user_id": "U-03435",
+   "decision_id": "D-02010",
+   "name": "has_played",
+   "value": true,
+   "source": "event",
+   "refs": [
+    "event:87f3355e-80b9-43ae-b981-d41e4af1b506"
+   ],
+   "as_of": "2026-09-02T14:57:15.218Z",
+   "age_s": 2505827.5,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T15:01:02.706Z"
+  },
+  {
+   "id": 29456,
+   "user_id": "U-03435",
+   "decision_id": "D-02010",
+   "name": "has_completed_episode",
+   "value": true,
+   "source": "event",
+   "refs": [
+    "event:ed50332b-fac5-4b63-9e9a-d08184bf3185"
+   ],
+   "as_of": "2026-09-02T16:55:55.778Z",
+   "age_s": 2498706.9,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T15:01:02.706Z"
+  },
+  {
+   "id": 29457,
+   "user_id": "U-03435",
+   "decision_id": "D-02010",
+   "name": "play_days_14d",
+   "value": 2,
+   "source": "derived",
+   "refs": [
+    "event:1abc8dc3-a1b5-4da2-bf7c-63ab02336f71",
+    "event:c1bfa5e1-506a-4fe0-bb06-e5766acee524"
+   ],
+   "as_of": "2026-10-01T15:01:02.706Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T15:01:02.706Z"
+  },
+  {
+   "id": 29458,
+   "user_id": "U-03435",
+   "decision_id": "D-02010",
+   "name": "last_open_before_trigger",
+   "value": "2026-10-01T06:17:04.476Z",
+   "source": "event",
+   "refs": [
+    "event:63599bd6-664b-4327-b20f-cf525c9341bf"
+   ],
+   "as_of": "2026-10-01T06:17:04.476Z",
+   "age_s": 31438.2,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "excludes the trigger itself; uses clock-corrected time",
+   "recorded_at": "2026-10-01T15:01:02.706Z"
+  },
+  {
+   "id": 29459,
+   "user_id": "U-03435",
+   "decision_id": "D-02010",
+   "name": "recent_lapse",
+   "value": null,
+   "source": "derived",
+   "refs": [
+    "absence:subscription_lapsed_30d"
+   ],
+   "as_of": "2026-10-01T15:01:02.706Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "G06 'recently lapsed' = lapse event within 30 days (our definition)",
+   "recorded_at": "2026-10-01T15:01:02.706Z"
+  },
+  {
+   "id": 29460,
+   "user_id": "U-03435",
+   "decision_id": "D-02010",
+   "name": "unfinished_series",
+   "value": [
+    {
+     "content_slug": "gidha-sudhako-d1",
+     "episodes_completed": 2,
+     "episodes_total": 59,
+     "furthest_episode": 2,
+     "idle_days": 4.9,
+     "last_played_at": "2026-09-26T17:14:16.810Z",
+     "next_episode_id": "gidha-sudhako-d1-s1e3",
+     "title_ids": [
+      "T1505"
+     ]
+    }
+   ],
+   "source": "derived",
+   "refs": [
+    "event:c7662006-28b0-4ddd-ade4-4472b3d66c35",
+    "event:5d8c1230-d31b-4339-b454-85e087686423",
+    "catalogue:gidha-sudhako-d1"
+   ],
+   "as_of": "2026-10-01T15:01:02.706Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "show/micro_drama with episodes left, no play for 3+ days, and at least 1 episode completed (sampling one episode is not an unfinished series)",
+   "recorded_at": "2026-10-01T15:01:02.706Z"
+  },
+  {
+   "id": 29461,
+   "user_id": "U-03435",
+   "decision_id": "D-02010",
+   "name": "trigger_age_s",
+   "value": 0.0,
+   "source": "derived",
+   "refs": [
+    "event:58fce0df-f3fe-4012-ba0d-a7d37b06e601"
+   ],
+   "as_of": "2026-10-01T15:01:02.706Z",
+   "age_s": 0.0,
+   "confidence": "medium",
+   "conflicts": [],
+   "rule": null,
+   "note": "clock-corrected; phone clock was wrong",
+   "recorded_at": "2026-10-01T15:01:02.706Z"
+  }
+ ],
+ "actions": [],
+ "learnings": [
+  {
+   "goal_instance_id": "GI-00772",
+   "at": "2026-10-15T18:30:00.000Z",
+   "note": {
+    "attribution": "holdout",
+    "effects": {},
+    "goal_id": "G07",
+    "goal_instance_id": "GI-00772",
+    "notes": [],
+    "result": "failed"
+   }
+  }
+ ]
+}

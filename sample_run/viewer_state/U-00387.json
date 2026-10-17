@@ -1,0 +1,569 @@
+{
+ "viewer_id": "U-00387",
+ "arm": "holdout",
+ "event_count": 117,
+ "profile_versions": [
+  {
+   "notifications_opt_in": true,
+   "plan_ends_at": "2026-10-16T08:08:28.055Z",
+   "plan_started_at": "2026-09-16T08:08:28.055Z",
+   "platform": "android",
+   "preferred_dialect": "d1",
+   "preferred_language": "hin",
+   "signup_at": "2024-10-30T17:06:48.283Z",
+   "snapshot_at": "2026-09-30T00:00:00.000Z",
+   "subscription_status": "active",
+   "updated_at": "2026-09-29T08:54:31.000Z",
+   "user_id": "U-00387",
+   "whatsapp_opt_in": true
+  }
+ ],
+ "goals": [
+  {
+   "goal_instance_id": "GI-00190",
+   "user_id": "U-00387",
+   "goal_id": "G07",
+   "status": "failed",
+   "started_at": "2026-10-01T02:52:32.652Z",
+   "deadline": "2026-10-04T02:52:32.652Z",
+   "success_spec": {
+    "condition": "same content_slug as the unfinished series",
+    "event": "play_started",
+    "goal_id": "G07",
+    "rule_version": 1,
+    "target": {
+     "content_slug": "tidha-dakachu-d1",
+     "episodes_completed": 5,
+     "episodes_total": 17,
+     "furthest_episode": 5,
+     "idle_days": 15.0,
+     "last_played_at": "2026-09-16T02:17:09.036Z",
+     "next_episode_id": "tidha-dakachu-d1-s1e6",
+     "title_ids": [
+      "T0005"
+     ]
+    },
+    "window_hours": 72
+   },
+   "rule_version": 1,
+   "decision_id": "D-00190",
+   "evidence": [
+    "event:373d8468-126b-457a-a5f1-1cf7af30d8eb",
+    "event:02e84d2b-8cf0-4e94-85e2-bc23e8a251fd",
+    "catalogue:tidha-dakachu-d1",
+    "goal_rule:G07-elig-v1"
+   ],
+   "closed_at": "2026-10-15T18:30:00.000Z",
+   "judgement": {
+    "attribution": "holdout",
+    "reason": "no qualifying play_started by 2026-10-04T02:52:32.652Z",
+    "rule_version": 1,
+    "signal": null,
+    "status": "failed"
+   },
+   "history": [
+    {
+     "at": "2026-10-01T02:52:32.652Z",
+     "change": "opened",
+     "rule_version": 1
+    }
+   ]
+  }
+ ],
+ "decisions": [
+  {
+   "action": "NONE",
+   "action_ids": [],
+   "arm": "holdout",
+   "assumptions": [],
+   "budget": {
+    "model_calls": 1,
+    "tool_calls": 6,
+    "tool_retries": 0,
+    "tool_timeouts": 0
+   },
+   "checks": {
+    "failed": [],
+    "passed": [
+     "duplicate_trigger",
+     "evidence",
+     "eligibility",
+     "single_goal",
+     "budget"
+    ]
+   },
+   "confidence": 0.9,
+   "confidence_reason": "weakest deciding fact: unfinished_series (high, source derived)",
+   "conflicts": [],
+   "content": [],
+   "created_at": "2026-10-01T02:52:32.652Z",
+   "decided_in_ms": 405.4,
+   "decision_id": "D-00190",
+   "dialect": {
+    "conflicts": [],
+    "rule": "R-dialect-1",
+    "source": "app_setting",
+    "used": "d1"
+   },
+   "evidence": [
+    {
+     "age_s": 1298123.6,
+     "event": "episode_completed",
+     "received_at": "2026-09-16T02:17:09.036Z",
+     "ref": "event:373d8468-126b-457a-a5f1-1cf7af30d8eb"
+    },
+    {
+     "age_s": 2063373.0,
+     "event": "episode_completed",
+     "received_at": "2026-09-07T05:42:59.640Z",
+     "ref": "event:02e84d2b-8cf0-4e94-85e2-bc23e8a251fd"
+    },
+    {
+     "ref": "catalogue:tidha-dakachu-d1"
+    },
+    {
+     "ref": "goal_rule:G07-elig-v1"
+    }
+   ],
+   "goal": {
+    "considered": [
+     {
+      "eligible": false,
+      "goal_id": "G01",
+      "why": "signed up more than 7 days ago (2024-10-30T17:06:48.283Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G02",
+      "why": "has completed an episode"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G03",
+      "why": "signed up more than 2 days ago (2024-10-30T17:06:48.283Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G04",
+      "why": "subscription_status=active (profile)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G05",
+      "why": "subscription_status=active, ever_paid=True"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G06",
+      "why": "subscription_status=active; recent lapse event: none"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G07",
+      "why": "1 unfinished series idle 3+ days"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G08",
+      "why": "84 available releases from the last 30 days in dialect d1"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G09",
+      "why": "plays on 3 IST day(s) in the last 14 days"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G10",
+      "why": "success event is null ('engages meaningfully' cannot be measured)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G11",
+      "why": "success event tv_app_open never appears in the event stream"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G12",
+      "why": "last app_open 2 days before this visit"
+     }
+    ],
+    "continuing": false,
+    "deadline": "2026-10-04T02:52:32.652Z",
+    "id": "G07",
+    "instance": "GI-00190",
+    "shadow": true,
+    "success_signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    },
+    "target": {
+     "content_slug": "tidha-dakachu-d1",
+     "episodes_completed": 5,
+     "episodes_total": 17,
+     "furthest_episode": 5,
+     "idle_days": 15.0,
+     "last_played_at": "2026-09-16T02:17:09.036Z",
+     "next_episode_id": "tidha-dakachu-d1-s1e6",
+     "title_ids": [
+      "T0005"
+     ]
+    },
+    "why": "1 unfinished series idle 3+ days"
+   },
+   "judged_by": {
+    "deadline": "2026-10-04T02:52:32.652Z",
+    "signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    }
+   },
+   "latency_ms": 405.4,
+   "lessons_applied": {
+    "avoid_goals": [],
+    "push_ok": true
+   },
+   "model": {
+    "called": true,
+    "calls": 1,
+    "claim": {
+     "confidence": 0.6,
+     "eligible": true,
+     "goal_id": "G07",
+     "reason": "agrees with rule ranking: 1 unfinished series idle 3+ days"
+    },
+    "elapsed_s": 0.4,
+    "outcome": "agreed",
+    "provider": "mock"
+   },
+   "no_action_reason": "viewer is in the 'holdout' arm: shadow decision only, no action of any kind",
+   "processing_ms": 5.39,
+   "published_at": null,
+   "queue_wait_ms": 0.0,
+   "rows_explained": [],
+   "status": "SHADOW_NO_ACTION",
+   "trigger": {
+    "copies_seen": 1,
+    "deliver_at": "2026-10-01T02:52:32.652Z",
+    "event": "app_open",
+    "event_age_s": 123502.8,
+    "event_id": "6f2b249b-0d9c-47d1-b09c-9f4114808cff",
+    "received_at": "2026-10-01T02:52:32.652Z"
+   },
+   "viewer_id": "U-00387",
+   "waited_on_dependencies_ms": 400.0,
+   "within_budget": true
+  }
+ ],
+ "facts_at_last_decision": [
+  {
+   "id": 2806,
+   "user_id": "U-00387",
+   "decision_id": "D-00190",
+   "name": "profile",
+   "value": {
+    "stale": true,
+    "versions": 1
+   },
+   "source": "profile",
+   "refs": [
+    "profile:U-00387@2026-09-29T08:54:31.000Z"
+   ],
+   "as_of": "2026-09-29T08:54:31.000Z",
+   "age_s": 151081.7,
+   "confidence": "medium",
+   "conflicts": [],
+   "rule": null,
+   "note": "snapshot is a daily export; newer events override status fields",
+   "recorded_at": "2026-10-01T02:52:32.652Z"
+  },
+  {
+   "id": 2807,
+   "user_id": "U-00387",
+   "decision_id": "D-00190",
+   "name": "signup_at",
+   "value": "2024-10-30T17:06:48.283Z",
+   "source": "profile",
+   "refs": [
+    "profile:U-00387@2026-09-29T08:54:31.000Z"
+   ],
+   "as_of": "2026-09-29T08:54:31.000Z",
+   "age_s": 151081.7,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-signup-1",
+   "note": null,
+   "recorded_at": "2026-10-01T02:52:32.652Z"
+  },
+  {
+   "id": 2808,
+   "user_id": "U-00387",
+   "decision_id": "D-00190",
+   "name": "subscription_status",
+   "value": "active",
+   "source": "profile",
+   "refs": [
+    "profile:U-00387@2026-09-29T08:54:31.000Z"
+   ],
+   "as_of": "2026-09-29T08:54:31.000Z",
+   "age_s": 151081.7,
+   "confidence": "medium",
+   "conflicts": [],
+   "rule": "R-status-2",
+   "note": null,
+   "recorded_at": "2026-10-01T02:52:32.652Z"
+  },
+  {
+   "id": 2809,
+   "user_id": "U-00387",
+   "decision_id": "D-00190",
+   "name": "ever_paid",
+   "value": true,
+   "source": "event",
+   "refs": [
+    "event:fffa10cf-9c3b-49d0-98b4-426ea76d183d"
+   ],
+   "as_of": "2026-09-16T08:08:28.055Z",
+   "age_s": 1277044.6,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-paid-1",
+   "note": null,
+   "recorded_at": "2026-10-01T02:52:32.652Z"
+  },
+  {
+   "id": 2810,
+   "user_id": "U-00387",
+   "decision_id": "D-00190",
+   "name": "dialect",
+   "value": "d1",
+   "source": "app_setting",
+   "refs": [
+    "event:6f2b249b-0d9c-47d1-b09c-9f4114808cff"
+   ],
+   "as_of": "2026-10-01T02:52:32.652Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-dialect-1",
+   "note": "the app requests the home page of its current dialect",
+   "recorded_at": "2026-10-01T02:52:32.652Z"
+  },
+  {
+   "id": 2811,
+   "user_id": "U-00387",
+   "decision_id": "D-00190",
+   "name": "language",
+   "value": "hin",
+   "source": "app_setting",
+   "refs": [
+    "event:6f2b249b-0d9c-47d1-b09c-9f4114808cff"
+   ],
+   "as_of": "2026-10-01T02:52:32.652Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T02:52:32.652Z"
+  },
+  {
+   "id": 2812,
+   "user_id": "U-00387",
+   "decision_id": "D-00190",
+   "name": "consent_push",
+   "value": true,
+   "source": "profile",
+   "refs": [
+    "profile:U-00387@2026-09-29T08:54:31.000Z"
+   ],
+   "as_of": "2026-09-29T08:54:31.000Z",
+   "age_s": 151081.7,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-consent-1",
+   "note": null,
+   "recorded_at": "2026-10-01T02:52:32.652Z"
+  },
+  {
+   "id": 2813,
+   "user_id": "U-00387",
+   "decision_id": "D-00190",
+   "name": "consent_whatsapp",
+   "value": true,
+   "source": "profile",
+   "refs": [
+    "profile:U-00387@2026-09-29T08:54:31.000Z"
+   ],
+   "as_of": "2026-09-29T08:54:31.000Z",
+   "age_s": 151081.7,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-consent-1",
+   "note": null,
+   "recorded_at": "2026-10-01T02:52:32.652Z"
+  },
+  {
+   "id": 2814,
+   "user_id": "U-00387",
+   "decision_id": "D-00190",
+   "name": "has_played",
+   "value": true,
+   "source": "event",
+   "refs": [
+    "event:05a7ce6b-0e20-4b54-8144-c2fdf9572b91"
+   ],
+   "as_of": "2026-09-03T16:29:55.754Z",
+   "age_s": 2370156.9,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T02:52:32.652Z"
+  },
+  {
+   "id": 2815,
+   "user_id": "U-00387",
+   "decision_id": "D-00190",
+   "name": "has_completed_episode",
+   "value": true,
+   "source": "event",
+   "refs": [
+    "event:8c49a498-50c9-4d51-9e93-47fadeff33f9"
+   ],
+   "as_of": "2026-09-03T18:20:18.863Z",
+   "age_s": 2363533.8,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T02:52:32.652Z"
+  },
+  {
+   "id": 2816,
+   "user_id": "U-00387",
+   "decision_id": "D-00190",
+   "name": "play_days_14d",
+   "value": 3,
+   "source": "derived",
+   "refs": [
+    "event:b5275edb-3797-462e-8d37-6d2e364c66af",
+    "event:ba654417-496c-4b30-8bbd-88ec6e71ef77",
+    "event:7615be06-48e0-47c8-83dc-aa199f93ec88"
+   ],
+   "as_of": "2026-10-01T02:52:32.652Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T02:52:32.652Z"
+  },
+  {
+   "id": 2817,
+   "user_id": "U-00387",
+   "decision_id": "D-00190",
+   "name": "last_open_before_trigger",
+   "value": "2026-09-27T05:15:09.335Z",
+   "source": "event",
+   "refs": [
+    "event:b0c4be61-8e8e-4803-a7e6-8834d5a5e791"
+   ],
+   "as_of": "2026-09-27T05:15:09.335Z",
+   "age_s": 337043.3,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "excludes the trigger itself; uses clock-corrected time",
+   "recorded_at": "2026-10-01T02:52:32.652Z"
+  },
+  {
+   "id": 2818,
+   "user_id": "U-00387",
+   "decision_id": "D-00190",
+   "name": "recent_lapse",
+   "value": null,
+   "source": "derived",
+   "refs": [
+    "absence:subscription_lapsed_30d"
+   ],
+   "as_of": "2026-10-01T02:52:32.652Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "G06 'recently lapsed' = lapse event within 30 days (our definition)",
+   "recorded_at": "2026-10-01T02:52:32.652Z"
+  },
+  {
+   "id": 2819,
+   "user_id": "U-00387",
+   "decision_id": "D-00190",
+   "name": "unfinished_series",
+   "value": [
+    {
+     "content_slug": "tidha-dakachu-d1",
+     "episodes_completed": 5,
+     "episodes_total": 17,
+     "furthest_episode": 5,
+     "idle_days": 15.0,
+     "last_played_at": "2026-09-16T02:17:09.036Z",
+     "next_episode_id": "tidha-dakachu-d1-s1e6",
+     "title_ids": [
+      "T0005"
+     ]
+    }
+   ],
+   "source": "derived",
+   "refs": [
+    "event:373d8468-126b-457a-a5f1-1cf7af30d8eb",
+    "event:02e84d2b-8cf0-4e94-85e2-bc23e8a251fd",
+    "catalogue:tidha-dakachu-d1"
+   ],
+   "as_of": "2026-10-01T02:52:32.652Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "show/micro_drama with episodes left, no play for 3+ days, and at least 1 episode completed (sampling one episode is not an unfinished series)",
+   "recorded_at": "2026-10-01T02:52:32.652Z"
+  },
+  {
+   "id": 2820,
+   "user_id": "U-00387",
+   "decision_id": "D-00190",
+   "name": "trigger_age_s",
+   "value": 123502.8,
+   "source": "derived",
+   "refs": [
+    "event:6f2b249b-0d9c-47d1-b09c-9f4114808cff"
+   ],
+   "as_of": "2026-10-01T02:52:32.652Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T02:52:32.652Z"
+  }
+ ],
+ "actions": [],
+ "learnings": [
+  {
+   "goal_instance_id": "GI-00190",
+   "at": "2026-10-15T18:30:00.000Z",
+   "note": {
+    "attribution": "holdout",
+    "effects": {},
+    "goal_id": "G07",
+    "goal_instance_id": "GI-00190",
+    "notes": [],
+    "result": "failed"
+   }
+  }
+ ]
+}

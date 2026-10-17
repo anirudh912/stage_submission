@@ -1,0 +1,792 @@
+{
+ "viewer_id": "U-01743",
+ "arm": "holdout",
+ "event_count": 94,
+ "profile_versions": [
+  {
+   "notifications_opt_in": true,
+   "plan_ends_at": "2026-10-13T12:35:20.512Z",
+   "plan_started_at": "2026-09-13T12:35:20.512Z",
+   "platform": "android",
+   "preferred_dialect": "d2",
+   "preferred_language": "hin",
+   "signup_at": "2025-09-18T11:49:50.351Z",
+   "snapshot_at": "2026-09-30T00:00:00.000Z",
+   "subscription_status": "active",
+   "updated_at": "2026-09-29T08:40:31.898Z",
+   "user_id": "U-01743",
+   "whatsapp_opt_in": false
+  }
+ ],
+ "goals": [
+  {
+   "goal_instance_id": "GI-01652",
+   "user_id": "U-01743",
+   "goal_id": "G07",
+   "status": "failed",
+   "started_at": "2026-10-01T13:13:43.219Z",
+   "deadline": "2026-10-04T13:13:43.219Z",
+   "success_spec": {
+    "condition": "same content_slug as the unfinished series",
+    "event": "play_started",
+    "goal_id": "G07",
+    "rule_version": 1,
+    "target": {
+     "content_slug": "tero-koja-d2",
+     "episodes_completed": 1,
+     "episodes_total": 15,
+     "furthest_episode": 1,
+     "idle_days": 3.2,
+     "last_played_at": "2026-09-28T08:13:12.028Z",
+     "next_episode_id": "tero-koja-d2-s1e2",
+     "title_ids": [
+      "T0536"
+     ]
+    },
+    "window_hours": 72
+   },
+   "rule_version": 1,
+   "decision_id": "D-01652",
+   "evidence": [
+    "event:1c45fa6c-590c-4fdf-8a3e-30905ad02e8f",
+    "event:1c45fa6c-590c-4fdf-8a3e-30905ad02e8f",
+    "catalogue:tero-koja-d2",
+    "event:ee0c677c-31bc-40da-b1dd-a9b74c9ee974",
+    "event:692a30b7-722c-4ff1-9abd-7cf2ad64eb39",
+    "catalogue:dhapipa-gini-d2",
+    "goal_rule:G07-elig-v1"
+   ],
+   "closed_at": "2026-10-15T18:30:00.000Z",
+   "judgement": {
+    "attribution": "holdout",
+    "reason": "no qualifying play_started by 2026-10-04T13:13:43.219Z",
+    "rule_version": 1,
+    "signal": null,
+    "status": "failed"
+   },
+   "history": [
+    {
+     "at": "2026-10-01T13:13:43.219Z",
+     "change": "opened",
+     "rule_version": 1
+    }
+   ]
+  }
+ ],
+ "decisions": [
+  {
+   "action": "NONE",
+   "action_ids": [],
+   "arm": "holdout",
+   "assumptions": [],
+   "budget": {
+    "model_calls": 1,
+    "tool_calls": 6,
+    "tool_retries": 0,
+    "tool_timeouts": 0
+   },
+   "checks": {
+    "failed": [],
+    "passed": [
+     "duplicate_trigger",
+     "evidence",
+     "eligibility",
+     "single_goal",
+     "budget"
+    ]
+   },
+   "confidence": 0.9,
+   "confidence_reason": "weakest deciding fact: unfinished_series (high, source derived)",
+   "conflicts": [],
+   "content": [],
+   "created_at": "2026-10-01T13:13:43.219Z",
+   "decided_in_ms": 12954.6,
+   "decision_id": "D-01652",
+   "dialect": {
+    "conflicts": [],
+    "rule": "R-dialect-1",
+    "source": "app_setting",
+    "used": "d2"
+   },
+   "evidence": [
+    {
+     "age_s": 277158.7,
+     "event": "episode_completed",
+     "received_at": "2026-09-28T08:14:24.473Z",
+     "ref": "event:1c45fa6c-590c-4fdf-8a3e-30905ad02e8f"
+    },
+    {
+     "ref": "catalogue:tero-koja-d2"
+    },
+    {
+     "age_s": 340880.6,
+     "event": "play_progress",
+     "received_at": "2026-09-27T14:32:22.641Z",
+     "ref": "event:ee0c677c-31bc-40da-b1dd-a9b74c9ee974"
+    },
+    {
+     "age_s": 1980712.4,
+     "event": "episode_completed",
+     "received_at": "2026-09-08T15:01:50.792Z",
+     "ref": "event:692a30b7-722c-4ff1-9abd-7cf2ad64eb39"
+    },
+    {
+     "ref": "catalogue:dhapipa-gini-d2"
+    },
+    {
+     "ref": "goal_rule:G07-elig-v1"
+    }
+   ],
+   "goal": {
+    "considered": [
+     {
+      "eligible": false,
+      "goal_id": "G01",
+      "why": "signed up more than 7 days ago (2025-09-18T11:49:50.351Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G02",
+      "why": "has completed an episode"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G03",
+      "why": "signed up more than 2 days ago (2025-09-18T11:49:50.351Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G04",
+      "why": "subscription_status=active (profile)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G05",
+      "why": "subscription_status=active, ever_paid=True"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G06",
+      "why": "subscription_status=active; recent lapse event: none"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G07",
+      "why": "2 unfinished series idle 3+ days"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G08",
+      "why": "60 available releases from the last 30 days in dialect d2"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G09",
+      "why": "plays on 4 IST day(s) in the last 14 days"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G10",
+      "why": "success event is null ('engages meaningfully' cannot be measured)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G11",
+      "why": "success event tv_app_open never appears in the event stream"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G12",
+      "why": "last app_open 1 days before this visit"
+     }
+    ],
+    "continuing": false,
+    "deadline": "2026-10-04T13:13:43.219Z",
+    "id": "G07",
+    "instance": "GI-01652",
+    "shadow": true,
+    "success_signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    },
+    "target": {
+     "content_slug": "tero-koja-d2",
+     "episodes_completed": 1,
+     "episodes_total": 15,
+     "furthest_episode": 1,
+     "idle_days": 3.2,
+     "last_played_at": "2026-09-28T08:13:12.028Z",
+     "next_episode_id": "tero-koja-d2-s1e2",
+     "title_ids": [
+      "T0536"
+     ]
+    },
+    "why": "2 unfinished series idle 3+ days"
+   },
+   "judged_by": {
+    "deadline": "2026-10-04T13:13:43.219Z",
+    "signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    }
+   },
+   "latency_ms": 12954.6,
+   "lessons_applied": {
+    "avoid_goals": [],
+    "push_ok": true
+   },
+   "model": {
+    "called": true,
+    "calls": 1,
+    "claim": {
+     "confidence": 0.6,
+     "eligible": true,
+     "goal_id": "G07",
+     "reason": "agrees with rule ranking: 2 unfinished series idle 3+ days"
+    },
+    "elapsed_s": 0.4,
+    "outcome": "agreed",
+    "provider": "mock"
+   },
+   "no_action_reason": "viewer is in the 'holdout' arm: shadow decision only, no action of any kind",
+   "processing_ms": 4.65,
+   "published_at": null,
+   "queue_wait_ms": 0.0,
+   "rows_explained": [],
+   "status": "SHADOW_NO_ACTION",
+   "trigger": {
+    "copies_seen": 1,
+    "deliver_at": "2026-10-01T13:13:43.219Z",
+    "event": "app_open",
+    "event_age_s": 0.0,
+    "event_id": "c26f532b-9587-479f-8d2a-e8e0fcae078a",
+    "received_at": "2026-10-01T13:13:43.219Z"
+   },
+   "viewer_id": "U-01743",
+   "waited_on_dependencies_ms": 12950.0,
+   "within_budget": true
+  },
+  {
+   "action": "NONE",
+   "action_ids": [],
+   "arm": "holdout",
+   "assumptions": [],
+   "budget": {
+    "model_calls": 1,
+    "tool_calls": 6,
+    "tool_retries": 0,
+    "tool_timeouts": 0
+   },
+   "checks": {
+    "failed": [],
+    "passed": [
+     "duplicate_trigger",
+     "evidence",
+     "single_goal",
+     "budget"
+    ]
+   },
+   "confidence": 0.9,
+   "confidence_reason": "goal already committed; window still open",
+   "conflicts": [],
+   "content": [],
+   "created_at": "2026-10-01T17:15:07.385Z",
+   "decided_in_ms": 404.0,
+   "decision_id": "D-02586",
+   "dialect": {
+    "conflicts": [],
+    "rule": "R-dialect-1",
+    "source": "app_setting",
+    "used": "d2"
+   },
+   "evidence": [
+    {
+     "age_s": 291642.9,
+     "event": "episode_completed",
+     "received_at": "2026-09-28T08:14:24.473Z",
+     "ref": "event:1c45fa6c-590c-4fdf-8a3e-30905ad02e8f"
+    },
+    {
+     "ref": "catalogue:tero-koja-d2"
+    },
+    {
+     "age_s": 355364.7,
+     "event": "play_progress",
+     "received_at": "2026-09-27T14:32:22.641Z",
+     "ref": "event:ee0c677c-31bc-40da-b1dd-a9b74c9ee974"
+    },
+    {
+     "age_s": 1995196.6,
+     "event": "episode_completed",
+     "received_at": "2026-09-08T15:01:50.792Z",
+     "ref": "event:692a30b7-722c-4ff1-9abd-7cf2ad64eb39"
+    },
+    {
+     "ref": "catalogue:dhapipa-gini-d2"
+    },
+    {
+     "ref": "goal_rule:G07-elig-v1"
+    }
+   ],
+   "goal": {
+    "considered": [
+     {
+      "eligible": false,
+      "goal_id": "G01",
+      "why": "signed up more than 7 days ago (2025-09-18T11:49:50.351Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G02",
+      "why": "has completed an episode"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G03",
+      "why": "signed up more than 2 days ago (2025-09-18T11:49:50.351Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G04",
+      "why": "subscription_status=active (profile)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G05",
+      "why": "subscription_status=active, ever_paid=True"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G06",
+      "why": "subscription_status=active; recent lapse event: none"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G07",
+      "why": "2 unfinished series idle 3+ days"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G08",
+      "why": "60 available releases from the last 30 days in dialect d2"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G09",
+      "why": "plays on 4 IST day(s) in the last 14 days"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G10",
+      "why": "success event is null ('engages meaningfully' cannot be measured)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G11",
+      "why": "success event tv_app_open never appears in the event stream"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G12",
+      "why": "last app_open 0 days before this visit"
+     }
+    ],
+    "continuing": true,
+    "deadline": "2026-10-04T13:13:43.219Z",
+    "id": "G07",
+    "instance": "GI-01652",
+    "shadow": true,
+    "success_signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    },
+    "target": {
+     "content_slug": "tero-koja-d2",
+     "episodes_completed": 1,
+     "episodes_total": 15,
+     "furthest_episode": 1,
+     "idle_days": 3.2,
+     "last_played_at": "2026-09-28T08:13:12.028Z",
+     "next_episode_id": "tero-koja-d2-s1e2",
+     "title_ids": [
+      "T0536"
+     ]
+    },
+    "why": "continuing open goal GI-01652 (one active plan per viewer)"
+   },
+   "judged_by": {
+    "deadline": "2026-10-04T13:13:43.219Z",
+    "signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    }
+   },
+   "latency_ms": 404.0,
+   "lessons_applied": {
+    "avoid_goals": [],
+    "push_ok": true
+   },
+   "model": {
+    "called": true,
+    "calls": 1,
+    "claim": {
+     "confidence": 0.6,
+     "eligible": true,
+     "goal_id": "G07",
+     "reason": "keep the goal already in progress"
+    },
+    "elapsed_s": 0.4,
+    "outcome": "agreed",
+    "provider": "mock"
+   },
+   "no_action_reason": "viewer is in the 'holdout' arm: shadow decision only, no action of any kind",
+   "processing_ms": 4.03,
+   "published_at": null,
+   "queue_wait_ms": 0.0,
+   "rows_explained": [],
+   "status": "SHADOW_NO_ACTION",
+   "trigger": {
+    "copies_seen": 1,
+    "deliver_at": "2026-10-01T17:15:07.385Z",
+    "event": "app_open",
+    "event_age_s": 0.0,
+    "event_id": "8d7859c4-bc0d-49eb-bb05-e599226a4df5",
+    "received_at": "2026-10-01T17:15:07.385Z"
+   },
+   "viewer_id": "U-01743",
+   "waited_on_dependencies_ms": 400.0,
+   "within_budget": true
+  }
+ ],
+ "facts_at_last_decision": [
+  {
+   "id": 37972,
+   "user_id": "U-01743",
+   "decision_id": "D-02586",
+   "name": "profile",
+   "value": {
+    "stale": true,
+    "versions": 1
+   },
+   "source": "profile",
+   "refs": [
+    "profile:U-01743@2026-09-29T08:40:31.898Z"
+   ],
+   "as_of": "2026-09-29T08:40:31.898Z",
+   "age_s": 203675.5,
+   "confidence": "medium",
+   "conflicts": [],
+   "rule": null,
+   "note": "snapshot is a daily export; newer events override status fields",
+   "recorded_at": "2026-10-01T17:15:07.385Z"
+  },
+  {
+   "id": 37973,
+   "user_id": "U-01743",
+   "decision_id": "D-02586",
+   "name": "signup_at",
+   "value": "2025-09-18T11:49:50.351Z",
+   "source": "profile",
+   "refs": [
+    "profile:U-01743@2026-09-29T08:40:31.898Z"
+   ],
+   "as_of": "2026-09-29T08:40:31.898Z",
+   "age_s": 203675.5,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-signup-1",
+   "note": null,
+   "recorded_at": "2026-10-01T17:15:07.385Z"
+  },
+  {
+   "id": 37974,
+   "user_id": "U-01743",
+   "decision_id": "D-02586",
+   "name": "subscription_status",
+   "value": "active",
+   "source": "profile",
+   "refs": [
+    "profile:U-01743@2026-09-29T08:40:31.898Z"
+   ],
+   "as_of": "2026-09-29T08:40:31.898Z",
+   "age_s": 203675.5,
+   "confidence": "medium",
+   "conflicts": [],
+   "rule": "R-status-2",
+   "note": null,
+   "recorded_at": "2026-10-01T17:15:07.385Z"
+  },
+  {
+   "id": 37975,
+   "user_id": "U-01743",
+   "decision_id": "D-02586",
+   "name": "ever_paid",
+   "value": true,
+   "source": "event",
+   "refs": [
+    "event:66000a9d-9da4-43e8-991c-cdeeccd38773"
+   ],
+   "as_of": "2026-09-13T12:35:20.512Z",
+   "age_s": 1571986.9,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-paid-1",
+   "note": null,
+   "recorded_at": "2026-10-01T17:15:07.385Z"
+  },
+  {
+   "id": 37976,
+   "user_id": "U-01743",
+   "decision_id": "D-02586",
+   "name": "dialect",
+   "value": "d2",
+   "source": "app_setting",
+   "refs": [
+    "event:8d7859c4-bc0d-49eb-bb05-e599226a4df5"
+   ],
+   "as_of": "2026-10-01T17:15:07.385Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-dialect-1",
+   "note": "the app requests the home page of its current dialect",
+   "recorded_at": "2026-10-01T17:15:07.385Z"
+  },
+  {
+   "id": 37977,
+   "user_id": "U-01743",
+   "decision_id": "D-02586",
+   "name": "language",
+   "value": "hin",
+   "source": "app_setting",
+   "refs": [
+    "event:8d7859c4-bc0d-49eb-bb05-e599226a4df5"
+   ],
+   "as_of": "2026-10-01T17:15:07.385Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T17:15:07.385Z"
+  },
+  {
+   "id": 37978,
+   "user_id": "U-01743",
+   "decision_id": "D-02586",
+   "name": "consent_push",
+   "value": true,
+   "source": "profile",
+   "refs": [
+    "profile:U-01743@2026-09-29T08:40:31.898Z"
+   ],
+   "as_of": "2026-09-29T08:40:31.898Z",
+   "age_s": 203675.5,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-consent-1",
+   "note": null,
+   "recorded_at": "2026-10-01T17:15:07.385Z"
+  },
+  {
+   "id": 37979,
+   "user_id": "U-01743",
+   "decision_id": "D-02586",
+   "name": "consent_whatsapp",
+   "value": false,
+   "source": "profile",
+   "refs": [
+    "profile:U-01743@2026-09-29T08:40:31.898Z"
+   ],
+   "as_of": "2026-09-29T08:40:31.898Z",
+   "age_s": 203675.5,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-consent-1",
+   "note": null,
+   "recorded_at": "2026-10-01T17:15:07.385Z"
+  },
+  {
+   "id": 37980,
+   "user_id": "U-01743",
+   "decision_id": "D-02586",
+   "name": "has_played",
+   "value": true,
+   "source": "event",
+   "refs": [
+    "event:3b2afd97-2ae5-4d22-b2c8-f4a9c2040792"
+   ],
+   "as_of": "2026-09-08T14:59:06.664Z",
+   "age_s": 1995360.7,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T17:15:07.385Z"
+  },
+  {
+   "id": 37981,
+   "user_id": "U-01743",
+   "decision_id": "D-02586",
+   "name": "has_completed_episode",
+   "value": true,
+   "source": "event",
+   "refs": [
+    "event:692a30b7-722c-4ff1-9abd-7cf2ad64eb39"
+   ],
+   "as_of": "2026-09-08T15:01:50.792Z",
+   "age_s": 1995196.6,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T17:15:07.385Z"
+  },
+  {
+   "id": 37982,
+   "user_id": "U-01743",
+   "decision_id": "D-02586",
+   "name": "play_days_14d",
+   "value": 4,
+   "source": "derived",
+   "refs": [
+    "event:c22d1448-4b20-44e4-b413-e21753111642",
+    "event:9ca26360-3118-468f-8455-8164d6a0d4cb",
+    "event:b5a80f89-a221-4e5c-90b6-46adcacd430c",
+    "event:a1a5d42e-ef65-4caa-84fc-c03da41cdf85"
+   ],
+   "as_of": "2026-10-01T17:15:07.385Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T17:15:07.385Z"
+  },
+  {
+   "id": 37983,
+   "user_id": "U-01743",
+   "decision_id": "D-02586",
+   "name": "last_open_before_trigger",
+   "value": "2026-10-01T13:13:43.219Z",
+   "source": "event",
+   "refs": [
+    "event:c26f532b-9587-479f-8d2a-e8e0fcae078a"
+   ],
+   "as_of": "2026-10-01T13:13:43.219Z",
+   "age_s": 14484.2,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "excludes the trigger itself; uses clock-corrected time",
+   "recorded_at": "2026-10-01T17:15:07.385Z"
+  },
+  {
+   "id": 37984,
+   "user_id": "U-01743",
+   "decision_id": "D-02586",
+   "name": "recent_lapse",
+   "value": null,
+   "source": "derived",
+   "refs": [
+    "absence:subscription_lapsed_30d"
+   ],
+   "as_of": "2026-10-01T17:15:07.385Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "G06 'recently lapsed' = lapse event within 30 days (our definition)",
+   "recorded_at": "2026-10-01T17:15:07.385Z"
+  },
+  {
+   "id": 37985,
+   "user_id": "U-01743",
+   "decision_id": "D-02586",
+   "name": "unfinished_series",
+   "value": [
+    {
+     "content_slug": "tero-koja-d2",
+     "episodes_completed": 1,
+     "episodes_total": 15,
+     "furthest_episode": 1,
+     "idle_days": 3.4,
+     "last_played_at": "2026-09-28T08:13:12.028Z",
+     "next_episode_id": "tero-koja-d2-s1e2",
+     "title_ids": [
+      "T0536"
+     ]
+    },
+    {
+     "content_slug": "dhapipa-gini-d2",
+     "episodes_completed": 4,
+     "episodes_total": 55,
+     "furthest_episode": 5,
+     "idle_days": 4.1,
+     "last_played_at": "2026-09-27T14:32:22.641Z",
+     "next_episode_id": "dhapipa-gini-d2-s1e6",
+     "title_ids": [
+      "T1677"
+     ]
+    }
+   ],
+   "source": "derived",
+   "refs": [
+    "event:1c45fa6c-590c-4fdf-8a3e-30905ad02e8f",
+    "event:1c45fa6c-590c-4fdf-8a3e-30905ad02e8f",
+    "catalogue:tero-koja-d2",
+    "event:ee0c677c-31bc-40da-b1dd-a9b74c9ee974",
+    "event:692a30b7-722c-4ff1-9abd-7cf2ad64eb39",
+    "catalogue:dhapipa-gini-d2"
+   ],
+   "as_of": "2026-10-01T17:15:07.385Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "show/micro_drama with episodes left, no play for 3+ days, and at least 1 episode completed (sampling one episode is not an unfinished series)",
+   "recorded_at": "2026-10-01T17:15:07.385Z"
+  },
+  {
+   "id": 37986,
+   "user_id": "U-01743",
+   "decision_id": "D-02586",
+   "name": "trigger_age_s",
+   "value": 0.0,
+   "source": "derived",
+   "refs": [
+    "event:8d7859c4-bc0d-49eb-bb05-e599226a4df5"
+   ],
+   "as_of": "2026-10-01T17:15:07.385Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T17:15:07.385Z"
+  }
+ ],
+ "actions": [],
+ "learnings": [
+  {
+   "goal_instance_id": "GI-01652",
+   "at": "2026-10-15T18:30:00.000Z",
+   "note": {
+    "attribution": "holdout",
+    "effects": {},
+    "goal_id": "G07",
+    "goal_instance_id": "GI-01652",
+    "notes": [],
+    "result": "failed"
+   }
+  }
+ ]
+}

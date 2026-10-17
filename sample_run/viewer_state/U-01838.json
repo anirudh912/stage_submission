@@ -1,0 +1,569 @@
+{
+ "viewer_id": "U-01838",
+ "arm": "holdout",
+ "event_count": 122,
+ "profile_versions": [
+  {
+   "notifications_opt_in": true,
+   "plan_ends_at": "2026-10-02T22:24:05.210Z",
+   "plan_started_at": "2026-09-02T22:24:05.210Z",
+   "platform": "android",
+   "preferred_dialect": "d1",
+   "preferred_language": "hin",
+   "signup_at": "2025-01-01T12:00:10.893Z",
+   "snapshot_at": "2026-09-30T00:00:00.000Z",
+   "subscription_status": "active",
+   "updated_at": "2026-09-29T06:39:56.451Z",
+   "user_id": "U-01838",
+   "whatsapp_opt_in": false
+  }
+ ],
+ "goals": [
+  {
+   "goal_instance_id": "GI-01837",
+   "user_id": "U-01838",
+   "goal_id": "G07",
+   "status": "failed",
+   "started_at": "2026-10-01T14:16:06.688Z",
+   "deadline": "2026-10-04T14:16:06.688Z",
+   "success_spec": {
+    "condition": "same content_slug as the unfinished series",
+    "event": "play_started",
+    "goal_id": "G07",
+    "rule_version": 1,
+    "target": {
+     "content_slug": "gima-bhadaba-d1",
+     "episodes_completed": 5,
+     "episodes_total": 44,
+     "furthest_episode": 5,
+     "idle_days": 5.6,
+     "last_played_at": "2026-09-26T00:47:49.300Z",
+     "next_episode_id": "gima-bhadaba-d1-s1e6",
+     "title_ids": [
+      "T1502"
+     ]
+    },
+    "window_hours": 72
+   },
+   "rule_version": 1,
+   "decision_id": "D-01837",
+   "evidence": [
+    "event:a71be7c1-17f3-4850-97b4-010c387411f1",
+    "event:3be48b3c-f9cd-431e-9781-81e682270a10",
+    "catalogue:gima-bhadaba-d1",
+    "goal_rule:G07-elig-v1"
+   ],
+   "closed_at": "2026-10-15T18:30:00.000Z",
+   "judgement": {
+    "attribution": "holdout",
+    "reason": "no qualifying play_started by 2026-10-04T14:16:06.688Z",
+    "rule_version": 1,
+    "signal": null,
+    "status": "failed"
+   },
+   "history": [
+    {
+     "at": "2026-10-01T14:16:06.688Z",
+     "change": "opened",
+     "rule_version": 1
+    }
+   ]
+  }
+ ],
+ "decisions": [
+  {
+   "action": "NONE",
+   "action_ids": [],
+   "arm": "holdout",
+   "assumptions": [],
+   "budget": {
+    "model_calls": 1,
+    "tool_calls": 6,
+    "tool_retries": 0,
+    "tool_timeouts": 0
+   },
+   "checks": {
+    "failed": [],
+    "passed": [
+     "duplicate_trigger",
+     "evidence",
+     "eligibility",
+     "single_goal",
+     "budget"
+    ]
+   },
+   "confidence": 0.9,
+   "confidence_reason": "weakest deciding fact: unfinished_series (high, source derived)",
+   "conflicts": [],
+   "content": [],
+   "created_at": "2026-10-01T14:16:06.688Z",
+   "decided_in_ms": 405.1,
+   "decision_id": "D-01837",
+   "dialect": {
+    "conflicts": [],
+    "rule": "R-dialect-1",
+    "source": "app_setting",
+    "used": "d1"
+   },
+   "evidence": [
+    {
+     "age_s": 480497.4,
+     "event": "episode_completed",
+     "received_at": "2026-09-26T00:47:49.300Z",
+     "ref": "event:a71be7c1-17f3-4850-97b4-010c387411f1"
+    },
+    {
+     "age_s": 2358093.3,
+     "event": "episode_completed",
+     "received_at": "2026-09-04T07:14:33.388Z",
+     "ref": "event:3be48b3c-f9cd-431e-9781-81e682270a10"
+    },
+    {
+     "ref": "catalogue:gima-bhadaba-d1"
+    },
+    {
+     "ref": "goal_rule:G07-elig-v1"
+    }
+   ],
+   "goal": {
+    "considered": [
+     {
+      "eligible": false,
+      "goal_id": "G01",
+      "why": "signed up more than 7 days ago (2025-01-01T12:00:10.893Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G02",
+      "why": "has completed an episode"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G03",
+      "why": "signed up more than 2 days ago (2025-01-01T12:00:10.893Z)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G04",
+      "why": "subscription_status=active (profile)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G05",
+      "why": "subscription_status=active, ever_paid=True"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G06",
+      "why": "subscription_status=active; recent lapse event: none"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G07",
+      "why": "1 unfinished series idle 3+ days"
+     },
+     {
+      "eligible": true,
+      "goal_id": "G08",
+      "why": "81 available releases from the last 30 days in dialect d1"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G09",
+      "why": "plays on 3 IST day(s) in the last 14 days"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G10",
+      "why": "success event is null ('engages meaningfully' cannot be measured)"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G11",
+      "why": "success event tv_app_open never appears in the event stream"
+     },
+     {
+      "eligible": false,
+      "goal_id": "G12",
+      "why": "last app_open 1 days before this visit"
+     }
+    ],
+    "continuing": false,
+    "deadline": "2026-10-04T14:16:06.688Z",
+    "id": "G07",
+    "instance": "GI-01837",
+    "shadow": true,
+    "success_signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    },
+    "target": {
+     "content_slug": "gima-bhadaba-d1",
+     "episodes_completed": 5,
+     "episodes_total": 44,
+     "furthest_episode": 5,
+     "idle_days": 5.6,
+     "last_played_at": "2026-09-26T00:47:49.300Z",
+     "next_episode_id": "gima-bhadaba-d1-s1e6",
+     "title_ids": [
+      "T1502"
+     ]
+    },
+    "why": "1 unfinished series idle 3+ days"
+   },
+   "judged_by": {
+    "deadline": "2026-10-04T14:16:06.688Z",
+    "signal": {
+     "condition": "same content_slug as the unfinished series",
+     "event": "play_started",
+     "rule_version": 1,
+     "window_hours": 72
+    }
+   },
+   "latency_ms": 405.1,
+   "lessons_applied": {
+    "avoid_goals": [],
+    "push_ok": true
+   },
+   "model": {
+    "called": true,
+    "calls": 1,
+    "claim": {
+     "confidence": 0.6,
+     "eligible": true,
+     "goal_id": "G07",
+     "reason": "agrees with rule ranking: 1 unfinished series idle 3+ days"
+    },
+    "elapsed_s": 0.4,
+    "outcome": "agreed",
+    "provider": "mock"
+   },
+   "no_action_reason": "viewer is in the 'holdout' arm: shadow decision only, no action of any kind",
+   "processing_ms": 5.09,
+   "published_at": null,
+   "queue_wait_ms": 0.0,
+   "rows_explained": [],
+   "status": "SHADOW_NO_ACTION",
+   "trigger": {
+    "copies_seen": 1,
+    "deliver_at": "2026-10-01T14:16:06.688Z",
+    "event": "app_open",
+    "event_age_s": 0.0,
+    "event_id": "c8f27149-f700-4120-977a-519de28f7e04",
+    "received_at": "2026-10-01T14:16:06.688Z"
+   },
+   "viewer_id": "U-01838",
+   "waited_on_dependencies_ms": 400.0,
+   "within_budget": true
+  }
+ ],
+ "facts_at_last_decision": [
+  {
+   "id": 26852,
+   "user_id": "U-01838",
+   "decision_id": "D-01837",
+   "name": "profile",
+   "value": {
+    "stale": true,
+    "versions": 1
+   },
+   "source": "profile",
+   "refs": [
+    "profile:U-01838@2026-09-29T06:39:56.451Z"
+   ],
+   "as_of": "2026-09-29T06:39:56.451Z",
+   "age_s": 200170.2,
+   "confidence": "medium",
+   "conflicts": [],
+   "rule": null,
+   "note": "snapshot is a daily export; newer events override status fields",
+   "recorded_at": "2026-10-01T14:16:06.688Z"
+  },
+  {
+   "id": 26853,
+   "user_id": "U-01838",
+   "decision_id": "D-01837",
+   "name": "signup_at",
+   "value": "2025-01-01T12:00:10.893Z",
+   "source": "profile",
+   "refs": [
+    "profile:U-01838@2026-09-29T06:39:56.451Z"
+   ],
+   "as_of": "2026-09-29T06:39:56.451Z",
+   "age_s": 200170.2,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-signup-1",
+   "note": null,
+   "recorded_at": "2026-10-01T14:16:06.688Z"
+  },
+  {
+   "id": 26854,
+   "user_id": "U-01838",
+   "decision_id": "D-01837",
+   "name": "subscription_status",
+   "value": "active",
+   "source": "profile",
+   "refs": [
+    "profile:U-01838@2026-09-29T06:39:56.451Z"
+   ],
+   "as_of": "2026-09-29T06:39:56.451Z",
+   "age_s": 200170.2,
+   "confidence": "medium",
+   "conflicts": [],
+   "rule": "R-status-2",
+   "note": null,
+   "recorded_at": "2026-10-01T14:16:06.688Z"
+  },
+  {
+   "id": 26855,
+   "user_id": "U-01838",
+   "decision_id": "D-01837",
+   "name": "ever_paid",
+   "value": true,
+   "source": "event",
+   "refs": [
+    "event:b0f03f46-87fa-4a92-aff0-130ed3d4b88d"
+   ],
+   "as_of": "2026-09-02T22:24:05.210Z",
+   "age_s": 2476321.5,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-paid-1",
+   "note": null,
+   "recorded_at": "2026-10-01T14:16:06.688Z"
+  },
+  {
+   "id": 26856,
+   "user_id": "U-01838",
+   "decision_id": "D-01837",
+   "name": "dialect",
+   "value": "d1",
+   "source": "app_setting",
+   "refs": [
+    "event:c8f27149-f700-4120-977a-519de28f7e04"
+   ],
+   "as_of": "2026-10-01T14:16:06.688Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-dialect-1",
+   "note": "the app requests the home page of its current dialect",
+   "recorded_at": "2026-10-01T14:16:06.688Z"
+  },
+  {
+   "id": 26857,
+   "user_id": "U-01838",
+   "decision_id": "D-01837",
+   "name": "language",
+   "value": "hin",
+   "source": "app_setting",
+   "refs": [
+    "event:c8f27149-f700-4120-977a-519de28f7e04"
+   ],
+   "as_of": "2026-10-01T14:16:06.688Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T14:16:06.688Z"
+  },
+  {
+   "id": 26858,
+   "user_id": "U-01838",
+   "decision_id": "D-01837",
+   "name": "consent_push",
+   "value": true,
+   "source": "profile",
+   "refs": [
+    "profile:U-01838@2026-09-29T06:39:56.451Z"
+   ],
+   "as_of": "2026-09-29T06:39:56.451Z",
+   "age_s": 200170.2,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-consent-1",
+   "note": null,
+   "recorded_at": "2026-10-01T14:16:06.688Z"
+  },
+  {
+   "id": 26859,
+   "user_id": "U-01838",
+   "decision_id": "D-01837",
+   "name": "consent_whatsapp",
+   "value": false,
+   "source": "profile",
+   "refs": [
+    "profile:U-01838@2026-09-29T06:39:56.451Z"
+   ],
+   "as_of": "2026-09-29T06:39:56.451Z",
+   "age_s": 200170.2,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": "R-consent-1",
+   "note": null,
+   "recorded_at": "2026-10-01T14:16:06.688Z"
+  },
+  {
+   "id": 26860,
+   "user_id": "U-01838",
+   "decision_id": "D-01837",
+   "name": "has_played",
+   "value": true,
+   "source": "event",
+   "refs": [
+    "event:c4dbeb0e-98c1-440f-950a-6007efc4be64"
+   ],
+   "as_of": "2026-09-04T07:11:46.375Z",
+   "age_s": 2358260.3,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T14:16:06.688Z"
+  },
+  {
+   "id": 26861,
+   "user_id": "U-01838",
+   "decision_id": "D-01837",
+   "name": "has_completed_episode",
+   "value": true,
+   "source": "event",
+   "refs": [
+    "event:3be48b3c-f9cd-431e-9781-81e682270a10"
+   ],
+   "as_of": "2026-09-04T07:14:33.388Z",
+   "age_s": 2358093.3,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T14:16:06.688Z"
+  },
+  {
+   "id": 26862,
+   "user_id": "U-01838",
+   "decision_id": "D-01837",
+   "name": "play_days_14d",
+   "value": 3,
+   "source": "derived",
+   "refs": [
+    "event:646e478a-c285-4c94-93b2-51750917edea",
+    "event:28f2e161-6883-4cd6-8610-871b4faabc29",
+    "event:8c00d368-cb65-4a1d-b7b6-09a04c20468b"
+   ],
+   "as_of": "2026-10-01T14:16:06.688Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T14:16:06.688Z"
+  },
+  {
+   "id": 26863,
+   "user_id": "U-01838",
+   "decision_id": "D-01837",
+   "name": "last_open_before_trigger",
+   "value": "2026-09-29T16:15:32.583Z",
+   "source": "event",
+   "refs": [
+    "event:38f85651-27d9-49f9-96b8-453d3916467e"
+   ],
+   "as_of": "2026-09-29T16:15:32.583Z",
+   "age_s": 165634.1,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "excludes the trigger itself; uses clock-corrected time",
+   "recorded_at": "2026-10-01T14:16:06.688Z"
+  },
+  {
+   "id": 26864,
+   "user_id": "U-01838",
+   "decision_id": "D-01837",
+   "name": "recent_lapse",
+   "value": null,
+   "source": "derived",
+   "refs": [
+    "absence:subscription_lapsed_30d"
+   ],
+   "as_of": "2026-10-01T14:16:06.688Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "G06 'recently lapsed' = lapse event within 30 days (our definition)",
+   "recorded_at": "2026-10-01T14:16:06.688Z"
+  },
+  {
+   "id": 26865,
+   "user_id": "U-01838",
+   "decision_id": "D-01837",
+   "name": "unfinished_series",
+   "value": [
+    {
+     "content_slug": "gima-bhadaba-d1",
+     "episodes_completed": 5,
+     "episodes_total": 44,
+     "furthest_episode": 5,
+     "idle_days": 5.6,
+     "last_played_at": "2026-09-26T00:47:49.300Z",
+     "next_episode_id": "gima-bhadaba-d1-s1e6",
+     "title_ids": [
+      "T1502"
+     ]
+    }
+   ],
+   "source": "derived",
+   "refs": [
+    "event:a71be7c1-17f3-4850-97b4-010c387411f1",
+    "event:3be48b3c-f9cd-431e-9781-81e682270a10",
+    "catalogue:gima-bhadaba-d1"
+   ],
+   "as_of": "2026-10-01T14:16:06.688Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": "show/micro_drama with episodes left, no play for 3+ days, and at least 1 episode completed (sampling one episode is not an unfinished series)",
+   "recorded_at": "2026-10-01T14:16:06.688Z"
+  },
+  {
+   "id": 26866,
+   "user_id": "U-01838",
+   "decision_id": "D-01837",
+   "name": "trigger_age_s",
+   "value": 0.0,
+   "source": "derived",
+   "refs": [
+    "event:c8f27149-f700-4120-977a-519de28f7e04"
+   ],
+   "as_of": "2026-10-01T14:16:06.688Z",
+   "age_s": 0.0,
+   "confidence": "high",
+   "conflicts": [],
+   "rule": null,
+   "note": null,
+   "recorded_at": "2026-10-01T14:16:06.688Z"
+  }
+ ],
+ "actions": [],
+ "learnings": [
+  {
+   "goal_instance_id": "GI-01837",
+   "at": "2026-10-15T18:30:00.000Z",
+   "note": {
+    "attribution": "holdout",
+    "effects": {},
+    "goal_id": "G07",
+    "goal_instance_id": "GI-01837",
+    "notes": [],
+    "result": "failed"
+   }
+  }
+ ]
+}
