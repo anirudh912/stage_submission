@@ -6,6 +6,9 @@ Design rules:
     from the catalogue) when the viewer consented and the app is in Hindi, otherwise push; or an honest trial-ending
     WhatsApp (G04, only when the trial end date is known). Never during quiet hours, never twice on one IST day.
     Push copy only says what is true of the named title (short episode, new release, premium, unfinished).
+  * When neither push nor WhatsApp can be used (no consent, or the next evening slot is after the deadline), an
+    in-app message instead: it needs no consent and is shown at the next app open (max 1 per day). The simulator
+    gives it no effect; it is there for viewers no other channel can reach.
   * Doing nothing is a normal outcome with a recorded reason (stale trigger, unknown dialect, too little content,
     page already live, no goal).
   * Titles are picked by content_slug (one per page), in the page dialect, available at publish time, and never
@@ -23,6 +26,7 @@ MAX_ROWS, MIN_ROW, MAX_ROW = 6, 3, 10
 MESSAGE_HOUR_IST = 19            # next allowed evening slot (quiet hours are 22:00-08:00 IST)
 # G01 is left out: its 24 h window usually closes before the next-evening slot (checked anyway below).
 MESSAGE_GOALS = {"G02", "G03", "G05", "G06", "G07", "G08", "G09", "G12"}
+IN_APP_GOALS = MESSAGE_GOALS | {"G01"}   # shown at the next open, so G01's 24 h window is no obstacle
 PUSH_TITLE_MAX, PUSH_BODY_MAX = 40, 120
 
 
@@ -92,8 +96,10 @@ class _Page:
     def __init__(self, catalog, dialect, language, at):
         self.catalog, self.dialect, self.language, self.at = catalog, dialect, language, at
         self.used, self.rows, self.hero = set(), [], None
+        self.limit = MAX_ROW
 
-    def take(self, slugs, limit=MAX_ROW):
+    def take(self, slugs, limit=None):
+        limit = limit or self.limit
         out = []
         for slug in slugs:
             if slug in self.used:
@@ -131,8 +137,9 @@ def actionable(goal, view, catalog, at):
         slug = (goal.success.get("target") or {}).get("content_slug", "")
         if d is None or not slug.endswith("-" + d):
             return False, f"the unfinished series {slug} is not in the app dialect {d}"
-        if not any(catalog.available(t, at) for t in catalog.pack.slugs.get(slug, [])):
-            return False, f"the unfinished series {slug} is not available now"
+        if not any(catalog.promotable(t, d, at) for t in catalog.pack.slugs.get(slug, [])):
+            return False, (f"the unfinished series {slug} cannot be promoted now "
+                           f"(not available, or flagged for injected instructions)")
     return True, None
 
 
@@ -200,6 +207,8 @@ def plan(view, goal, pack, catalog, store, publish_at, arm, push_ok=True):
     if msg and msg["type"] == "push" and not push_ok:
         msg, why_not = None, "lesson: this viewer's push token was invalid last time"
     if msg:
+        if msg.get("_why"):
+            p["assumptions"].append(f"in-app message (shown at the next app open) because {msg.pop('_why')}")
         p["actions"].append(msg)
     elif why_not:
         p["assumptions"].append(f"no message: {why_not}")
@@ -222,10 +231,23 @@ def build_page(view, goal, pack, catalog, dialect, at):
     slugs = lambda ts_: list(dict.fromkeys(t["content_slug"] for t in ts_))
     pg = _Page(catalog, dialect, lang, at)
 
-    # hero: the one thing this goal wants the viewer to do next
     series = [s for s in view.value("unfinished_series") if s["content_slug"].endswith("-" + dialect)]
+    in_progress = list(dict.fromkeys([s["content_slug"] for s in series] +
+                                     [s for s in started if s.endswith("-" + dialect) and s not in done]))
+    next_row_done = False
+
+    # hero: the one thing this goal wants the viewer to do next
     if goal.goal_id == "G07" and goal.success and goal.success.get("target"):
-        pg.set_hero(goal.success["target"]["content_slug"], "the unfinished series this goal is about")
+        target = goal.success["target"]["content_slug"]
+        resume = [target] + [s for s in in_progress if s != target]
+        if len(pg.take(resume)) >= MIN_ROW:
+            # one slug per page: as hero the series would leave the next-episode row short (and dropped), so it
+            # leads that row instead and the hero goes to the most-played title
+            pg.add_row("next_episode", resume, "series the viewer has started in this dialect, "
+                                               "led by the unfinished series this goal is about")
+            next_row_done = True
+        else:
+            pg.set_hero(target, "the unfinished series this goal is about")
     elif goal.goal_id in ("G01", "G02"):
         short = [t for t in ranked if t["content_type"] == "micro_drama"] or ranked
         if short:
@@ -238,12 +260,19 @@ def build_page(view, goal, pack, catalog, dialect, at):
         new = [t for t in ranked if _released_within(t, at, NEW_RELEASE_DAYS)]
         if new:
             pg.set_hero(new[0]["content_slug"], f"released in the last {NEW_RELEASE_DAYS} days")
-    elif ranked:
-        pg.set_hero(ranked[0]["content_slug"], "most-played title in this dialect")
+    if not pg.hero:
+        # the goal's own hero could not be shown (or the series leads the next-episode row): most-played instead
+        free = [t for t in ranked if t["content_slug"] not in pg.used]
+        if free:
+            pg.set_hero(free[0]["content_slug"], "most-played title in this dialect")
 
-    in_progress = [s["content_slug"] for s in series] + \
-                  [s for s in started if s.endswith("-" + dialect) and s not in done]
-    pg.add_row("next_episode", list(dict.fromkeys(in_progress)), "series the viewer has started in this dialect")
+    # thin catalogue (d3 has about a dozen titles): shorter rows, so the titles fill several rows instead of one
+    # or two long ones; rows never go below the platform minimum of 3
+    left = len({t["content_slug"] for t in ranked} - pg.used)
+    pg.limit = max(MIN_ROW, min(MAX_ROW, left // 5))
+
+    if not next_row_done:
+        pg.add_row("next_episode", in_progress, "series the viewer has started in this dialect")
     if goal.goal_id == "G08":
         pg.add_row("new_releases", slugs(t for t in ranked if _released_within(t, at, NEW_RELEASE_DAYS)),
                    f"released in the last {NEW_RELEASE_DAYS} days (the goal)")
@@ -266,10 +295,39 @@ def build_page(view, goal, pack, catalog, dialect, at):
         if len(pg.rows) >= 5:
             break
         pg.add_row("genre", slugs(t for t in ranked if g in t["genres"]), f"genre: {g}")
+    # whatever the themed rows left over (a thin catalogue scatters it across genres) still makes full rows
+    while len(pg.rows) < 5 and pg.add_row("popular_in_dialect", slugs(ranked), "more of the most-played in this dialect"):
+        pass
 
     if not pg.rows and not pg.hero:
         return None
     page = {"type": "home_page", "dialect": dialect, "rows": pg.rows, "goal_id": goal.goal_id}
+    if pg.hero:
+        page["hero_title_id"] = pg.hero["title_id"]
+        page["_hero_why"] = pg.hero["why"]
+    return page
+
+
+def fallback_page(catalog, dialect, language, at):
+    """Catalogue-only page for when the viewer's data cannot be read (data store degraded): the most-played titles
+    of the app's dialect, nothing personal, no goal and no message. None if the dialect has no content."""
+    ranked = _ranked(catalog.in_dialect(dialect, at), prefer_free=False) if dialect else []
+    if not ranked:
+        return None
+    pg = _Page(catalog, dialect, language, at)
+    pg.set_hero(ranked[0]["content_slug"], "most-played title in this dialect (viewer data unavailable)")
+    pg.limit = max(MIN_ROW, min(MAX_ROW, len({t["content_slug"] for t in ranked} - pg.used) // 5))
+    slugs = lambda ts_: list(dict.fromkeys(t["content_slug"] for t in ts_))
+    pg.add_row("popular_in_dialect", slugs(ranked), "most-played in this dialect")
+    pg.add_row("new_releases", slugs(t for t in ranked if _released_within(t, at, NEW_RELEASE_DAYS)),
+               f"released in the last {NEW_RELEASE_DAYS} days")
+    for g in sorted({g for t in ranked for g in t["genres"]}):
+        if len(pg.rows) >= 5:
+            break
+        pg.add_row("genre", slugs(t for t in ranked if g in t["genres"]), f"genre: {g}")
+    while len(pg.rows) < 5 and pg.add_row("popular_in_dialect", slugs(ranked), "more of the most-played in this dialect"):
+        pass
+    page = {"type": "home_page", "dialect": dialect, "rows": pg.rows, "goal_id": None, "fallback": True}
     if pg.hero:
         page["hero_title_id"] = pg.hero["title_id"]
         page["_hero_why"] = pg.hero["why"]
@@ -306,11 +364,17 @@ def messages_on_day(store, user_id, day, until):
     return len(n) + len(d)
 
 
+def in_app_on_day(store, user_id, day):
+    return [a for a in store.actions_for(user_id) if a["type"] == "in_app_message" and not a.get("cancelled")
+            and ist_day(a.get("send_at") or a["published_at"]) == day]
+
+
 def build_message(view, goal, pack, catalog, store, dialect, at):
     """At most one message. Returns (message|None, reason_if_none)."""
     gid = goal.goal_id
     send_at = next_send_slot(at)
-    if goal.deadline and send_at >= goal.deadline:
+    slot_ok = not goal.deadline or send_at < goal.deadline
+    if gid == "G04" and not slot_ok:
         return None, "next allowed send slot is after the goal deadline"
     if gid == "G04":
         end = view.value("trial_ends_at") if "trial_ends_at" in view.facts else None
@@ -326,15 +390,19 @@ def build_message(view, goal, pack, catalog, store, dialect, at):
         return {"type": "whatsapp", "send_at": send_at, "template_id": "wa_trial_ending_v1",
                 "variables": {"plan_price": f"₹{price['price_inr']}"}, "goal_id": gid,
                 "evidence": ["pricing:P_MONTH"]}, None
-    if gid not in MESSAGE_GOALS:
+    if gid not in IN_APP_GOALS:
         return None, f"goal {gid} is served by the home page while the viewer is in the app"
     hin = view.value("language") == "hin"
     # WhatsApp first where it is allowed: approved templates are Hindi only, and it clicks more than push.
     # One message per IST day across both channels, so it replaces the push, never adds to it.
     use_wa = bool(view.value("consent_whatsapp")) and hin
+    if gid not in MESSAGE_GOALS or not slot_ok:
+        return _in_app(view, goal, pack, catalog, store, dialect, at,
+                       "next allowed send slot is after the goal deadline")
     if not use_wa and not view.value("consent_push"):
-        return None, (f"no push consent ({view.f('consent_push').source}) and no usable WhatsApp "
-                      f"({'no consent' if not view.value('consent_whatsapp') else 'templates are Hindi only'})")
+        return _in_app(view, goal, pack, catalog, store, dialect, at,
+                       f"no push consent ({view.f('consent_push').source}) and no usable WhatsApp "
+                       f"({'no consent' if not view.value('consent_whatsapp') else 'templates are Hindi only'})")
     if messages_on_day(store, view.user_id, ist_day(send_at), at):
         return None, "a message is already planned or delivered that IST day"
     tid, kind = _message_title(view, goal, pack, catalog, dialect, send_at)
@@ -351,6 +419,21 @@ def build_message(view, goal, pack, catalog, store, dialect, at):
     return {"type": "push", "send_at": send_at, "title_id": tid,
             "text": {"title": _clip(title, PUSH_TITLE_MAX), "body": body},
             "deeplink": f"ott://title/{tid}", "goal_id": gid, "evidence": [f"catalogue:{tid}"]}, None
+
+
+def _in_app(view, goal, pack, catalog, store, dialect, at, why_not_out):
+    """In-app message for a viewer push and WhatsApp cannot reach: no consent needed, shown at the next app open."""
+    why = f"no push/WhatsApp: {why_not_out}"
+    if in_app_on_day(store, view.user_id, ist_day(at)):
+        return None, why + "; an in-app message is already queued today (max 1 per day)"
+    tid, kind = _message_title(view, goal, pack, catalog, dialect, at)
+    if not tid or not catalog.available(tid, at):
+        return None, why + "; no suitable title in the viewer's dialect for an in-app message"
+    return {"type": "in_app_message", "send_at": at, "title_id": tid,
+            "text": {"title": _clip(pack.titles[tid]["title"], PUSH_TITLE_MAX),
+                     "body": PUSH_COPY[kind][0 if view.value("language") == "hin" else 1]},
+            "deeplink": f"ott://title/{tid}", "goal_id": goal.goal_id, "evidence": [f"catalogue:{tid}"],
+            "_why": why}, None
 
 
 # Each body claims only what is true of the title picked for it (checked in _message_title).

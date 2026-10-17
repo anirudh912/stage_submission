@@ -9,11 +9,12 @@ comparable; only the final publish step is skipped. This is what makes the holdo
 import time
 from datetime import timedelta
 
-from .actions import PAGE_TTL, Catalog, choose_actionable_goal, live_page, plan
+from .actions import PAGE_TTL, STALE_TRIGGER_S, Catalog, choose_actionable_goal, fallback_page, live_page, plan
 from .deps import DataStoreTimeout, StoreProxy
 from .goals import PRIORITY, apply_rule_correction, eligibility, success_event
 from .judge import feedback
 from .model import CircuitBreaker, ModelError, build_request, parse_advice
+from .pack import CATALOGUE_DIALECTS
 from .resolver import resolve
 from .timeutil import age_s, iso, ts
 from .verifier import Verifier
@@ -35,6 +36,8 @@ class Agent:
         self.max_model_calls = max_model_calls
         self.n_decisions = self.n_actions = 0
         self.log = []                  # control / revision log lines for the run report
+        self.pages_sent = {}           # user_id -> (published_at, dialect) of the last page: in-process memory, so
+                                       # the degraded-store fallback never needs a store read to avoid a live page
 
     # ------------------------------------------------------------------ ids
     def _did(self, prefix="D"):
@@ -81,8 +84,7 @@ class Agent:
                 uid, trig, now, gd, p["actions"], open_goal=og,
                 budget={"model_calls": model_info.get("calls", 0), "tool_calls": self.io.tool_calls})
         except DataStoreTimeout as e:
-            return self._finish(rec, t0, deliver, queue_wait_s, model_info, status="DEGRADED_NO_ACTION",
-                                reason=f"user data store degraded: {e}; not acting on partial data")
+            return self._degraded(rec, trig, now, t0, deliver, queue_wait_s, model_info, e)
 
         decision_ok = not any(f["check"] in DECISION_CHECKS for f in checks["failed"])
         goal_instance = choice.continuing
@@ -129,6 +131,42 @@ class Agent:
         return self._finish(rec, t0, deliver, queue_wait_s, model_info, status="PUBLISHED", actions=approved,
                             goal_instance=goal_instance, trigger_id=trig["event_id"])
 
+    def _degraded(self, rec, trig, now, t0, deliver, queue_wait_s, model_info, err):
+        """The data store failed mid-decision. Nothing personal can be trusted, so no goal and no message. If the
+        arm was already read as 'agent', the trigger is fresh and the app dialect has content, publish a
+        catalogue-only page (most-played in the app's dialect) rather than leave the default layout."""
+        reason = f"user data store degraded: {err}; not acting on partial data"
+        d = trig.get("app_dialect")
+        last = self.pages_sent.get(trig["user_id"])
+        why_not = ("arm unknown (not read before the store failed)" if rec.get("arm") is None else
+                   f"arm is {rec['arm']!r}" if rec["arm"] != "agent" else
+                   "trigger is stale" if (rec["trigger"]["event_age_s"] or 0) > STALE_TRIGGER_S else
+                   f"app dialect {d!r} has no catalogue content" if d not in CATALOGUE_DIALECTS else
+                   "a page we published for this dialect is still live"
+                   if last and last[1] == d and ts(last[0]) + PAGE_TTL > ts(now) else None)
+        page = None if why_not else fallback_page(self.catalog, d, trig.get("app_language"), now)
+        if page:
+            approved, checks = self.verifier.verify_fallback_page(page, trig, now)
+            if approved:
+                rec.update({
+                    "goal": {"id": None, "why": "viewer data unavailable (data store degraded): no goal is opened "
+                                                "on partial data"},
+                    "dialect": {"used": d, "source": "app_setting", "rule": "R-dialect-1", "conflicts": []},
+                    "content": [f"title:{t}" for t in [page.get("hero_title_id")] +
+                                [t for r in page["rows"] for t in r["title_ids"]] if t],
+                    "rows_explained": ([{"row_type": "hero", "why": page.pop("_hero_why")}] if page.get("_hero_why")
+                                       else []) + [{"row_type": r["row_type"], "why": r.pop("why")}
+                                                   for r in page["rows"]],
+                    "checks": checks, "confidence": 0.5,
+                    "confidence_reason": "catalogue only: nothing about this viewer could be read",
+                    "fallback": {"why": reason},
+                })
+                return self._finish(rec, t0, deliver, queue_wait_s, model_info, status="DEGRADED_FALLBACK_PAGE",
+                                    actions=[page], trigger_id=trig["event_id"])
+            why_not = "fallback page failed checks: " + "; ".join(f["check"] for f in checks["failed"])
+        rec["fallback"] = {"why_not": why_not or f"no content in {d}"}
+        return self._finish(rec, t0, deliver, queue_wait_s, model_info, status="DEGRADED_NO_ACTION", reason=reason)
+
     def _finish(self, rec, t0, deliver, queue_wait_s, model_info, status, reason=None, actions=(),
                 goal_instance=None, trigger_id=None):
         processing_s = time.perf_counter() - t0
@@ -144,8 +182,12 @@ class Agent:
             out.update({"action_id": self._aid(), "decision_id": rec["decision_id"], "user_id": rec["viewer_id"],
                         "trigger_event_id": trigger_id, "published_at": iso(published),
                         "goal_instance": goal_instance})
+            if out["type"] == "in_app_message":
+                out["send_at"] = out["published_at"]       # queued when published, shown at the next app open
             self.store.save_action(out)
             published_ids.append(out["action_id"])
+            if out["type"] == "home_page":
+                self.pages_sent[out["user_id"]] = (out["published_at"], out["dialect"])
         types = [a["type"] for a in actions]
         rec.setdefault("model", model_info)
         rec.setdefault("goal", {"id": None, "why": "not chosen: decision stopped early"})
@@ -276,11 +318,19 @@ class Agent:
         self.store.save_decision({**out, "status": "REVISED"})
         return out
 
+    def _pending(self, a, now):
+        """Not yet seen by the viewer. A push or WhatsApp is pending until its send time; an in-app message until the
+        viewer's next app open after it was queued."""
+        if a["type"] != "in_app_message":
+            return ts(a.get("send_at") or a["published_at"]) > ts(now)
+        return not any(e["event"] in ("app_open", "login_success") and e["received_at"] > a["published_at"]
+                       for e in self.store.events_for(a["user_id"], until=now))
+
     def _cancel_pending(self, uid, now, match, reason):
         done = []
         for a in self.store.actions_for(uid):
-            if a["type"] in ("push", "whatsapp") and not a.get("cancelled") and match(a) \
-                    and ts(a.get("send_at") or a["published_at"]) > ts(now):
+            if a["type"] in ("push", "whatsapp", "in_app_message") and not a.get("cancelled") and match(a) \
+                    and self._pending(a, now):
                 self.store.cancel_action(a["action_id"], now, reason)
                 done.append(f"cancelled {a['type']} {a['action_id']} (was due {a.get('send_at')}): {reason}")
         return done
@@ -332,8 +382,8 @@ class Agent:
                                                                 f"{tid}; the platform drops it")
             self.store.save_decision(rec)
         for a in self.store.all_actions():
-            if a.get("title_id") == tid and a["type"] in ("push", "whatsapp") and not a.get("cancelled") \
-                    and ts(a.get("send_at") or a["published_at"]) > ts(at):
+            if a.get("title_id") == tid and a["type"] in ("push", "whatsapp", "in_app_message") \
+                    and not a.get("cancelled") and self._pending(a, at):
                 self.store.cancel_action(a["action_id"], at, f"{tid} withdrawn: {c.get('reason')}")
                 cancelled.append(a["action_id"])
         entry = {"at": at, "type": "title_withdrawn", "title_id": tid, "pages_republished_for": repaired,

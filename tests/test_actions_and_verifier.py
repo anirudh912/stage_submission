@@ -114,11 +114,27 @@ class PlanTests(unittest.TestCase):
         self.assertIn(approved[0]["hero_title_id"], ("T1", "T1e"))
         self.assertEqual(approved[1]["send_at"], "2026-10-02T13:30:00.000Z")       # 19:00 IST next day
 
-    def test_no_push_without_consent_and_the_reason_is_recorded(self):
+    def test_no_push_without_consent_gets_in_app_instead_and_the_reason_is_recorded(self):
         h = Harness(profiles=[profile("U1", push=False)], events=series_events("U1"))
-        _, p, approved, _ = h.decide(h.trigger())
-        self.assertEqual([a["type"] for a in approved], ["home_page"])
-        self.assertTrue(any("no push consent" in a for a in p["assumptions"]))
+        _, p, approved, checks = h.decide(h.trigger())
+        self.assertEqual(checks["failed"], [])
+        self.assertEqual([a["type"] for a in approved], ["home_page", "in_app_message"])
+        self.assertTrue(any("in-app" in a and "no push consent" in a for a in p["assumptions"]))
+        self.assertIn(approved[1]["title_id"], ("T1", "T1e"))                      # the series the goal is about
+
+    def test_in_app_needs_no_profile_but_only_one_a_day(self):
+        h = Harness(profiles=[], events=series_events("U1"))                     # no profile row: no consent data
+        g, _, approved, checks = h.decide(h.trigger())
+        self.assertEqual(checks["failed"], [])
+        self.assertIn("in_app_message", [a["type"] for a in approved])
+        h.publish(approved)
+        _, p, again, _ = h.decide(h.trigger(at="2026-10-01T09:00:00.000Z"))     # same IST day, page expired
+        self.assertNotIn("in_app_message", [a["type"] for a in again])
+        self.assertTrue(any("already queued today" in a for a in p["assumptions"]))
+        _, checks = h.check([{"type": "in_app_message", "send_at": NOW, "title_id": "F1", "deeplink": "ott://title/F1",
+                              "text": {"title": "Title F1", "body": "Picked for you. Watch now."}}], goal={
+            "goal_id": g.goal_id, "evidence": g.evidence, "success": g.success})
+        self.assertIn("in_app_cap", failed(checks))                              # the verifier enforces it too
 
     def test_series_in_another_dialect_is_skipped_for_the_next_goal(self):
         h = Harness(events=series_events("U1"))
@@ -134,6 +150,45 @@ class PlanTests(unittest.TestCase):
         _, p, second, _ = h.decide(h.trigger(at="2026-10-01T06:30:00.000Z"))
         self.assertEqual(second, [])
         self.assertIn("still live", p["no_action_reason"])
+
+
+class PageQualityTests(unittest.TestCase):
+    def test_thin_catalogue_fills_several_short_rows_instead_of_one_long_one(self):
+        h = Harness()
+        for i in range(7):                                       # d2: 8 titles in all, like the real d3
+            tid = f"D2-{i}"
+            h.pack.titles[tid] = {**h.pack.titles["T3"], "title_id": tid, "content_slug": f"film-{i}-d2",
+                                  "popularity": 20 - i}
+            h.pack.slugs[f"film-{i}-d2"] = [tid]
+            h.pack.episodes[f"film-{i}-d2"] = h.pack.episodes["film-c-d2"]
+        _, _, approved, checks = h.decide(h.trigger(dialect="d2"))
+        self.assertEqual(checks["failed"], [])
+        rows = approved[0]["rows"]
+        self.assertEqual([len(r["title_ids"]) for r in rows], [3, 3])   # 7 titles after the hero: 2 rows, not 1
+        self.assertTrue(approved[0].get("hero_title_id"))
+
+    def test_unfinished_series_leads_the_next_episode_row_when_it_would_otherwise_be_dropped(self):
+        # the show plus two films started: 3 titles in progress, enough for a next_episode row only if the
+        # series is in it (one slug per page, so it cannot also be the hero)
+        plays = [ev("U1", "play_started", "2026-09-22T10:00:00.000Z", props={"title_id": t}) for t in ("F1", "F2")]
+        h = Harness(events=series_events("U1") + plays)
+        g, _, approved, checks = h.decide(h.trigger())
+        self.assertEqual((g.goal_id, checks["failed"]), ("G07", []))
+        pg = approved[0]
+        self.assertEqual(pg["rows"][0]["row_type"], "next_episode")
+        self.assertEqual(h.pack.slug_of(pg["rows"][0]["title_ids"][0]), "show-a-d1")
+        self.assertTrue(pg.get("hero_title_id"))
+        self.assertNotEqual(h.pack.slug_of(pg["hero_title_id"]), "show-a-d1")
+
+    def test_series_that_cannot_be_promoted_is_not_chosen_as_g07(self):
+        h = Harness(events=series_events("U1"))
+        for tid in ("T1", "T1e"):
+            h.pack.titles[tid]["injection_suspect"] = True
+        g, _, approved, _ = h.decide(h.trigger())
+        self.assertNotEqual(g.goal_id, "G07")
+        g07 = next(c for c in g.considered if c["goal_id"] == "G07")
+        self.assertIn("cannot be promoted", g07["skipped"])
+        self.assertTrue(approved[0].get("hero_title_id"))              # the next goal still gets a hero
 
 
 class VerifierTests(unittest.TestCase):

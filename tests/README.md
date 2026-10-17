@@ -21,8 +21,8 @@ python3 -m unittest discover -s tests -v
 |---|---|
 | `test_state_and_facts.py` | Durable store (idempotent events, one open goal, one decision per trigger), source precedence, conflicts, no use of future events, wrong phone clocks, language variants |
 | `test_goals.py` | Eligibility with evidence, unmeasurable goals, conflicting status blocks payment goals, single active plan, rule correction scope, IST-day and trial rules |
-| `test_actions_and_verifier.py` | Doing nothing (holdout, stale trigger, no content, live page), page rules, injected and withdrawn titles, message timing; every verifier check catching a bad action, incl. an unsupported model claim |
-| `test_agent_loop.py` | Advisor faults (unsupported claim, malformed, timeout, outage + circuit breaker), data-store degradation, purchase after decision, title withdrawal repair |
+| `test_actions_and_verifier.py` | Doing nothing (holdout, stale trigger, no content, live page), page rules, injected and withdrawn titles, thin-catalogue rows, series leading the next_episode row, G07 skipped for a series that cannot be promoted, message timing, in-app message for viewers without consent and its daily cap; every verifier check catching a bad action, incl. an unsupported model claim |
+| `test_agent_loop.py` | Advisor faults (unsupported claim, malformed, timeout, outage + circuit breaker), data-store degradation (incl. the catalogue-only fallback page and when it is refused), purchase after decision (push and in-app cancelled; in-app not cancelled once shown), title withdrawal repair |
 | `test_judge_impact.py` | Judging and attribution, lessons changing the next decision, proportion maths, ITT unit, selection bias demo, ground-truth leakage flag, CUPED/stratification, honest push copy |
 | `test_required_scenarios.py` | The four required scenarios, end to end |
 

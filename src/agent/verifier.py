@@ -77,6 +77,7 @@ class Verifier:
         for i, a in enumerate(actions):
             results = (self._page(user_id, a, trigger) if a["type"] == "home_page"
                        else self._message(user_id, a) if a["type"] in ("push", "whatsapp")
+                       else self._in_app(user_id, a) if a["type"] == "in_app_message"
                        else [("action_type", False, f"unsupported action type {a['type']}")])
             ok_all = True
             for name, ok, detail in results:
@@ -203,9 +204,30 @@ class Verifier:
         return False, f"no verifier rule for {gid}"
 
     # ------------------------------------------------------------------ home page
+    def verify_fallback_page(self, page, trigger, now):
+        """Catalogue-only checks for the degraded-store fallback page (no viewer data can be read). The caller has
+        already confirmed the arm; the duplicate-page check needs the store and is left to the caller."""
+        passed, failed = [], []
+        for name, ok, detail in self._page_static(page, trigger, page.get("published_at") or ts(now)):
+            if ok:
+                passed.append(name)
+            else:
+                failed.append({"check": name, "detail": detail, "action": 0})
+        return ([page] if not failed else []), {"passed": passed, "failed": failed}
+
     def _page(self, user_id, a, trigger):
-        out = []
         at = a.get("published_at") or self.now
+        out = self._page_static(a, trigger, at)
+        rows = a.get("rows") or []
+        live = [x for x in self.store.actions_for(user_id) if x["type"] == "home_page" and x.get("published_at")
+                and ts(x["published_at"]) <= ts(at) < ts(x["published_at"]) + PAGE_TTL
+                and x["dialect"] == a["dialect"] and x.get("hero_title_id") == a.get("hero_title_id")
+                and [r["title_ids"] for r in x["rows"]] == [r["title_ids"] for r in rows]]
+        out.append(("duplicate_page", not live, f"identical page {live and live[-1]['action_id']} is still live"))
+        return out
+
+    def _page_static(self, a, trigger, at):
+        out = []
         app_d = (trigger or {}).get("app_dialect")
         out.append(("page_dialect", a["dialect"] == app_d,
                     f"page dialect {a['dialect']} but the app requests {app_d}"))
@@ -231,11 +253,6 @@ class Verifier:
         out.append(("dialect", not wrong, f"not in page dialect {a['dialect']}: {wrong[:5]}"))
         flagged = [t for t in ids if INJECTION.search((self.pack.titles.get(t) or {}).get("description") or "")]
         out.append(("injection", not flagged, f"titles whose description carries instructions: {flagged}"))
-        live = [x for x in self.store.actions_for(user_id) if x["type"] == "home_page" and x.get("published_at")
-                and ts(x["published_at"]) <= ts(at) < ts(x["published_at"]) + PAGE_TTL
-                and x["dialect"] == a["dialect"] and x.get("hero_title_id") == a.get("hero_title_id")
-                and [r["title_ids"] for r in x["rows"]] == [r["title_ids"] for r in rows]]
-        out.append(("duplicate_page", not live, f"identical page {live and live[-1]['action_id']} is still live"))
         return out
 
     # ------------------------------------------------------------------ messages
@@ -277,6 +294,24 @@ class Verifier:
             out.append(("copy", *self._copy(a)))
         else:
             out.append(("template", *self._template(a)))
+        return out
+
+    def _in_app(self, user_id, a):
+        """In-app message: no consent and no quiet hours (it is shown inside the app), at most 1 per IST day, and the
+        same title and copy rules as a push."""
+        send = ts(a.get("send_at") or a.get("published_at") or self.now)
+        day = ist_day(send)
+        ours = [x for x in self.store.actions_for(user_id) if x["type"] == "in_app_message" and not x.get("cancelled")
+                and ist_day(x.get("send_at") or x["published_at"]) == day]
+        limit = self.pack.interventions.get("in_app_message", {}).get("max_per_day", 1)
+        out = [("in_app_cap", len(ours) < limit, f"{len(ours)} in-app message(s) already on IST day {day}")]
+        tid = a.get("title_id")
+        t = self.pack.titles.get(tid)
+        app_d = self._current_dialect()
+        out.append(("message_title", bool(t) and self.catalog.available(tid, send) and t["dialect"] == app_d
+                    and not INJECTION.search(t["description"] or ""),
+                    f"title {tid} must exist, be available and be in the app dialect {app_d}"))
+        out.append(("copy", *self._copy(a)))
         return out
 
     def _current_language(self):

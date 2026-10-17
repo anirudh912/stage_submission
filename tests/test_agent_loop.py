@@ -131,6 +131,38 @@ class DependencyTests(unittest.TestCase):
         self.assertGreater(rec["waited_on_dependencies_ms"], 400)
 
 
+class FallbackPageTests(unittest.TestCase):
+    def store_fails_after_arm(self, arm="agent"):
+        lp = Loop(arm=arm)
+        lp.agent.io.max_tool_calls = 1           # the arm read succeeds, every later read fails
+        return lp
+
+    def test_unreadable_viewer_data_gets_a_catalogue_only_page(self):
+        lp = self.store_fails_after_arm()
+        rec = lp.run(lp.trigger())
+        self.assertEqual(rec["status"], "DEGRADED_FALLBACK_PAGE")
+        acts = lp.store.actions_for("U1")
+        self.assertEqual([a["type"] for a in acts], ["home_page"])     # no message on unread consent
+        self.assertEqual(acts[0]["dialect"], "d1")
+        self.assertTrue({r["row_type"] for r in acts[0]["rows"]} <= {"popular_in_dialect", "new_releases", "genre"})
+        self.assertIsNone(rec["goal"]["id"])
+        self.assertIsNone(lp.store.open_goal("U1"))                    # no goal opened on partial data
+
+    def test_no_fallback_for_holdout_stale_trigger_or_a_live_page(self):
+        lp = self.store_fails_after_arm(arm="holdout")
+        rec = lp.run(lp.trigger())
+        self.assertEqual((rec["status"], rec["fallback"]["why_not"]), ("DEGRADED_NO_ACTION", "arm is 'holdout'"))
+        lp = self.store_fails_after_arm()
+        old = lp.trigger(at="2026-10-01T04:00:00.000Z", deliver=NOW)
+        rec = lp.run(old)
+        self.assertEqual((rec["status"], rec["fallback"]["why_not"]), ("DEGRADED_NO_ACTION", "trigger is stale"))
+        lp = Loop()
+        self.assertEqual(lp.run(lp.trigger())["status"], "PUBLISHED")
+        lp.agent.io.max_tool_calls = 1
+        rec = lp.run(lp.trigger(at="2026-10-01T06:30:00.000Z"))
+        self.assertEqual(rec["fallback"]["why_not"], "a page we published for this dialect is still live")
+
+
 class RevisionTests(unittest.TestCase):
     def test_purchase_two_minutes_after_decision_closes_goal_and_cancels_push(self):
         lp = Loop(**lapsed_viewer())
@@ -146,6 +178,30 @@ class RevisionTests(unittest.TestCase):
         self.assertIsNone(lp.store.open_goal("U1"))
         push = next(a for a in lp.store.actions_for("U1") if a["type"] == "push")
         self.assertIn("cancelled", push)
+
+    def test_in_app_message_is_cancelled_when_the_goal_is_met_before_the_next_open(self):
+        v = lapsed_viewer()
+        v["profiles"] = [profile("U1", status="lapsed", push=False)]      # no push consent: in-app instead
+        lp = Loop(**v)
+        rec = lp.run(lp.trigger())
+        self.assertEqual(rec["action"], "HOME_PAGE+IN_APP_MESSAGE")
+        buy = ev("U1", "purchase_completed", "2026-10-01T06:02:00.000Z",
+                 props={"plan_id": "P_MONTH", "price_inr": 149, "is_trial": False})
+        buy["deliver_at"] = buy["received_at"]
+        r = lp.agent.handle_live_event(buy)
+        self.assertTrue(any("cancelled in_app_message" in c for c in r["changes"]))
+
+    def test_in_app_message_already_shown_at_a_later_open_is_not_cancelled(self):
+        v = lapsed_viewer()
+        v["profiles"] = [profile("U1", status="lapsed", push=False)]
+        lp = Loop(**v)
+        lp.run(lp.trigger())
+        lp.run(lp.trigger(at="2026-10-01T06:01:00.000Z"))                 # next open: the message was shown
+        buy = ev("U1", "purchase_completed", "2026-10-01T06:02:00.000Z",
+                 props={"plan_id": "P_MONTH", "price_inr": 149, "is_trial": False})
+        buy["deliver_at"] = buy["received_at"]
+        r = lp.agent.handle_live_event(buy) or {"changes": []}
+        self.assertFalse(any("in_app_message" in c for c in r["changes"]))
 
     def test_withdrawn_title_is_removed_from_live_pages_and_pending_pushes(self):
         lp = Loop(**lapsed_viewer())

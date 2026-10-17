@@ -28,16 +28,13 @@ dec = {d["decision_id"]: d for d in rd(f"{RUN}/decisions.jsonl")}
 acts = rd(f"{RUN}/actions.jsonl")
 msgs = [a for a in acts if a["type"] in ("push", "whatsapp", "in_app_message")]
 forbidden = iv["push"]["copy"]["forbidden_phrases"]
-bad = collections.defaultdict(list); per_day = collections.Counter()
+bad = collections.defaultdict(list); per_day = collections.Counter(); in_app_day = collections.Counter()
 for a in msgs:
     u, send = a["user_id"], T(a.get("send_at") or a["published_at"]); h = send.astimezone(IST)
     col = "notifications_opt_in" if a["type"] == "push" else "whatsapp_opt_in"
     t = cat.get(a.get("title_id")); tr = trig.get(a["trigger_event_id"]); d = dec[a["decision_id"]]
     chk = {
         "holdout": arms.get(u) != "holdout",
-        "consent_all_profile_rows": bool(prof[u]) and all(p[col] == "true" for p in prof[u]),
-        "no_opt_out_before_send": not any(ch == a["type"] and T(at) <= send for ch, at in optout[u]),
-        "quiet_hours_22_08_ist": 8 <= h.hour < 22,
         "send_after_publish": send >= T(a["published_at"]),
         "before_goal_deadline": send < T(d["goal"]["deadline"]),
         "title_exists": t is not None,
@@ -45,7 +42,15 @@ for a in msgs:
         "title_in_app_dialect": t is not None and tr is not None and t["dialect"] == tr["app_dialect"],
         "no_injected_title": a.get("title_id") not in ("T0002", "T0522"),
     }
-    if a["type"] == "push":
+    if a["type"] != "in_app_message":    # in-app needs no consent and is shown inside the app, not at a send time
+        chk.update({
+            "consent_all_profile_rows": bool(prof[u]) and all(p[col] == "true" for p in prof[u]),
+            "no_opt_out_before_send": not any(ch == a["type"] and T(at) <= send for ch, at in optout[u]),
+            "quiet_hours_22_08_ist": 8 <= h.hour < 22,
+        })
+    else:
+        in_app_day[(u, h.date())] += 1
+    if a["type"] in ("push", "in_app_message"):
         ti, bo = a["text"]["title"], a["text"]["body"]; low = (ti + " " + bo).lower()
         lang = tr["app_language"] if tr else None
         kind = {"Chhote": "short", "Short": "short", "Nayi": "new", "A new": "new", "Premium": "premium", "On Premium": "premium", "Aapki": "resume", "Pick up": "resume"}
@@ -76,17 +81,20 @@ for a in msgs:
     for name, ok in chk.items():
         if not ok: bad[name].append(a["action_id"])
     if a["type"] in ("push", "whatsapp"): per_day[(u, h.date())] += 1
-cap = [k for k, n in per_day.items() if n + delivered[k[0]].count(k[1]) > 1]
+cap = [k for k, n in per_day.items() if n + delivered[k[0]].count(k[1]) > 1] + \
+      [k for k, n in in_app_day.items() if n > iv["in_app_message"]["max_per_day"]]
 print("messages audited:", collections.Counter(a["type"] for a in msgs))
-print("checks per message (push / whatsapp): 18 / 16", "| failures:", {k: len(v) for k, v in bad.items()} or "NONE")
-print("frequency cap (1/IST day incl. history deliveries) violations:", len(cap))
-print("viewers messaged without a profile row:", sum(1 for a in msgs if not prof[a["user_id"]]))
+print("checks per message (push / whatsapp / in-app): 18 / 16 / 15", "| failures:", {k: len(v) for k, v in bad.items()} or "NONE")
+print("frequency cap violations (push+WhatsApp 1/IST day incl. history deliveries; in-app 1/IST day):", len(cap))
+ext = [a for a in msgs if a["type"] != "in_app_message"]
+print("viewers sent push/WhatsApp without a profile row:", sum(1 for a in ext if not prof[a["user_id"]]))
 print("cancelled messages leaking into actions.jsonl:", sum(1 for a in acts if a.get("cancelled")))
 print("send hour IST:", sorted(collections.Counter(T(a["send_at"]).astimezone(IST).hour for a in msgs).items()))
 print("by goal:", dict(collections.Counter(a["goal_id"] for a in msgs)))
-result = {"messages": dict(collections.Counter(a["type"] for a in msgs)), "checks_per_message": {"push": 18, "whatsapp": 16},
+result = {"messages": dict(collections.Counter(a["type"] for a in msgs)),
+          "checks_per_message": {"push": 18, "whatsapp": 16, "in_app_message": 15},
           "failures": {k: v[:20] for k, v in bad.items()}, "frequency_cap_violations": len(cap),
-          "messaged_without_profile": sum(1 for a in msgs if not prof[a["user_id"]]),
+          "messaged_without_profile": sum(1 for a in ext if not prof[a["user_id"]]),
           "cancelled_in_actions": sum(1 for a in acts if a.get("cancelled"))}
 json.dump(result, open(f"{RUN}/message_audit.json", "w"), indent=1)
 wa_ok = [u for u in {a["user_id"] for a in acts} if prof[u] and all(p["whatsapp_opt_in"] == "true" for p in prof[u])]

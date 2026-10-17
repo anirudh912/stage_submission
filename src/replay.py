@@ -134,7 +134,7 @@ def main():
     write_jsonl(os.path.join(a.out, "actions_cancelled.jsonl"), [x for x in acts if x.get("cancelled")])
 
     lat = [d["latency_ms"] for d in decisions]
-    pub = [d for d in decisions if d["status"] == "PUBLISHED"]
+    pub = [d for d in decisions if d["status"] in ("PUBLISHED", "DEGRADED_FALLBACK_PAGE")]
     spike = [d for d in decisions if "2026-10-01T15:00" <= d["trigger"]["deliver_at"] < "2026-10-01T15:10"]
     by_hour = Counter(ts(d["trigger"]["deliver_at"]).astimezone(IST).strftime("%H") for d in decisions)
     in_window = lambda win: [d for d in decisions if win(d["trigger"]["deliver_at"])]
