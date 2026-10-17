@@ -2,9 +2,9 @@
 
 Design rules:
   * The viewer is in the app right now, so the main lever is the home page for the dialect the app shows.
-  * A message is only planned when the goal needs the viewer to come back later (G03 / G07 / G06), or for an
-    honest trial-ending reminder (G04, only when the trial end date is known). It is scheduled for the next
-    allowed evening slot, never during quiet hours, and never twice on one IST day.
+  * At most one message: a push the next evening for the goals in MESSAGE_GOALS, or an honest trial-ending
+    WhatsApp (G04, only when the trial end date is known). Never during quiet hours, never twice on one IST day.
+    Push copy only says what is true of the named title (short episode, new release, premium, unfinished).
   * Doing nothing is a normal outcome with a recorded reason (stale trigger, unknown dialect, too little content,
     page already live, no goal).
   * Titles are picked by content_slug (one per page), in the page dialect, available at publish time, and never
@@ -20,7 +20,8 @@ STALE_TRIGGER_S = 600            # older than this, the viewer is not in the app
 PAGE_TTL = timedelta(minutes=120)
 MAX_ROWS, MIN_ROW, MAX_ROW = 6, 3, 10
 MESSAGE_HOUR_IST = 19            # next allowed evening slot (quiet hours are 22:00-08:00 IST)
-MESSAGE_GOALS = {"G03", "G06", "G07"}
+# G01 is left out: its 24 h window usually closes before the next-evening slot (checked anyway below).
+MESSAGE_GOALS = {"G02", "G03", "G05", "G06", "G07", "G08", "G09", "G12"}
 PUSH_TITLE_MAX, PUSH_BODY_MAX = 40, 120
 
 
@@ -134,10 +135,12 @@ def actionable(goal, view, catalog, at):
     return True, None
 
 
-def choose_actionable_goal(view, registry, pack, catalog, at, open_goal=None):
-    """choose_goal, skipping goals that cannot be served for this viewer right now."""
+def choose_actionable_goal(view, registry, pack, catalog, at, open_goal=None, avoid=()):
+    """choose_goal, skipping goals that cannot be served for this viewer right now, and goals a past lesson says
+    to avoid (failed recently although the viewer saw our action)."""
     from .goals import choose_goal
-    skipped = []
+    skipped = [{"goal_id": g, "why_skipped": "lesson: failed recently after exposure; try another goal"}
+               for g in avoid]
     while True:
         g = choose_goal(view, registry, pack, open_goal=open_goal, exclude=[s["goal_id"] for s in skipped])
         if g.goal_id is None or g.continuing:
@@ -153,7 +156,7 @@ def choose_actionable_goal(view, registry, pack, catalog, at, open_goal=None):
     return g
 
 
-def plan(view, goal, pack, catalog, store, publish_at, arm):
+def plan(view, goal, pack, catalog, store, publish_at, arm, push_ok=True):
     """Return a plan dict. `goal` is a goals.GoalChoice. Never raises for normal "do nothing" cases."""
     at = iso(ts(publish_at))
     p = {"actions": [], "no_action_reason": None, "content": [], "assumptions": [], "evidence": [],
@@ -193,6 +196,8 @@ def plan(view, goal, pack, catalog, store, publish_at, arm):
         p["evidence"] += [f"catalogue:{t.split(':')[1]}" for t in p["content"][:3]]
 
     msg, why_not = build_message(view, goal, pack, catalog, store, dialect, at)
+    if msg and msg["type"] == "push" and not push_ok:
+        msg, why_not = None, "lesson: this viewer's push token was invalid last time"
     if msg:
         p["actions"].append(msg)
     elif why_not:
@@ -326,24 +331,50 @@ def build_message(view, goal, pack, catalog, store, dialect, at):
         return None, f"no push consent ({view.f('consent_push').source})"
     if messages_on_day(store, view.user_id, ist_day(send_at), at):
         return None, "a message is already planned or delivered that IST day"
-    if gid == "G07" and goal.success.get("target"):
-        tid = _pick_variant(catalog, goal.success["target"]["content_slug"], dialect, view.value("language"), send_at)
-    else:
-        cand = _ranked(catalog.in_dialect(dialect, send_at), prefer_free=gid == "G03")
-        tid = cand[0]["title_id"] if cand else None
+    tid, kind = _message_title(view, goal, pack, catalog, dialect, send_at)
     if not tid or not catalog.available(tid, send_at):
-        return None, "no title in the viewer's dialect is available at the send time"
+        return None, "no suitable title in the viewer's dialect is available at the send time"
     title = pack.titles[tid]["title"]
     hin = view.value("language") == "hin"
-    if gid == "G07":
-        text = {"title": _clip(title, PUSH_TITLE_MAX),
-                "body": "Aapki kahani wahin ruki hai. Agla episode dekhiye." if hin
-                else "Pick up where you left off: your next episode is waiting."}
-    else:
-        text = {"title": _clip(title, PUSH_TITLE_MAX),
-                "body": "Aaj ke liye ek nayi kahani. Abhi dekhiye." if hin else "Something to watch tonight."}
-    return {"type": "push", "send_at": send_at, "title_id": tid, "text": text,
+    body = PUSH_COPY[kind][0 if hin else 1]
+    return {"type": "push", "send_at": send_at, "title_id": tid,
+            "text": {"title": _clip(title, PUSH_TITLE_MAX), "body": body},
             "deeplink": f"ott://title/{tid}", "goal_id": gid, "evidence": [f"catalogue:{tid}"]}, None
+
+
+# Each body claims only what is true of the title picked for it (checked in _message_title).
+PUSH_COPY = {
+    "resume": ("Aapki kahani wahin ruki hai. Agla episode dekhiye.",
+               "Pick up where you left off: your next episode is waiting."),
+    "short": ("Chhote episode, aapki boli mein. Abhi dekhiye.", "Short episodes in your dialect. Watch now."),
+    "new": ("Nayi release, aapki boli mein. Abhi dekhiye.", "A new release in your dialect. Watch now."),
+    "premium": ("Premium mein: aapki boli ki ek kahani.", "On Premium: a story in your dialect."),
+    "pick": ("Aapke liye chuni gayi kahani. Abhi dekhiye.", "Picked for you. Watch now."),
+}
+
+
+def _message_title(view, goal, pack, catalog, dialect, send_at):
+    """The title a push names, chosen so that its copy is true. Never a title the viewer has finished."""
+    gid = goal.goal_id
+    if gid == "G07" and goal.success.get("target"):
+        return _pick_variant(catalog, goal.success["target"]["content_slug"], dialect, view.value("language"),
+                             send_at), "resume"
+    _, done, _ = _watch_profile(view, pack)
+    pool = [t for t in catalog.in_dialect(dialect, send_at) if t["content_slug"] not in done]
+    payer = view.value("subscription_status") in ("active", "trial_active")
+    if gid == "G02":
+        pool, kind = [t for t in pool if t["content_type"] == "micro_drama"], "short"
+    elif gid == "G08":
+        pool, kind = [t for t in pool if _released_within(t, send_at, NEW_RELEASE_DAYS)], "new"
+    elif gid in ("G05", "G06"):
+        pool, kind = [t for t in pool if t["is_premium"]], "premium"
+    else:
+        kind = "pick"
+    ranked = _ranked(pool, prefer_free=not payer and kind != "premium")
+    if not ranked:
+        return None, kind
+    slug = ranked[0]["content_slug"]
+    return _pick_variant(catalog, slug, dialect, view.value("language"), send_at), kind
 
 
 def _clip(s, n):

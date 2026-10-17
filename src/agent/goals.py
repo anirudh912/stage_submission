@@ -8,7 +8,8 @@ Goals we never choose:
   G11 tv_activation_14d: tv_app_open does not exist in the event stream
 Underspecified goals, and the definitions we picked:
   G06 "recently lapsed" = subscription_lapsed event within 30 days (resolver.RECENT_LAPSE_DAYS)
-  G07 "unwatched episodes left" = furthest episode reached < episodes in the content_slug, idle 3+ days
+  G07 "unwatched episodes left" = furthest episode reached < episodes in the content_slug, idle 3+ days;
+      we also require at least one COMPLETED episode of that series (policy: narrows goals.json, never widens it)
 """
 import copy
 from dataclasses import asdict, dataclass, field

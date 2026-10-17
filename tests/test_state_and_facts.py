@@ -121,10 +121,17 @@ class ResolverTests(unittest.TestCase):
         self.assertEqual(f.value, 9.0)
         self.assertEqual(f.confidence, "medium")
 
+    def test_sampling_one_episode_is_not_an_unfinished_series(self):
+        s = new_store()
+        load(s, [profile("U1")], [
+            ev("U1", "play_started", "2026-09-20T10:00:00.000Z", props={"title_id": "T1", "episode_id": "show-a-d1-s1e1"})])
+        self.assertEqual(resolve(s, self.pack, "U1", NOW).value("unfinished_series"), [])
+
     def test_unfinished_series_counts_language_variants_as_one_title(self):
         s = new_store()
         load(s, [profile("U1")], [
             ev("U1", "play_started", "2026-09-20T10:00:00.000Z", props={"title_id": "T1", "episode_id": "show-a-d1-s1e1"}),
+            ev("U1", "episode_completed", "2026-09-20T10:20:00.000Z", props={"title_id": "T1", "episode_id": "show-a-d1-s1e1"}),
             ev("U1", "play_started", "2026-09-21T10:00:00.000Z", props={"title_id": "T1e", "episode_id": "show-a-d1-s1e2"}),
         ])
         series = resolve(s, self.pack, "U1", NOW).value("unfinished_series")

@@ -22,7 +22,8 @@ from .timeutil import age_s, ist_day, iso, ts
 
 PROFILE_STALE_H = 36       # profile older than this is "stale": fine for slow facts, weak for status
 RECENT_LAPSE_DAYS = 30     # G06 "recently lapsed" (definition we chose; goals.json leaves it open)
-SERIES_IDLE_DAYS = 3       # G07 "not played it for 3 or more days"
+SERIES_IDLE_DAYS = 3       # G07 "not played it for 3 or more days" (goals.json; not ours to change)
+SERIES_MIN_COMPLETED = 1   # our policy on top of goals.json: a viewer who only sampled a series is not "resuming"
 TRIAL_DAYS = 3             # pricing.json P_TRIAL
 
 
@@ -265,7 +266,8 @@ def resolve(store, pack, user_id, now, trigger=None):
     series = _unfinished_series(pack, plays + comps + by_type.get("play_progress", []), now)
     put(Fact("unfinished_series", [s["summary"] for s in series], "derived",
              [r for s in series for r in s["refs"]], iso(now),
-             note=f"show/micro_drama with episodes left and no play for {SERIES_IDLE_DAYS}+ days"))
+             note=f"show/micro_drama with episodes left, no play for {SERIES_IDLE_DAYS}+ days, and at least "
+                  f"{SERIES_MIN_COMPLETED} episode completed (sampling one episode is not an unfinished series)"))
 
     # ---------------------------------------------------------------- trigger freshness
     if trigger:
@@ -298,8 +300,12 @@ def _unfinished_series(pack, watch_events, now):
             continue
         slug = t["content_slug"]
         pos = pack.episode_position(slug, e["properties"].get("episode_id"))
-        s = by_slug.setdefault(slug, {"last": None, "max_pos": 0, "title_ids": set(), "last_ref": None})
+        s = by_slug.setdefault(slug, {"last": None, "max_pos": 0, "title_ids": set(), "last_ref": None,
+                                      "completed": set(), "completed_ref": None})
         s["title_ids"].add(tid)
+        if e["event"] == "episode_completed":
+            s["completed"].add(e["properties"].get("episode_id"))
+            s["completed_ref"] = s["completed_ref"] or eref(e)
         if pos:
             s["max_pos"] = max(s["max_pos"], pos)
         if s["last"] is None or _when(e) > s["last"]:
@@ -308,11 +314,13 @@ def _unfinished_series(pack, watch_events, now):
     for slug, s in by_slug.items():
         total = pack.episodes.get(slug, {}).get("count", 0)
         idle_days = (now - s["last"]).total_seconds() / 86400
-        if s["max_pos"] and s["max_pos"] < total and idle_days >= SERIES_IDLE_DAYS:
+        if s["max_pos"] and s["max_pos"] < total and idle_days >= SERIES_IDLE_DAYS \
+                and len(s["completed"]) >= SERIES_MIN_COMPLETED:
             next_ep = pack.episodes[slug]["episode_ids"][s["max_pos"]]
-            out.append({"slug": slug, "refs": [s["last_ref"], f"catalogue:{slug}"],
+            out.append({"slug": slug, "refs": [s["last_ref"], s["completed_ref"], f"catalogue:{slug}"],
                         "summary": {"content_slug": slug, "title_ids": sorted(s["title_ids"]),
                                     "furthest_episode": s["max_pos"], "episodes_total": total,
+                                    "episodes_completed": len(s["completed"]),
                                     "next_episode_id": next_ep, "last_played_at": iso(s["last"]),
                                     "idle_days": round(idle_days, 1)}})
     out.sort(key=lambda s: s["summary"]["last_played_at"], reverse=True)
