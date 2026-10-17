@@ -251,6 +251,22 @@ class Store:
                          a.get("send_at"), _j(a)))
         self.db.commit()
 
+    def cancel_action(self, action_id, at, reason):
+        """Mark a not-yet-sent action as cancelled (e.g. a scheduled push for a goal that is already met)."""
+        r = self.db.execute("SELECT record FROM actions WHERE action_id=?", (action_id,)).fetchone()
+        rec = _uj(r["record"])
+        rec["cancelled"] = {"at": at, "reason": reason}
+        self.db.execute("UPDATE actions SET record=? WHERE action_id=?", (_j(rec), action_id))
+        self.db.commit()
+
+    def all_actions(self):
+        return [_uj(r["record"]) for r in self.db.execute("SELECT record FROM actions ORDER BY published_at, action_id")]
+
+    def pages_published_between(self, start, end):
+        return [_uj(r["record"]) for r in self.db.execute(
+            "SELECT record FROM actions WHERE type='home_page' AND published_at >= ? AND published_at < ?"
+            " ORDER BY published_at", (start, end))]
+
     def actions_for(self, user_id):
         return [_uj(r["record"]) for r in self.db.execute(
             "SELECT record FROM actions WHERE user_id=? ORDER BY published_at", (user_id,)).fetchall()]

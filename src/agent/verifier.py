@@ -85,6 +85,17 @@ class Verifier:
                 approved.append(a)
         return approved, {"passed": passed, "failed": failed}
 
+    def check_claim(self, user_id, trigger, now, goal_id, target=None):
+        """Check an advisor's 'viewer is eligible for goal X' claim against the data only."""
+        if not goal_id:
+            return False, "no goal named"
+        if goal_id not in self.registry.goals:
+            return False, f"{goal_id} is not a goal in goals.json"
+        self.now = ts(now)
+        self.events = self.store.events_for(user_id, until=self.now)
+        self.profiles = self.store.profile_versions(user_id)
+        return self._eligible(user_id, {"goal_id": goal_id, "success": {"target": target}}, trigger)
+
     # ------------------------------------------------------------------ decision-level
     def _evidence(self, user_id, refs):
         """Every event/profile ref must exist, belong to this viewer and be known at decision time.
