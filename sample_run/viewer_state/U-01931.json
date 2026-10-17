@@ -20,43 +20,30 @@
  ],
  "goals": [
   {
-   "goal_instance_id": "GI-02011",
+   "goal_instance_id": "GI-02012",
    "user_id": "U-01931",
-   "goal_id": "G07",
+   "goal_id": "G05",
    "status": "failed",
    "started_at": "2026-10-01T15:01:03.668Z",
-   "deadline": "2026-10-04T15:01:03.668Z",
+   "deadline": "2026-10-08T15:01:03.668Z",
    "success_spec": {
-    "condition": "same content_slug as the unfinished series",
-    "event": "play_started",
-    "goal_id": "G07",
+    "condition": "is_trial = false",
+    "event": "purchase_completed",
+    "goal_id": "G05",
     "rule_version": 1,
-    "target": {
-     "content_slug": "hama-chudibha-d1",
-     "episodes_completed": 1,
-     "episodes_total": 36,
-     "furthest_episode": 1,
-     "idle_days": 10.0,
-     "last_played_at": "2026-09-21T15:44:52.342Z",
-     "next_episode_id": "hama-chudibha-d1-s1e2",
-     "title_ids": [
-      "T0002"
-     ]
-    },
-    "window_hours": 72
+    "window_hours": 168
    },
    "rule_version": 1,
-   "decision_id": "D-02011",
+   "decision_id": "D-02012",
    "evidence": [
-    "event:b2cc4969-8187-4747-bc1d-e1f8809503af",
-    "event:b2cc4969-8187-4747-bc1d-e1f8809503af",
-    "catalogue:hama-chudibha-d1",
-    "goal_rule:G07-elig-v1"
+    "profile:U-01931@2026-09-29T16:23:21.608Z",
+    "profile:U-01931@2026-09-29T16:23:21.608Z",
+    "goal_rule:G05-elig-v1"
    ],
    "closed_at": "2026-10-15T18:30:00.000Z",
    "judgement": {
     "attribution": "holdout",
-    "reason": "no qualifying play_started by 2026-10-04T15:01:03.668Z",
+    "reason": "no qualifying purchase_completed by 2026-10-08T15:01:03.668Z",
     "rule_version": 1,
     "signal": null,
     "status": "failed"
@@ -92,13 +79,13 @@
      "budget"
     ]
    },
-   "confidence": 0.9,
-   "confidence_reason": "weakest deciding fact: unfinished_series (high, source derived)",
+   "confidence": 0.7,
+   "confidence_reason": "weakest deciding fact: subscription_status (medium, source profile, 46h old)",
    "conflicts": [],
    "content": [],
    "created_at": "2026-10-01T15:01:03.668Z",
-   "decided_in_ms": 401.9,
-   "decision_id": "D-02011",
+   "decided_in_ms": 403.0,
+   "decision_id": "D-02012",
    "dialect": {
     "conflicts": [],
     "rule": "R-dialect-1",
@@ -107,16 +94,11 @@
    },
    "evidence": [
     {
-     "age_s": 861371.3,
-     "event": "episode_completed",
-     "received_at": "2026-09-21T15:44:52.342Z",
-     "ref": "event:b2cc4969-8187-4747-bc1d-e1f8809503af"
+     "age_s": 167862.1,
+     "ref": "profile:U-01931@2026-09-29T16:23:21.608Z"
     },
     {
-     "ref": "catalogue:hama-chudibha-d1"
-    },
-    {
-     "ref": "goal_rule:G07-elig-v1"
+     "ref": "goal_rule:G05-elig-v1"
     }
    ],
    "goal": {
@@ -154,6 +136,7 @@
      {
       "eligible": true,
       "goal_id": "G07",
+      "skipped": "the unfinished series hama-chudibha-d1 cannot be promoted now (not available, or flagged for injected instructions)",
       "why": "1 unfinished series idle 3+ days"
      },
      {
@@ -183,40 +166,29 @@
      }
     ],
     "continuing": false,
-    "deadline": "2026-10-04T15:01:03.668Z",
-    "id": "G07",
-    "instance": "GI-02011",
+    "deadline": "2026-10-08T15:01:03.668Z",
+    "id": "G05",
+    "instance": "GI-02012",
     "shadow": true,
     "success_signal": {
-     "condition": "same content_slug as the unfinished series",
-     "event": "play_started",
+     "condition": "is_trial = false",
+     "event": "purchase_completed",
      "rule_version": 1,
-     "window_hours": 72
+     "window_hours": 168
     },
-    "target": {
-     "content_slug": "hama-chudibha-d1",
-     "episodes_completed": 1,
-     "episodes_total": 36,
-     "furthest_episode": 1,
-     "idle_days": 10.0,
-     "last_played_at": "2026-09-21T15:44:52.342Z",
-     "next_episode_id": "hama-chudibha-d1-s1e2",
-     "title_ids": [
-      "T0002"
-     ]
-    },
-    "why": "1 unfinished series idle 3+ days"
+    "target": null,
+    "why": "subscription_status=never, ever_paid=False"
    },
    "judged_by": {
-    "deadline": "2026-10-04T15:01:03.668Z",
+    "deadline": "2026-10-08T15:01:03.668Z",
     "signal": {
-     "condition": "same content_slug as the unfinished series",
-     "event": "play_started",
+     "condition": "is_trial = false",
+     "event": "purchase_completed",
      "rule_version": 1,
-     "window_hours": 72
+     "window_hours": 168
     }
    },
-   "latency_ms": 401.9,
+   "latency_ms": 403.0,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -227,15 +199,15 @@
     "claim": {
      "confidence": 0.6,
      "eligible": true,
-     "goal_id": "G07",
-     "reason": "agrees with rule ranking: 1 unfinished series idle 3+ days"
+     "goal_id": "G05",
+     "reason": "agrees with rule ranking: subscription_status=never, ever_paid=False"
     },
     "elapsed_s": 0.4,
     "outcome": "agreed",
     "provider": "mock"
    },
    "no_action_reason": "viewer is in the 'holdout' arm: shadow decision only, no action of any kind",
-   "processing_ms": 1.95,
+   "processing_ms": 3.02,
    "published_at": null,
    "queue_wait_ms": 0.0,
    "rows_explained": [],
@@ -277,8 +249,8 @@
    "conflicts": [],
    "content": [],
    "created_at": "2026-10-01T15:01:08.595Z",
-   "decided_in_ms": 401.5,
-   "decision_id": "D-02012",
+   "decided_in_ms": 402.8,
+   "decision_id": "D-02013",
    "dialect": {
     "conflicts": [],
     "rule": "R-dialect-1",
@@ -287,16 +259,11 @@
    },
    "evidence": [
     {
-     "age_s": 861376.3,
-     "event": "episode_completed",
-     "received_at": "2026-09-21T15:44:52.342Z",
-     "ref": "event:b2cc4969-8187-4747-bc1d-e1f8809503af"
+     "age_s": 167867.0,
+     "ref": "profile:U-01931@2026-09-29T16:23:21.608Z"
     },
     {
-     "ref": "catalogue:hama-chudibha-d1"
-    },
-    {
-     "ref": "goal_rule:G07-elig-v1"
+     "ref": "goal_rule:G05-elig-v1"
     }
    ],
    "goal": {
@@ -363,40 +330,29 @@
      }
     ],
     "continuing": true,
-    "deadline": "2026-10-04T15:01:03.668Z",
-    "id": "G07",
-    "instance": "GI-02011",
+    "deadline": "2026-10-08T15:01:03.668Z",
+    "id": "G05",
+    "instance": "GI-02012",
     "shadow": true,
     "success_signal": {
-     "condition": "same content_slug as the unfinished series",
-     "event": "play_started",
+     "condition": "is_trial = false",
+     "event": "purchase_completed",
      "rule_version": 1,
-     "window_hours": 72
+     "window_hours": 168
     },
-    "target": {
-     "content_slug": "hama-chudibha-d1",
-     "episodes_completed": 1,
-     "episodes_total": 36,
-     "furthest_episode": 1,
-     "idle_days": 10.0,
-     "last_played_at": "2026-09-21T15:44:52.342Z",
-     "next_episode_id": "hama-chudibha-d1-s1e2",
-     "title_ids": [
-      "T0002"
-     ]
-    },
-    "why": "continuing open goal GI-02011 (one active plan per viewer)"
+    "target": null,
+    "why": "continuing open goal GI-02012 (one active plan per viewer)"
    },
    "judged_by": {
-    "deadline": "2026-10-04T15:01:03.668Z",
+    "deadline": "2026-10-08T15:01:03.668Z",
     "signal": {
-     "condition": "same content_slug as the unfinished series",
-     "event": "play_started",
+     "condition": "is_trial = false",
+     "event": "purchase_completed",
      "rule_version": 1,
-     "window_hours": 72
+     "window_hours": 168
     }
    },
-   "latency_ms": 401.5,
+   "latency_ms": 402.8,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -407,7 +363,7 @@
     "claim": {
      "confidence": 0.6,
      "eligible": true,
-     "goal_id": "G07",
+     "goal_id": "G05",
      "reason": "keep the goal already in progress"
     },
     "elapsed_s": 0.4,
@@ -415,7 +371,7 @@
     "provider": "mock"
    },
    "no_action_reason": "viewer is in the 'holdout' arm: shadow decision only, no action of any kind",
-   "processing_ms": 1.52,
+   "processing_ms": 2.84,
    "published_at": null,
    "queue_wait_ms": 0.0,
    "rows_explained": [],
@@ -435,9 +391,9 @@
  ],
  "facts_at_last_decision": [
   {
-   "id": 29477,
+   "id": 29492,
    "user_id": "U-01931",
-   "decision_id": "D-02012",
+   "decision_id": "D-02013",
    "name": "profile",
    "value": {
     "stale": true,
@@ -456,9 +412,9 @@
    "recorded_at": "2026-10-01T15:01:08.595Z"
   },
   {
-   "id": 29478,
+   "id": 29493,
    "user_id": "U-01931",
-   "decision_id": "D-02012",
+   "decision_id": "D-02013",
    "name": "signup_at",
    "value": "2026-05-01T22:58:53.292Z",
    "source": "profile",
@@ -474,9 +430,9 @@
    "recorded_at": "2026-10-01T15:01:08.595Z"
   },
   {
-   "id": 29479,
+   "id": 29494,
    "user_id": "U-01931",
-   "decision_id": "D-02012",
+   "decision_id": "D-02013",
    "name": "subscription_status",
    "value": "never",
    "source": "profile",
@@ -492,9 +448,9 @@
    "recorded_at": "2026-10-01T15:01:08.595Z"
   },
   {
-   "id": 29480,
+   "id": 29495,
    "user_id": "U-01931",
-   "decision_id": "D-02012",
+   "decision_id": "D-02013",
    "name": "ever_paid",
    "value": false,
    "source": "profile",
@@ -510,9 +466,9 @@
    "recorded_at": "2026-10-01T15:01:08.595Z"
   },
   {
-   "id": 29481,
+   "id": 29496,
    "user_id": "U-01931",
-   "decision_id": "D-02012",
+   "decision_id": "D-02013",
    "name": "dialect",
    "value": "d1",
    "source": "app_setting",
@@ -528,9 +484,9 @@
    "recorded_at": "2026-10-01T15:01:08.595Z"
   },
   {
-   "id": 29482,
+   "id": 29497,
    "user_id": "U-01931",
-   "decision_id": "D-02012",
+   "decision_id": "D-02013",
    "name": "language",
    "value": "hin",
    "source": "app_setting",
@@ -546,9 +502,9 @@
    "recorded_at": "2026-10-01T15:01:08.595Z"
   },
   {
-   "id": 29483,
+   "id": 29498,
    "user_id": "U-01931",
-   "decision_id": "D-02012",
+   "decision_id": "D-02013",
    "name": "consent_push",
    "value": true,
    "source": "profile",
@@ -564,9 +520,9 @@
    "recorded_at": "2026-10-01T15:01:08.595Z"
   },
   {
-   "id": 29484,
+   "id": 29499,
    "user_id": "U-01931",
-   "decision_id": "D-02012",
+   "decision_id": "D-02013",
    "name": "consent_whatsapp",
    "value": true,
    "source": "profile",
@@ -582,9 +538,9 @@
    "recorded_at": "2026-10-01T15:01:08.595Z"
   },
   {
-   "id": 29485,
+   "id": 29500,
    "user_id": "U-01931",
-   "decision_id": "D-02012",
+   "decision_id": "D-02013",
    "name": "has_played",
    "value": true,
    "source": "event",
@@ -600,9 +556,9 @@
    "recorded_at": "2026-10-01T15:01:08.595Z"
   },
   {
-   "id": 29486,
+   "id": 29501,
    "user_id": "U-01931",
-   "decision_id": "D-02012",
+   "decision_id": "D-02013",
    "name": "has_completed_episode",
    "value": true,
    "source": "event",
@@ -618,9 +574,9 @@
    "recorded_at": "2026-10-01T15:01:08.595Z"
   },
   {
-   "id": 29487,
+   "id": 29502,
    "user_id": "U-01931",
-   "decision_id": "D-02012",
+   "decision_id": "D-02013",
    "name": "play_days_14d",
    "value": 1,
    "source": "derived",
@@ -636,9 +592,9 @@
    "recorded_at": "2026-10-01T15:01:08.595Z"
   },
   {
-   "id": 29488,
+   "id": 29503,
    "user_id": "U-01931",
-   "decision_id": "D-02012",
+   "decision_id": "D-02013",
    "name": "last_open_before_trigger",
    "value": "2026-10-01T15:01:03.668Z",
    "source": "event",
@@ -654,9 +610,9 @@
    "recorded_at": "2026-10-01T15:01:08.595Z"
   },
   {
-   "id": 29489,
+   "id": 29504,
    "user_id": "U-01931",
-   "decision_id": "D-02012",
+   "decision_id": "D-02013",
    "name": "recent_lapse",
    "value": null,
    "source": "derived",
@@ -672,9 +628,9 @@
    "recorded_at": "2026-10-01T15:01:08.595Z"
   },
   {
-   "id": 29490,
+   "id": 29505,
    "user_id": "U-01931",
-   "decision_id": "D-02012",
+   "decision_id": "D-02013",
    "name": "unfinished_series",
    "value": [
     {
@@ -705,9 +661,9 @@
    "recorded_at": "2026-10-01T15:01:08.595Z"
   },
   {
-   "id": 29491,
+   "id": 29506,
    "user_id": "U-01931",
-   "decision_id": "D-02012",
+   "decision_id": "D-02013",
    "name": "trigger_age_s",
    "value": 0.0,
    "source": "derived",
@@ -726,13 +682,13 @@
  "actions": [],
  "learnings": [
   {
-   "goal_instance_id": "GI-02011",
+   "goal_instance_id": "GI-02012",
    "at": "2026-10-15T18:30:00.000Z",
    "note": {
     "attribution": "holdout",
     "effects": {},
-    "goal_id": "G07",
-    "goal_instance_id": "GI-02011",
+    "goal_id": "G05",
+    "goal_instance_id": "GI-02012",
     "notes": [],
     "result": "failed"
    }

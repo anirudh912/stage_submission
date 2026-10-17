@@ -28,12 +28,12 @@
    "closed_at": "2026-10-15T18:30:00.000Z",
    "judgement": {
     "attribution": "success_after_exposure",
-    "reason": "play_started oua-024708 at 2026-10-01T05:54:42.536Z",
+    "reason": "play_started oua-024758 at 2026-10-01T05:54:42.536Z",
     "rule_version": 1,
     "signal": {
      "at": "2026-10-01T05:54:42.536Z",
      "event": "play_started",
-     "event_id": "oua-024708"
+     "event_id": "oua-024758"
     },
     "status": "succeeded"
    },
@@ -48,13 +48,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-00299"
+    "A-00346",
+    "A-00347"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: next allowed send slot is after the goal deadline",
+    "in-app message (shown at the next app open) because no push/WhatsApp: next allowed send slot is after the goal deadline",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -77,7 +78,10 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.8,
@@ -137,7 +141,7 @@
     "title:T0615"
    ],
    "created_at": "2026-10-01T05:49:43.536Z",
-   "decided_in_ms": 406.0,
+   "decided_in_ms": 412.8,
    "decision_id": "D-00716",
    "dialect": {
     "conflicts": [],
@@ -256,7 +260,7 @@
      "window_hours": 24
     }
    },
-   "latency_ms": 406.0,
+   "latency_ms": 412.8,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -275,8 +279,8 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 6.0,
-   "published_at": "2026-10-01T05:49:43.942Z",
+   "processing_ms": 12.81,
+   "published_at": "2026-10-01T05:49:43.948Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
@@ -322,8 +326,8 @@
    "action_ids": [],
    "arm": "agent",
    "assumptions": [
-    "page A-00299 for d2 is still live and unchanged",
-    "no message: next allowed send slot is after the goal deadline"
+    "page A-00346 for d2 is still live and unchanged",
+    "no message: no push/WhatsApp: next allowed send slot is after the goal deadline; an in-app message is already queued today (max 1 per day)"
    ],
    "budget": {
     "model_calls": 1,
@@ -345,7 +349,7 @@
    "conflicts": [],
    "content": [],
    "created_at": "2026-10-01T05:49:49.087Z",
-   "decided_in_ms": 404.6,
+   "decided_in_ms": 408.3,
    "decision_id": "D-00717",
    "dialect": {
     "conflicts": [],
@@ -458,7 +462,7 @@
      "window_hours": 24
     }
    },
-   "latency_ms": 404.6,
+   "latency_ms": 408.3,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -476,8 +480,8 @@
     "outcome": "agreed",
     "provider": "mock"
    },
-   "no_action_reason": "personalised page A-00299 is still live for this goal; nothing new to add",
-   "processing_ms": 4.64,
+   "no_action_reason": "personalised page A-00346 is still live for this goal; nothing new to add",
+   "processing_ms": 8.31,
    "published_at": null,
    "queue_wait_ms": 0.0,
    "rows_explained": [],
@@ -755,13 +759,13 @@
  ],
  "actions": [
   {
-   "action_id": "A-00299",
+   "action_id": "A-00346",
    "decision_id": "D-00716",
    "dialect": "d2",
    "goal_id": "G01",
    "goal_instance": "GI-00716",
    "hero_title_id": "T0523",
-   "published_at": "2026-10-01T05:49:43.942Z",
+   "published_at": "2026-10-01T05:49:43.948Z",
    "rows": [
     {
      "row_type": "popular_in_dialect",
@@ -842,6 +846,23 @@
    "trigger_event_id": "20f80b5e-a090-4079-87c1-8f9da54d0e46",
    "type": "home_page",
    "user_id": "U-03790"
+  },
+  {
+   "action_id": "A-00347",
+   "decision_id": "D-00716",
+   "deeplink": "ott://title/T0521",
+   "goal_id": "G01",
+   "goal_instance": "GI-00716",
+   "published_at": "2026-10-01T05:49:43.948Z",
+   "send_at": "2026-10-01T05:49:43.948Z",
+   "text": {
+    "body": "Aapke liye chuni gayi kahani. Abhi dekhiye.",
+    "title": "Molo"
+   },
+   "title_id": "T0521",
+   "trigger_event_id": "20f80b5e-a090-4079-87c1-8f9da54d0e46",
+   "type": "in_app_message",
+   "user_id": "U-03790"
   }
  ],
  "learnings": [
@@ -854,7 +875,7 @@
     "goal_id": "G01",
     "goal_instance_id": "GI-00716",
     "notes": [
-     "G01 reached after exposure (home_page)"
+     "G01 reached after exposure (home_page, in_app_message)"
     ],
     "result": "succeeded"
    }

@@ -74,8 +74,8 @@
   {
    "action": "HOME_PAGE+PUSH",
    "action_ids": [
-    "A-00315",
-    "A-00316"
+    "A-00365",
+    "A-00366"
    ],
    "arm": "agent",
    "assumptions": [
@@ -127,8 +127,9 @@
     }
    ],
    "content": [
-    "title:T1976",
     "title:T1977",
+    "title:T1976",
+    "title:T1392",
     "title:T1395",
     "title:T1984",
     "title:T1981",
@@ -139,6 +140,7 @@
     "title:T2014",
     "title:T1431",
     "title:T2007",
+    "title:T1403",
     "title:T1413",
     "title:T1417",
     "title:T1991",
@@ -148,8 +150,8 @@
     "title:T1472",
     "title:T1489",
     "title:T2013",
+    "title:T1493",
     "title:T1978",
-    "title:T1392",
     "title:T1391",
     "title:T1979",
     "title:T1390",
@@ -158,6 +160,7 @@
     "title:T1398",
     "title:T1397",
     "title:T1982",
+    "title:T1406",
     "title:T1463",
     "title:T1486",
     "title:T1421",
@@ -165,20 +168,10 @@
     "title:T1461",
     "title:T2004",
     "title:T2009",
-    "title:T2012",
-    "title:T1406",
-    "title:T1399",
-    "title:T1414",
-    "title:T1450",
-    "title:T2003",
-    "title:T1439",
-    "title:T1445",
-    "title:T1449",
-    "title:T2000",
-    "title:T1462"
+    "title:T2012"
    ],
    "created_at": "2026-10-01T06:01:00.811Z",
-   "decided_in_ms": 404.7,
+   "decided_in_ms": 411.7,
    "decision_id": "D-00744",
    "dialect": {
     "conflicts": [
@@ -202,13 +195,13 @@
      "ref": "goal_rule:G07-elig-v1"
     },
     {
-     "ref": "catalogue:T1976"
-    },
-    {
      "ref": "catalogue:T1977"
     },
     {
-     "ref": "catalogue:T1395"
+     "ref": "catalogue:T1976"
+    },
+    {
+     "ref": "catalogue:T1392"
     }
    ],
    "goal": {
@@ -308,7 +301,7 @@
      "window_hours": 72
     }
    },
-   "latency_ms": 404.7,
+   "latency_ms": 411.7,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -327,13 +320,17 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 4.74,
-   "published_at": "2026-10-01T06:01:01.215Z",
+   "processing_ms": 11.66,
+   "published_at": "2026-10-01T06:01:01.222Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
      "row_type": "hero",
-     "why": "the unfinished series this goal is about"
+     "why": "most-played title in this dialect"
+    },
+    {
+     "row_type": "next_episode",
+     "why": "series the viewer has started in this dialect, led by the unfinished series this goal is about"
     },
     {
      "row_type": "because_you_watched",
@@ -350,10 +347,6 @@
     {
      "row_type": "new_releases",
      "why": "released in the last 30 days"
-    },
-    {
-     "row_type": "genre",
-     "why": "genre: Action"
     }
    ],
    "status": "PUBLISHED",
@@ -670,19 +663,25 @@
  ],
  "actions": [
   {
-   "action_id": "A-00315",
+   "action_id": "A-00365",
    "decision_id": "D-00744",
    "dialect": "d6",
    "goal_id": "G07",
    "goal_instance": "GI-00744",
-   "hero_title_id": "T1976",
-   "published_at": "2026-10-01T06:01:01.215Z",
+   "hero_title_id": "T1977",
+   "published_at": "2026-10-01T06:01:01.222Z",
    "rows": [
+    {
+     "row_type": "next_episode",
+     "title_ids": [
+      "T1976",
+      "T1392",
+      "T1395"
+     ]
+    },
     {
      "row_type": "because_you_watched",
      "title_ids": [
-      "T1977",
-      "T1395",
       "T1984",
       "T1981",
       "T1500",
@@ -690,13 +689,14 @@
       "T1419",
       "T1992",
       "T2014",
-      "T1431"
+      "T1431",
+      "T2007",
+      "T1403"
      ]
     },
     {
      "row_type": "genre",
      "title_ids": [
-      "T2007",
       "T1413",
       "T1417",
       "T1991",
@@ -705,14 +705,14 @@
       "T1459",
       "T1472",
       "T1489",
-      "T2013"
+      "T2013",
+      "T1493"
      ]
     },
     {
      "row_type": "popular_in_dialect",
      "title_ids": [
       "T1978",
-      "T1392",
       "T1391",
       "T1979",
       "T1390",
@@ -720,7 +720,8 @@
       "T1393",
       "T1398",
       "T1397",
-      "T1982"
+      "T1982",
+      "T1406"
      ]
     },
     {
@@ -735,21 +736,6 @@
       "T2009",
       "T2012"
      ]
-    },
-    {
-     "row_type": "genre",
-     "title_ids": [
-      "T1406",
-      "T1399",
-      "T1414",
-      "T1450",
-      "T2003",
-      "T1439",
-      "T1445",
-      "T1449",
-      "T2000",
-      "T1462"
-     ]
     }
    ],
    "trigger_event_id": "bb9f43dc-544d-4823-8f23-cacf40b1e8cc",
@@ -757,12 +743,12 @@
    "user_id": "U-01183"
   },
   {
-   "action_id": "A-00316",
+   "action_id": "A-00366",
    "decision_id": "D-00744",
    "deeplink": "ott://title/T1976",
    "goal_id": "G07",
    "goal_instance": "GI-00744",
-   "published_at": "2026-10-01T06:01:01.215Z",
+   "published_at": "2026-10-01T06:01:01.222Z",
    "send_at": "2026-10-02T13:30:00.000Z",
    "text": {
     "body": "Pick up where you left off: your next episode is waiting.",

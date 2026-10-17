@@ -72,13 +72,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-00282"
+    "A-00326",
+    "A-00327"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: no push consent (profile) and no usable WhatsApp (no consent)",
+    "in-app message (shown at the next app open) because no push/WhatsApp: no push consent (profile) and no usable WhatsApp (no consent)",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -101,7 +102,10 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.9,
@@ -175,7 +179,7 @@
     "title:T0216"
    ],
    "created_at": "2026-10-01T05:37:32.554Z",
-   "decided_in_ms": 406.2,
+   "decided_in_ms": 411.0,
    "decision_id": "D-00689",
    "dialect": {
     "conflicts": [
@@ -305,7 +309,7 @@
      "window_hours": 72
     }
    },
-   "latency_ms": 406.2,
+   "latency_ms": 411.0,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -324,8 +328,8 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 6.19,
-   "published_at": "2026-10-01T05:37:32.960Z",
+   "processing_ms": 11.03,
+   "published_at": "2026-10-01T05:37:32.965Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
@@ -663,13 +667,13 @@
  ],
  "actions": [
   {
-   "action_id": "A-00282",
+   "action_id": "A-00326",
    "decision_id": "D-00689",
    "dialect": "d1",
    "goal_id": "G07",
    "goal_instance": "GI-00689",
    "hero_title_id": "T0034",
-   "published_at": "2026-10-01T05:37:32.960Z",
+   "published_at": "2026-10-01T05:37:32.965Z",
    "rows": [
     {
      "row_type": "because_you_watched",
@@ -749,6 +753,23 @@
    ],
    "trigger_event_id": "df1ec962-b151-4d09-9572-7fe7ffe4bb2e",
    "type": "home_page",
+   "user_id": "U-02044"
+  },
+  {
+   "action_id": "A-00327",
+   "decision_id": "D-00689",
+   "deeplink": "ott://title/T0034",
+   "goal_id": "G07",
+   "goal_instance": "GI-00689",
+   "published_at": "2026-10-01T05:37:32.965Z",
+   "send_at": "2026-10-01T05:37:32.965Z",
+   "text": {
+    "body": "Aapki kahani wahin ruki hai. Agla episode dekhiye.",
+    "title": "Labha"
+   },
+   "title_id": "T0034",
+   "trigger_event_id": "df1ec962-b151-4d09-9572-7fe7ffe4bb2e",
+   "type": "in_app_message",
    "user_id": "U-02044"
   }
  ],

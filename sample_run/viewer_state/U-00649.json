@@ -20,7 +20,7 @@
  ],
  "goals": [
   {
-   "goal_instance_id": "GI-00937",
+   "goal_instance_id": "GI-00938",
    "user_id": "U-00649",
    "goal_id": "G05",
    "status": "succeeded",
@@ -34,7 +34,7 @@
     "window_hours": 168
    },
    "rule_version": 1,
-   "decision_id": "D-00937",
+   "decision_id": "D-00938",
    "evidence": [
     "profile:U-00649@2026-09-29T02:21:02.066Z",
     "profile:U-00649@2026-09-29T02:21:02.066Z",
@@ -67,13 +67,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-00452"
+    "A-00520",
+    "A-00521"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: no push consent (profile) and no usable WhatsApp (no consent)",
+    "in-app message (shown at the next app open) because no push/WhatsApp: no push consent (profile) and no usable WhatsApp (no consent)",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -96,7 +97,10 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.7,
@@ -156,8 +160,8 @@
     "title:T1048"
    ],
    "created_at": "2026-10-01T07:35:14.802Z",
-   "decided_in_ms": 405.3,
-   "decision_id": "D-00937",
+   "decided_in_ms": 411.4,
+   "decision_id": "D-00938",
    "dialect": {
     "conflicts": [],
     "rule": "R-dialect-1",
@@ -248,7 +252,7 @@
     "continuing": false,
     "deadline": "2026-10-08T07:35:14.802Z",
     "id": "G05",
-    "instance": "GI-00937",
+    "instance": "GI-00938",
     "shadow": false,
     "success_signal": {
      "condition": "is_trial = false",
@@ -268,7 +272,7 @@
      "window_hours": 168
     }
    },
-   "latency_ms": 405.3,
+   "latency_ms": 411.4,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -287,8 +291,8 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 5.3,
-   "published_at": "2026-10-01T07:35:15.207Z",
+   "processing_ms": 11.36,
+   "published_at": "2026-10-01T07:35:15.213Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
@@ -331,10 +335,11 @@
   },
   {
    "changes": [
-    "goal GI-00937 (G05) success observed: event:9b6c3196-4d3b-45cf-8378-78dd0899a0f1"
+    "goal GI-00938 (G05) success observed: event:9b6c3196-4d3b-45cf-8378-78dd0899a0f1",
+    "cancelled in_app_message A-00521 (was due 2026-10-01T07:35:15.213Z): goal GI-00938 closed after purchase_completed"
    ],
    "created_at": "2026-10-01T07:37:32.152Z",
-   "decision_id": "R-00941",
+   "decision_id": "R-00942",
    "kind": "REVISION",
    "status": "REVISED",
    "trigger": {
@@ -348,13 +353,13 @@
  "facts_at_last_decision": [],
  "actions": [
   {
-   "action_id": "A-00452",
-   "decision_id": "D-00937",
+   "action_id": "A-00520",
+   "decision_id": "D-00938",
    "dialect": "d4",
    "goal_id": "G05",
-   "goal_instance": "GI-00937",
+   "goal_instance": "GI-00938",
    "hero_title_id": "T0915",
-   "published_at": "2026-10-01T07:35:15.207Z",
+   "published_at": "2026-10-01T07:35:15.213Z",
    "rows": [
     {
      "row_type": "because_you_watched",
@@ -435,19 +440,40 @@
    "trigger_event_id": "17530592-11e5-4685-9158-04843b924866",
    "type": "home_page",
    "user_id": "U-00649"
+  },
+  {
+   "action_id": "A-00521",
+   "cancelled": {
+    "at": "2026-10-01T07:37:32.152Z",
+    "reason": "goal GI-00938 closed after purchase_completed"
+   },
+   "decision_id": "D-00938",
+   "deeplink": "ott://title/T0915",
+   "goal_id": "G05",
+   "goal_instance": "GI-00938",
+   "published_at": "2026-10-01T07:35:15.213Z",
+   "send_at": "2026-10-01T07:35:15.213Z",
+   "text": {
+    "body": "On Premium: a story in your dialect.",
+    "title": "Gineni"
+   },
+   "title_id": "T0915",
+   "trigger_event_id": "17530592-11e5-4685-9158-04843b924866",
+   "type": "in_app_message",
+   "user_id": "U-00649"
   }
  ],
  "learnings": [
   {
-   "goal_instance_id": "GI-00937",
+   "goal_instance_id": "GI-00938",
    "at": "2026-10-15T18:30:00.000Z",
    "note": {
     "attribution": "success_after_exposure",
     "effects": {},
     "goal_id": "G05",
-    "goal_instance_id": "GI-00937",
+    "goal_instance_id": "GI-00938",
     "notes": [
-     "G05 reached after exposure (home_page)"
+     "G05 reached after exposure (home_page, in_app_message)"
     ],
     "result": "succeeded"
    }

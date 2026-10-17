@@ -22,41 +22,30 @@
   {
    "goal_instance_id": "GI-00787",
    "user_id": "U-02881",
-   "goal_id": "G07",
+   "goal_id": "G08",
    "status": "failed",
    "started_at": "2026-10-01T06:25:39.842Z",
-   "deadline": "2026-10-04T06:25:39.842Z",
+   "deadline": "2026-10-08T06:25:39.842Z",
    "success_spec": {
-    "condition": "same content_slug as the unfinished series",
+    "condition": "a title released in the 30 days before the goal start",
     "event": "play_started",
-    "goal_id": "G07",
+    "goal_id": "G08",
     "rule_version": 1,
-    "target": {
-     "content_slug": "hama-chudibha-d1",
-     "episodes_completed": 6,
-     "episodes_total": 36,
-     "furthest_episode": 6,
-     "idle_days": 5.7,
-     "last_played_at": "2026-09-25T12:35:39.835Z",
-     "next_episode_id": "hama-chudibha-d1-s1e7",
-     "title_ids": [
-      "T0002"
-     ]
-    },
-    "window_hours": 72
+    "window_hours": 168
    },
    "rule_version": 1,
    "decision_id": "D-00787",
    "evidence": [
-    "event:7f179c40-31bd-481b-b0ab-4186751462c2",
-    "event:703d62a8-6f7e-472f-9bad-995b714adb1d",
-    "catalogue:hama-chudibha-d1",
-    "goal_rule:G07-elig-v1"
+    "profile:U-02881@2026-09-29T11:30:43.677Z",
+    "goal_rule:G08-elig-v1",
+    "catalogue:T0007",
+    "catalogue:T0028",
+    "catalogue:T0031"
    ],
    "closed_at": "2026-10-15T18:30:00.000Z",
    "judgement": {
     "attribution": "holdout",
-    "reason": "no qualifying play_started by 2026-10-04T06:25:39.842Z",
+    "reason": "no qualifying play_started by 2026-10-08T06:25:39.842Z",
     "rule_version": 1,
     "signal": null,
     "status": "failed"
@@ -92,8 +81,8 @@
      "budget"
     ]
    },
-   "confidence": 0.9,
-   "confidence_reason": "weakest deciding fact: unfinished_series (high, source derived)",
+   "confidence": 0.7,
+   "confidence_reason": "weakest deciding fact: subscription_status (medium, source profile, 42h old)",
    "conflicts": [
     {
      "conflicts": [
@@ -111,7 +100,7 @@
    ],
    "content": [],
    "created_at": "2026-10-01T06:25:39.842Z",
-   "decided_in_ms": 405.3,
+   "decided_in_ms": 413.3,
    "decision_id": "D-00787",
    "dialect": {
     "conflicts": [
@@ -123,22 +112,20 @@
    },
    "evidence": [
     {
-     "age_s": 496200.0,
-     "event": "episode_completed",
-     "received_at": "2026-09-25T12:35:39.835Z",
-     "ref": "event:7f179c40-31bd-481b-b0ab-4186751462c2"
+     "age_s": 154496.2,
+     "ref": "profile:U-02881@2026-09-29T11:30:43.677Z"
     },
     {
-     "age_s": 2321585.8,
-     "event": "episode_completed",
-     "received_at": "2026-09-04T09:32:34.050Z",
-     "ref": "event:703d62a8-6f7e-472f-9bad-995b714adb1d"
+     "ref": "goal_rule:G08-elig-v1"
     },
     {
-     "ref": "catalogue:hama-chudibha-d1"
+     "ref": "catalogue:T0007"
     },
     {
-     "ref": "goal_rule:G07-elig-v1"
+     "ref": "catalogue:T0028"
+    },
+    {
+     "ref": "catalogue:T0031"
     }
    ],
    "goal": {
@@ -176,6 +163,7 @@
      {
       "eligible": true,
       "goal_id": "G07",
+      "skipped": "the unfinished series hama-chudibha-d1 cannot be promoted now (not available, or flagged for injected instructions)",
       "why": "1 unfinished series idle 3+ days"
      },
      {
@@ -205,40 +193,29 @@
      }
     ],
     "continuing": false,
-    "deadline": "2026-10-04T06:25:39.842Z",
-    "id": "G07",
+    "deadline": "2026-10-08T06:25:39.842Z",
+    "id": "G08",
     "instance": "GI-00787",
     "shadow": true,
     "success_signal": {
-     "condition": "same content_slug as the unfinished series",
+     "condition": "a title released in the 30 days before the goal start",
      "event": "play_started",
      "rule_version": 1,
-     "window_hours": 72
+     "window_hours": 168
     },
-    "target": {
-     "content_slug": "hama-chudibha-d1",
-     "episodes_completed": 6,
-     "episodes_total": 36,
-     "furthest_episode": 6,
-     "idle_days": 5.7,
-     "last_played_at": "2026-09-25T12:35:39.835Z",
-     "next_episode_id": "hama-chudibha-d1-s1e7",
-     "title_ids": [
-      "T0002"
-     ]
-    },
-    "why": "1 unfinished series idle 3+ days"
+    "target": null,
+    "why": "84 available releases from the last 30 days in dialect d1"
    },
    "judged_by": {
-    "deadline": "2026-10-04T06:25:39.842Z",
+    "deadline": "2026-10-08T06:25:39.842Z",
     "signal": {
-     "condition": "same content_slug as the unfinished series",
+     "condition": "a title released in the 30 days before the goal start",
      "event": "play_started",
      "rule_version": 1,
-     "window_hours": 72
+     "window_hours": 168
     }
    },
-   "latency_ms": 405.3,
+   "latency_ms": 413.3,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -249,15 +226,15 @@
     "claim": {
      "confidence": 0.6,
      "eligible": true,
-     "goal_id": "G07",
-     "reason": "agrees with rule ranking: 1 unfinished series idle 3+ days"
+     "goal_id": "G08",
+     "reason": "agrees with rule ranking: 84 available releases from the last 30 days in dialect d1"
     },
     "elapsed_s": 0.4,
     "outcome": "agreed",
     "provider": "mock"
    },
    "no_action_reason": "viewer is in the 'holdout' arm: shadow decision only, no action of any kind",
-   "processing_ms": 5.27,
+   "processing_ms": 13.32,
    "published_at": null,
    "queue_wait_ms": 0.0,
    "rows_explained": [],
@@ -582,7 +559,7 @@
    "note": {
     "attribution": "holdout",
     "effects": {},
-    "goal_id": "G07",
+    "goal_id": "G08",
     "goal_instance_id": "GI-00787",
     "notes": [],
     "result": "failed"

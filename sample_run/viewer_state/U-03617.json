@@ -5,7 +5,7 @@
  "profile_versions": [],
  "goals": [
   {
-   "goal_instance_id": "GI-01441",
+   "goal_instance_id": "GI-01442",
    "user_id": "U-03617",
    "goal_id": "G01",
    "status": "succeeded",
@@ -19,7 +19,7 @@
     "window_hours": 24
    },
    "rule_version": 1,
-   "decision_id": "D-01441",
+   "decision_id": "D-01442",
    "evidence": [
     "event:e22fb97b-bd6d-407c-ac4f-63cff8d9b47c",
     "goal_rule:G01-elig-v1",
@@ -28,12 +28,12 @@
    "closed_at": "2026-10-15T18:30:00.000Z",
    "judgement": {
     "attribution": "success_after_exposure",
-    "reason": "play_started oua-023345 at 2026-10-01T11:44:31.224Z",
+    "reason": "play_started oua-023393 at 2026-10-01T11:44:31.224Z",
     "rule_version": 1,
     "signal": {
      "at": "2026-10-01T11:44:31.224Z",
      "event": "play_started",
-     "event_id": "oua-023345"
+     "event_id": "oua-023393"
     },
     "status": "succeeded"
    },
@@ -48,13 +48,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-00741"
+    "A-00847",
+    "A-00848"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: next allowed send slot is after the goal deadline",
+    "in-app message (shown at the next app open) because no push/WhatsApp: next allowed send slot is after the goal deadline",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -77,7 +78,10 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.8,
@@ -88,19 +92,19 @@
     "title:T0903",
     "title:T0908",
     "title:T0913",
+    "title:T0914",
     "title:T0907",
     "title:T0910",
-    "title:T0914",
     "title:T0902",
     "title:T0904",
+    "title:T0905",
     "title:T0909",
     "title:T0906",
-    "title:T0911",
-    "title:T0905"
+    "title:T0911"
    ],
    "created_at": "2026-10-01T11:40:23.224Z",
-   "decided_in_ms": 402.2,
-   "decision_id": "D-01441",
+   "decided_in_ms": 409.6,
+   "decision_id": "D-01442",
    "dialect": {
     "conflicts": [],
     "rule": "R-dialect-1",
@@ -198,7 +202,7 @@
     "continuing": false,
     "deadline": "2026-10-02T11:40:23.224Z",
     "id": "G01",
-    "instance": "GI-01441",
+    "instance": "GI-01442",
     "shadow": false,
     "success_signal": {
      "condition": "any title",
@@ -218,7 +222,7 @@
      "window_hours": 24
     }
    },
-   "latency_ms": 402.2,
+   "latency_ms": 409.6,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -237,8 +241,8 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 2.23,
-   "published_at": "2026-10-01T11:40:23.626Z",
+   "processing_ms": 9.58,
+   "published_at": "2026-10-01T11:40:23.633Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
@@ -252,6 +256,14 @@
     {
      "row_type": "popular_in_dialect",
      "why": "most-played in this dialect"
+    },
+    {
+     "row_type": "new_releases",
+     "why": "released in the last 30 days"
+    },
+    {
+     "row_type": "popular_in_dialect",
+     "why": "more of the most-played in this dialect"
     }
    ],
    "status": "PUBLISHED",
@@ -272,8 +284,8 @@
    "action_ids": [],
    "arm": "agent",
    "assumptions": [
-    "page A-00741 for d3 is still live and unchanged",
-    "no message: next allowed send slot is after the goal deadline"
+    "page A-00847 for d3 is still live and unchanged",
+    "no message: no push/WhatsApp: next allowed send slot is after the goal deadline; an in-app message is already queued today (max 1 per day)"
    ],
    "budget": {
     "model_calls": 1,
@@ -295,8 +307,8 @@
    "conflicts": [],
    "content": [],
    "created_at": "2026-10-01T11:40:23.674Z",
-   "decided_in_ms": 401.8,
-   "decision_id": "D-01442",
+   "decided_in_ms": 403.7,
+   "decision_id": "D-01443",
    "dialect": {
     "conflicts": [],
     "rule": "R-dialect-1",
@@ -388,7 +400,7 @@
     "continuing": true,
     "deadline": "2026-10-02T11:40:23.224Z",
     "id": "G01",
-    "instance": "GI-01441",
+    "instance": "GI-01442",
     "shadow": false,
     "success_signal": {
      "condition": "any title",
@@ -397,7 +409,7 @@
      "window_hours": 24
     },
     "target": null,
-    "why": "continuing open goal GI-01441 (one active plan per viewer)"
+    "why": "continuing open goal GI-01442 (one active plan per viewer)"
    },
    "judged_by": {
     "deadline": "2026-10-02T11:40:23.224Z",
@@ -408,7 +420,7 @@
      "window_hours": 24
     }
    },
-   "latency_ms": 401.8,
+   "latency_ms": 403.7,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -426,8 +438,8 @@
     "outcome": "agreed",
     "provider": "mock"
    },
-   "no_action_reason": "personalised page A-00741 is still live for this goal; nothing new to add",
-   "processing_ms": 1.77,
+   "no_action_reason": "personalised page A-00847 is still live for this goal; nothing new to add",
+   "processing_ms": 3.72,
    "published_at": null,
    "queue_wait_ms": 0.0,
    "rows_explained": [],
@@ -449,7 +461,7 @@
   {
    "id": 21122,
    "user_id": "U-03617",
-   "decision_id": "D-01442",
+   "decision_id": "D-01443",
    "name": "profile",
    "value": null,
    "source": "none",
@@ -465,7 +477,7 @@
   {
    "id": 21123,
    "user_id": "U-03617",
-   "decision_id": "D-01442",
+   "decision_id": "D-01443",
    "name": "signup_at",
    "value": "2026-10-01T11:40:01.198Z",
    "source": "event",
@@ -483,7 +495,7 @@
   {
    "id": 21124,
    "user_id": "U-03617",
-   "decision_id": "D-01442",
+   "decision_id": "D-01443",
    "name": "subscription_status",
    "value": null,
    "source": "none",
@@ -499,7 +511,7 @@
   {
    "id": 21125,
    "user_id": "U-03617",
-   "decision_id": "D-01442",
+   "decision_id": "D-01443",
    "name": "ever_paid",
    "value": null,
    "source": "none",
@@ -515,7 +527,7 @@
   {
    "id": 21126,
    "user_id": "U-03617",
-   "decision_id": "D-01442",
+   "decision_id": "D-01443",
    "name": "dialect",
    "value": "d3",
    "source": "app_setting",
@@ -533,7 +545,7 @@
   {
    "id": 21127,
    "user_id": "U-03617",
-   "decision_id": "D-01442",
+   "decision_id": "D-01443",
    "name": "language",
    "value": "hin",
    "source": "app_setting",
@@ -551,7 +563,7 @@
   {
    "id": 21128,
    "user_id": "U-03617",
-   "decision_id": "D-01442",
+   "decision_id": "D-01443",
    "name": "consent_push",
    "value": false,
    "source": "none",
@@ -567,7 +579,7 @@
   {
    "id": 21129,
    "user_id": "U-03617",
-   "decision_id": "D-01442",
+   "decision_id": "D-01443",
    "name": "consent_whatsapp",
    "value": false,
    "source": "none",
@@ -583,7 +595,7 @@
   {
    "id": 21130,
    "user_id": "U-03617",
-   "decision_id": "D-01442",
+   "decision_id": "D-01443",
    "name": "has_played",
    "value": false,
    "source": "derived",
@@ -601,7 +613,7 @@
   {
    "id": 21131,
    "user_id": "U-03617",
-   "decision_id": "D-01442",
+   "decision_id": "D-01443",
    "name": "has_completed_episode",
    "value": false,
    "source": "derived",
@@ -619,7 +631,7 @@
   {
    "id": 21132,
    "user_id": "U-03617",
-   "decision_id": "D-01442",
+   "decision_id": "D-01443",
    "name": "play_days_14d",
    "value": 0,
    "source": "derived",
@@ -635,7 +647,7 @@
   {
    "id": 21133,
    "user_id": "U-03617",
-   "decision_id": "D-01442",
+   "decision_id": "D-01443",
    "name": "last_open_before_trigger",
    "value": "2026-10-01T11:40:23.224Z",
    "source": "event",
@@ -653,7 +665,7 @@
   {
    "id": 21134,
    "user_id": "U-03617",
-   "decision_id": "D-01442",
+   "decision_id": "D-01443",
    "name": "recent_lapse",
    "value": null,
    "source": "derived",
@@ -671,7 +683,7 @@
   {
    "id": 21135,
    "user_id": "U-03617",
-   "decision_id": "D-01442",
+   "decision_id": "D-01443",
    "name": "unfinished_series",
    "value": [],
    "source": "derived",
@@ -687,7 +699,7 @@
   {
    "id": 21136,
    "user_id": "U-03617",
-   "decision_id": "D-01442",
+   "decision_id": "D-01443",
    "name": "trigger_age_s",
    "value": 0.0,
    "source": "derived",
@@ -705,53 +717,80 @@
  ],
  "actions": [
   {
-   "action_id": "A-00741",
-   "decision_id": "D-01441",
+   "action_id": "A-00847",
+   "decision_id": "D-01442",
    "dialect": "d3",
    "goal_id": "G01",
-   "goal_instance": "GI-01441",
+   "goal_instance": "GI-01442",
    "hero_title_id": "T0901",
-   "published_at": "2026-10-01T11:40:23.626Z",
+   "published_at": "2026-10-01T11:40:23.633Z",
    "rows": [
     {
      "row_type": "popular_in_dialect",
      "title_ids": [
       "T0903",
       "T0908",
-      "T0913",
-      "T0907",
-      "T0910"
+      "T0913"
      ]
     },
     {
      "row_type": "popular_in_dialect",
      "title_ids": [
       "T0914",
+      "T0907",
+      "T0910"
+     ]
+    },
+    {
+     "row_type": "new_releases",
+     "title_ids": [
       "T0902",
       "T0904",
+      "T0905"
+     ]
+    },
+    {
+     "row_type": "popular_in_dialect",
+     "title_ids": [
       "T0909",
       "T0906",
-      "T0911",
-      "T0905"
+      "T0911"
      ]
     }
    ],
    "trigger_event_id": "c6dc7a18-6bef-45c0-b658-cd184318e3cb",
    "type": "home_page",
    "user_id": "U-03617"
+  },
+  {
+   "action_id": "A-00848",
+   "decision_id": "D-01442",
+   "deeplink": "ott://title/T0901",
+   "goal_id": "G01",
+   "goal_instance": "GI-01442",
+   "published_at": "2026-10-01T11:40:23.633Z",
+   "send_at": "2026-10-01T11:40:23.633Z",
+   "text": {
+    "body": "Aapke liye chuni gayi kahani. Abhi dekhiye.",
+    "title": "Yatite Roloda"
+   },
+   "title_id": "T0901",
+   "trigger_event_id": "c6dc7a18-6bef-45c0-b658-cd184318e3cb",
+   "type": "in_app_message",
+   "user_id": "U-03617"
   }
  ],
  "learnings": [
   {
-   "goal_instance_id": "GI-01441",
+   "goal_instance_id": "GI-01442",
    "at": "2026-10-15T18:30:00.000Z",
    "note": {
     "attribution": "success_after_exposure",
     "effects": {},
     "goal_id": "G01",
-    "goal_instance_id": "GI-01441",
+    "goal_instance_id": "GI-01442",
     "notes": [
-     "G01 reached after exposure (home_page)"
+     "G01 reached after exposure (home_page, in_app_message)"
     ],
     "result": "succeeded"
    }

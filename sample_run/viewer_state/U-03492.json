@@ -79,13 +79,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-00055"
+    "A-00059",
+    "A-00060"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: no push consent (profile) and no usable WhatsApp (no consent)",
+    "in-app message (shown at the next app open) because no push/WhatsApp: no push consent (profile) and no usable WhatsApp (no consent)",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -108,15 +109,20 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.9,
    "confidence_reason": "weakest deciding fact: unfinished_series (high, source derived)",
    "conflicts": [],
    "content": [
+    "title:T1178",
     "title:T1187",
     "title:T1177",
+    "title:T1295",
     "title:T1180",
     "title:T1186",
     "title:T1181",
@@ -126,6 +132,7 @@
     "title:T1188",
     "title:T1184",
     "title:T1196",
+    "title:T1206",
     "title:T1195",
     "title:T1221",
     "title:T1386",
@@ -133,19 +140,19 @@
     "title:T1194",
     "title:T1243",
     "title:T1293",
-    "title:T1295",
     "title:T1197",
     "title:T1202",
-    "title:T1178",
+    "title:T1217",
     "title:T1179",
     "title:T1185",
     "title:T1189",
     "title:T1198",
     "title:T1200",
-    "title:T1206",
     "title:T1210",
     "title:T1214",
     "title:T1245",
+    "title:T1193",
+    "title:T1228",
     "title:T1192",
     "title:T1213",
     "title:T1215",
@@ -155,20 +162,10 @@
     "title:T1250",
     "title:T1258",
     "title:T1264",
-    "title:T1278",
-    "title:T1241",
-    "title:T1201",
-    "title:T1226",
-    "title:T1261",
-    "title:T1310",
-    "title:T1224",
-    "title:T1231",
-    "title:T1235",
-    "title:T1246",
-    "title:T1251"
+    "title:T1278"
    ],
    "created_at": "2026-10-01T00:11:02.920Z",
-   "decided_in_ms": 406.1,
+   "decided_in_ms": 410.5,
    "decision_id": "D-00074",
    "dialect": {
     "conflicts": [],
@@ -226,13 +223,13 @@
      "ref": "goal_rule:G07-elig-v1"
     },
     {
+     "ref": "catalogue:T1178"
+    },
+    {
      "ref": "catalogue:T1187"
     },
     {
      "ref": "catalogue:T1177"
-    },
-    {
-     "ref": "catalogue:T1180"
     }
    ],
    "goal": {
@@ -333,7 +330,7 @@
      "window_hours": 72
     }
    },
-   "latency_ms": 406.1,
+   "latency_ms": 410.5,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -352,13 +349,17 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 6.08,
-   "published_at": "2026-10-01T00:11:03.326Z",
+   "processing_ms": 10.48,
+   "published_at": "2026-10-01T00:11:03.330Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
      "row_type": "hero",
-     "why": "the unfinished series this goal is about"
+     "why": "most-played title in this dialect"
+    },
+    {
+     "row_type": "next_episode",
+     "why": "series the viewer has started in this dialect, led by the unfinished series this goal is about"
     },
     {
      "row_type": "because_you_watched",
@@ -375,10 +376,6 @@
     {
      "row_type": "new_releases",
      "why": "released in the last 30 days"
-    },
-    {
-     "row_type": "genre",
-     "why": "genre: Action"
     }
    ],
    "status": "PUBLISHED",
@@ -722,18 +719,25 @@
  ],
  "actions": [
   {
-   "action_id": "A-00055",
+   "action_id": "A-00059",
    "decision_id": "D-00074",
    "dialect": "d5",
    "goal_id": "G07",
    "goal_instance": "GI-00074",
-   "hero_title_id": "T1187",
-   "published_at": "2026-10-01T00:11:03.326Z",
+   "hero_title_id": "T1178",
+   "published_at": "2026-10-01T00:11:03.330Z",
    "rows": [
+    {
+     "row_type": "next_episode",
+     "title_ids": [
+      "T1187",
+      "T1177",
+      "T1295"
+     ]
+    },
     {
      "row_type": "because_you_watched",
      "title_ids": [
-      "T1177",
       "T1180",
       "T1186",
       "T1181",
@@ -742,7 +746,8 @@
       "T1191",
       "T1188",
       "T1184",
-      "T1196"
+      "T1196",
+      "T1206"
      ]
     },
     {
@@ -755,24 +760,24 @@
       "T1194",
       "T1243",
       "T1293",
-      "T1295",
       "T1197",
-      "T1202"
+      "T1202",
+      "T1217"
      ]
     },
     {
      "row_type": "popular_in_dialect",
      "title_ids": [
-      "T1178",
       "T1179",
       "T1185",
       "T1189",
       "T1198",
       "T1200",
-      "T1206",
       "T1210",
       "T1214",
-      "T1245"
+      "T1245",
+      "T1193",
+      "T1228"
      ]
     },
     {
@@ -789,25 +794,27 @@
       "T1264",
       "T1278"
      ]
-    },
-    {
-     "row_type": "genre",
-     "title_ids": [
-      "T1241",
-      "T1201",
-      "T1226",
-      "T1261",
-      "T1310",
-      "T1224",
-      "T1231",
-      "T1235",
-      "T1246",
-      "T1251"
-     ]
     }
    ],
    "trigger_event_id": "b43006ad-ff74-4a7c-911f-cdd079b82b23",
    "type": "home_page",
+   "user_id": "U-03492"
+  },
+  {
+   "action_id": "A-00060",
+   "decision_id": "D-00074",
+   "deeplink": "ott://title/T1187",
+   "goal_id": "G07",
+   "goal_instance": "GI-00074",
+   "published_at": "2026-10-01T00:11:03.330Z",
+   "send_at": "2026-10-01T00:11:03.330Z",
+   "text": {
+    "body": "Aapki kahani wahin ruki hai. Agla episode dekhiye.",
+    "title": "Diti Kochu"
+   },
+   "title_id": "T1187",
+   "trigger_event_id": "b43006ad-ff74-4a7c-911f-cdd079b82b23",
+   "type": "in_app_message",
    "user_id": "U-03492"
   }
  ],

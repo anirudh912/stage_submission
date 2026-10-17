@@ -44,13 +44,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-00141"
+    "A-00167",
+    "A-00168"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: next allowed send slot is after the goal deadline",
+    "in-app message (shown at the next app open) because no push/WhatsApp: next allowed send slot is after the goal deadline",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -73,7 +74,10 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.8,
@@ -133,7 +137,7 @@
     "title:T0615"
    ],
    "created_at": "2026-10-01T03:24:47.143Z",
-   "decided_in_ms": 405.0,
+   "decided_in_ms": 413.2,
    "decision_id": "D-00233",
    "dialect": {
     "conflicts": [],
@@ -252,7 +256,7 @@
      "window_hours": 24
     }
    },
-   "latency_ms": 405.0,
+   "latency_ms": 413.2,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -271,8 +275,8 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 5.02,
-   "published_at": "2026-10-01T03:24:47.548Z",
+   "processing_ms": 13.18,
+   "published_at": "2026-10-01T03:24:47.556Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
@@ -318,8 +322,8 @@
    "action_ids": [],
    "arm": "agent",
    "assumptions": [
-    "page A-00141 for d2 is still live and unchanged",
-    "no message: next allowed send slot is after the goal deadline"
+    "page A-00167 for d2 is still live and unchanged",
+    "no message: no push/WhatsApp: next allowed send slot is after the goal deadline; an in-app message is already queued today (max 1 per day)"
    ],
    "budget": {
     "model_calls": 1,
@@ -356,7 +360,7 @@
    ],
    "content": [],
    "created_at": "2026-10-01T03:24:49.217Z",
-   "decided_in_ms": 404.3,
+   "decided_in_ms": 407.2,
    "decision_id": "D-00234",
    "dialect": {
     "conflicts": [
@@ -471,7 +475,7 @@
      "window_hours": 24
     }
    },
-   "latency_ms": 404.3,
+   "latency_ms": 407.2,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -489,8 +493,8 @@
     "outcome": "agreed",
     "provider": "mock"
    },
-   "no_action_reason": "personalised page A-00141 is still live for this goal; nothing new to add",
-   "processing_ms": 4.31,
+   "no_action_reason": "personalised page A-00167 is still live for this goal; nothing new to add",
+   "processing_ms": 7.21,
    "published_at": null,
    "queue_wait_ms": 0.0,
    "rows_explained": [],
@@ -775,13 +779,13 @@
  ],
  "actions": [
   {
-   "action_id": "A-00141",
+   "action_id": "A-00167",
    "decision_id": "D-00233",
    "dialect": "d2",
    "goal_id": "G01",
    "goal_instance": "GI-00233",
    "hero_title_id": "T1677",
-   "published_at": "2026-10-01T03:24:47.548Z",
+   "published_at": "2026-10-01T03:24:47.556Z",
    "rows": [
     {
      "row_type": "popular_in_dialect",
@@ -861,6 +865,23 @@
    ],
    "trigger_event_id": "4c7c54a9-1169-4db3-aed8-092e5a114659",
    "type": "home_page",
+   "user_id": "U-00952"
+  },
+  {
+   "action_id": "A-00168",
+   "decision_id": "D-00233",
+   "deeplink": "ott://title/T0521",
+   "goal_id": "G01",
+   "goal_instance": "GI-00233",
+   "published_at": "2026-10-01T03:24:47.556Z",
+   "send_at": "2026-10-01T03:24:47.556Z",
+   "text": {
+    "body": "Picked for you. Watch now.",
+    "title": "Molo"
+   },
+   "title_id": "T0521",
+   "trigger_event_id": "4c7c54a9-1169-4db3-aed8-092e5a114659",
+   "type": "in_app_message",
    "user_id": "U-00952"
   }
  ],

@@ -44,13 +44,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-00089"
+    "A-00103",
+    "A-00104"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: next allowed send slot is after the goal deadline",
+    "in-app message (shown at the next app open) because no push/WhatsApp: next allowed send slot is after the goal deadline",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -73,7 +74,10 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.8,
@@ -133,7 +137,7 @@
     "title:T0615"
    ],
    "created_at": "2026-10-01T01:53:27.054Z",
-   "decided_in_ms": 405.8,
+   "decided_in_ms": 413.2,
    "decision_id": "D-00138",
    "dialect": {
     "conflicts": [],
@@ -252,7 +256,7 @@
      "window_hours": 24
     }
    },
-   "latency_ms": 405.8,
+   "latency_ms": 413.2,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -271,8 +275,8 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 5.84,
-   "published_at": "2026-10-01T01:53:27.459Z",
+   "processing_ms": 13.16,
+   "published_at": "2026-10-01T01:53:27.467Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
@@ -318,8 +322,8 @@
    "action_ids": [],
    "arm": "agent",
    "assumptions": [
-    "page A-00089 for d2 is still live and unchanged",
-    "no message: next allowed send slot is after the goal deadline"
+    "page A-00103 for d2 is still live and unchanged",
+    "no message: no push/WhatsApp: next allowed send slot is after the goal deadline; an in-app message is already queued today (max 1 per day)"
    ],
    "budget": {
     "model_calls": 1,
@@ -341,7 +345,7 @@
    "conflicts": [],
    "content": [],
    "created_at": "2026-10-01T01:53:30.641Z",
-   "decided_in_ms": 404.4,
+   "decided_in_ms": 408.2,
    "decision_id": "D-00139",
    "dialect": {
     "conflicts": [],
@@ -454,7 +458,7 @@
      "window_hours": 24
     }
    },
-   "latency_ms": 404.4,
+   "latency_ms": 408.2,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -472,8 +476,8 @@
     "outcome": "agreed",
     "provider": "mock"
    },
-   "no_action_reason": "personalised page A-00089 is still live for this goal; nothing new to add",
-   "processing_ms": 4.44,
+   "no_action_reason": "personalised page A-00103 is still live for this goal; nothing new to add",
+   "processing_ms": 8.21,
    "published_at": null,
    "queue_wait_ms": 0.0,
    "rows_explained": [],
@@ -751,13 +755,13 @@
  ],
  "actions": [
   {
-   "action_id": "A-00089",
+   "action_id": "A-00103",
    "decision_id": "D-00138",
    "dialect": "d2",
    "goal_id": "G01",
    "goal_instance": "GI-00138",
    "hero_title_id": "T0523",
-   "published_at": "2026-10-01T01:53:27.459Z",
+   "published_at": "2026-10-01T01:53:27.467Z",
    "rows": [
     {
      "row_type": "popular_in_dialect",
@@ -837,6 +841,23 @@
    ],
    "trigger_event_id": "f7ba8628-2716-48ed-ba8a-b7d9517ac967",
    "type": "home_page",
+   "user_id": "U-04559"
+  },
+  {
+   "action_id": "A-00104",
+   "decision_id": "D-00138",
+   "deeplink": "ott://title/T0521",
+   "goal_id": "G01",
+   "goal_instance": "GI-00138",
+   "published_at": "2026-10-01T01:53:27.467Z",
+   "send_at": "2026-10-01T01:53:27.467Z",
+   "text": {
+    "body": "Aapke liye chuni gayi kahani. Abhi dekhiye.",
+    "title": "Molo"
+   },
+   "title_id": "T0521",
+   "trigger_event_id": "f7ba8628-2716-48ed-ba8a-b7d9517ac967",
+   "type": "in_app_message",
    "user_id": "U-04559"
   }
  ],

@@ -20,7 +20,7 @@
  ],
  "goals": [
   {
-   "goal_instance_id": "GI-02156",
+   "goal_instance_id": "GI-02157",
    "user_id": "U-01657",
    "goal_id": "G02",
    "status": "failed",
@@ -34,7 +34,7 @@
     "window_hours": 72
    },
    "rule_version": 1,
-   "decision_id": "D-02156",
+   "decision_id": "D-02157",
    "evidence": [
     "absence:episode_completed:14_events_scanned",
     "goal_rule:G02-elig-v1"
@@ -58,13 +58,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-01164"
+    "A-01317",
+    "A-01318"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: no push consent (profile) and no usable WhatsApp (no consent)",
+    "in-app message (shown at the next app open) because no push/WhatsApp: no push consent (profile) and no usable WhatsApp (no consent)",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -87,7 +88,10 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.9,
@@ -161,8 +165,8 @@
     "title:T0615"
    ],
    "created_at": "2026-10-01T15:09:47.896Z",
-   "decided_in_ms": 405.3,
-   "decision_id": "D-02156",
+   "decided_in_ms": 415.0,
+   "decision_id": "D-02157",
    "dialect": {
     "conflicts": [
      "profile:d4"
@@ -254,7 +258,7 @@
     "continuing": false,
     "deadline": "2026-10-04T15:09:47.896Z",
     "id": "G02",
-    "instance": "GI-02156",
+    "instance": "GI-02157",
     "shadow": false,
     "success_signal": {
      "condition": "any episode",
@@ -274,7 +278,7 @@
      "window_hours": 72
     }
    },
-   "latency_ms": 405.3,
+   "latency_ms": 415.0,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -293,8 +297,8 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 5.35,
-   "published_at": "2026-10-01T15:09:48.301Z",
+   "processing_ms": 14.97,
+   "published_at": "2026-10-01T15:09:48.310Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
@@ -338,9 +342,9 @@
  ],
  "facts_at_last_decision": [
   {
-   "id": 31592,
+   "id": 31607,
    "user_id": "U-01657",
-   "decision_id": "D-02156",
+   "decision_id": "D-02157",
    "name": "profile",
    "value": {
     "stale": true,
@@ -359,9 +363,9 @@
    "recorded_at": "2026-10-01T15:09:47.896Z"
   },
   {
-   "id": 31593,
+   "id": 31608,
    "user_id": "U-01657",
-   "decision_id": "D-02156",
+   "decision_id": "D-02157",
    "name": "signup_at",
    "value": "2025-05-13T05:26:31.334Z",
    "source": "profile",
@@ -377,9 +381,9 @@
    "recorded_at": "2026-10-01T15:09:47.896Z"
   },
   {
-   "id": 31594,
+   "id": 31609,
    "user_id": "U-01657",
-   "decision_id": "D-02156",
+   "decision_id": "D-02157",
    "name": "subscription_status",
    "value": "never",
    "source": "profile",
@@ -395,9 +399,9 @@
    "recorded_at": "2026-10-01T15:09:47.896Z"
   },
   {
-   "id": 31595,
+   "id": 31610,
    "user_id": "U-01657",
-   "decision_id": "D-02156",
+   "decision_id": "D-02157",
    "name": "ever_paid",
    "value": false,
    "source": "profile",
@@ -413,9 +417,9 @@
    "recorded_at": "2026-10-01T15:09:47.896Z"
   },
   {
-   "id": 31596,
+   "id": 31611,
    "user_id": "U-01657",
-   "decision_id": "D-02156",
+   "decision_id": "D-02157",
    "name": "dialect",
    "value": "d2",
    "source": "app_setting",
@@ -437,9 +441,9 @@
    "recorded_at": "2026-10-01T15:09:47.896Z"
   },
   {
-   "id": 31597,
+   "id": 31612,
    "user_id": "U-01657",
-   "decision_id": "D-02156",
+   "decision_id": "D-02157",
    "name": "language",
    "value": "hin",
    "source": "app_setting",
@@ -455,9 +459,9 @@
    "recorded_at": "2026-10-01T15:09:47.896Z"
   },
   {
-   "id": 31598,
+   "id": 31613,
    "user_id": "U-01657",
-   "decision_id": "D-02156",
+   "decision_id": "D-02157",
    "name": "consent_push",
    "value": false,
    "source": "profile",
@@ -473,9 +477,9 @@
    "recorded_at": "2026-10-01T15:09:47.896Z"
   },
   {
-   "id": 31599,
+   "id": 31614,
    "user_id": "U-01657",
-   "decision_id": "D-02156",
+   "decision_id": "D-02157",
    "name": "consent_whatsapp",
    "value": false,
    "source": "profile",
@@ -491,9 +495,9 @@
    "recorded_at": "2026-10-01T15:09:47.896Z"
   },
   {
-   "id": 31600,
+   "id": 31615,
    "user_id": "U-01657",
-   "decision_id": "D-02156",
+   "decision_id": "D-02157",
    "name": "has_played",
    "value": false,
    "source": "derived",
@@ -509,9 +513,9 @@
    "recorded_at": "2026-10-01T15:09:47.896Z"
   },
   {
-   "id": 31601,
+   "id": 31616,
    "user_id": "U-01657",
-   "decision_id": "D-02156",
+   "decision_id": "D-02157",
    "name": "has_completed_episode",
    "value": false,
    "source": "derived",
@@ -527,9 +531,9 @@
    "recorded_at": "2026-10-01T15:09:47.896Z"
   },
   {
-   "id": 31602,
+   "id": 31617,
    "user_id": "U-01657",
-   "decision_id": "D-02156",
+   "decision_id": "D-02157",
    "name": "play_days_14d",
    "value": 0,
    "source": "derived",
@@ -543,9 +547,9 @@
    "recorded_at": "2026-10-01T15:09:47.896Z"
   },
   {
-   "id": 31603,
+   "id": 31618,
    "user_id": "U-01657",
-   "decision_id": "D-02156",
+   "decision_id": "D-02157",
    "name": "last_open_before_trigger",
    "value": "2026-09-22T15:07:16.627Z",
    "source": "event",
@@ -561,9 +565,9 @@
    "recorded_at": "2026-10-01T15:09:47.896Z"
   },
   {
-   "id": 31604,
+   "id": 31619,
    "user_id": "U-01657",
-   "decision_id": "D-02156",
+   "decision_id": "D-02157",
    "name": "recent_lapse",
    "value": null,
    "source": "derived",
@@ -579,9 +583,9 @@
    "recorded_at": "2026-10-01T15:09:47.896Z"
   },
   {
-   "id": 31605,
+   "id": 31620,
    "user_id": "U-01657",
-   "decision_id": "D-02156",
+   "decision_id": "D-02157",
    "name": "unfinished_series",
    "value": [],
    "source": "derived",
@@ -595,9 +599,9 @@
    "recorded_at": "2026-10-01T15:09:47.896Z"
   },
   {
-   "id": 31606,
+   "id": 31621,
    "user_id": "U-01657",
-   "decision_id": "D-02156",
+   "decision_id": "D-02157",
    "name": "trigger_age_s",
    "value": 0.0,
    "source": "derived",
@@ -615,13 +619,13 @@
  ],
  "actions": [
   {
-   "action_id": "A-01164",
-   "decision_id": "D-02156",
+   "action_id": "A-01317",
+   "decision_id": "D-02157",
    "dialect": "d2",
    "goal_id": "G02",
-   "goal_instance": "GI-02156",
+   "goal_instance": "GI-02157",
    "hero_title_id": "T0523",
-   "published_at": "2026-10-01T15:09:48.301Z",
+   "published_at": "2026-10-01T15:09:48.310Z",
    "rows": [
     {
      "row_type": "popular_in_dialect",
@@ -702,11 +706,28 @@
    "trigger_event_id": "fa630105-8af8-4a39-a681-fd9ace6ab6ae",
    "type": "home_page",
    "user_id": "U-01657"
+  },
+  {
+   "action_id": "A-01318",
+   "decision_id": "D-02157",
+   "deeplink": "ott://title/T0523",
+   "goal_id": "G02",
+   "goal_instance": "GI-02157",
+   "published_at": "2026-10-01T15:09:48.310Z",
+   "send_at": "2026-10-01T15:09:48.310Z",
+   "text": {
+    "body": "Chhote episode, aapki boli mein. Abhi dekhiye.",
+    "title": "Dhapipa Gini"
+   },
+   "title_id": "T0523",
+   "trigger_event_id": "fa630105-8af8-4a39-a681-fd9ace6ab6ae",
+   "type": "in_app_message",
+   "user_id": "U-01657"
   }
  ],
  "learnings": [
   {
-   "goal_instance_id": "GI-02156",
+   "goal_instance_id": "GI-02157",
    "at": "2026-10-15T18:30:00.000Z",
    "note": {
     "attribution": "failed_after_exposure",
@@ -717,7 +738,7 @@
      }
     },
     "goal_id": "G02",
-    "goal_instance_id": "GI-02156",
+    "goal_instance_id": "GI-02157",
     "notes": [
      "G02 failed although the viewer saw our action: try a different goal for 7 days"
     ],

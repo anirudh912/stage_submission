@@ -22,41 +22,30 @@
   {
    "goal_instance_id": "GI-00226",
    "user_id": "U-02004",
-   "goal_id": "G07",
+   "goal_id": "G08",
    "status": "failed",
    "started_at": "2026-10-01T03:15:02.575Z",
-   "deadline": "2026-10-04T03:15:02.575Z",
+   "deadline": "2026-10-08T03:15:02.575Z",
    "success_spec": {
-    "condition": "same content_slug as the unfinished series",
+    "condition": "a title released in the 30 days before the goal start",
     "event": "play_started",
-    "goal_id": "G07",
+    "goal_id": "G08",
     "rule_version": 1,
-    "target": {
-     "content_slug": "hama-chudibha-d1",
-     "episodes_completed": 1,
-     "episodes_total": 36,
-     "furthest_episode": 1,
-     "idle_days": 17.5,
-     "last_played_at": "2026-09-13T15:36:40.714Z",
-     "next_episode_id": "hama-chudibha-d1-s1e2",
-     "title_ids": [
-      "T0002"
-     ]
-    },
-    "window_hours": 72
+    "window_hours": 168
    },
    "rule_version": 1,
    "decision_id": "D-00226",
    "evidence": [
-    "event:3be99325-ffaa-4c2b-a86a-cd92706d036a",
-    "event:3be99325-ffaa-4c2b-a86a-cd92706d036a",
-    "catalogue:hama-chudibha-d1",
-    "goal_rule:G07-elig-v1"
+    "profile:U-02004@2026-09-29T07:35:27.992Z",
+    "goal_rule:G08-elig-v1",
+    "catalogue:T0007",
+    "catalogue:T0028",
+    "catalogue:T0031"
    ],
    "closed_at": "2026-10-15T18:30:00.000Z",
    "judgement": {
     "attribution": "failed_without_exposure",
-    "reason": "no qualifying play_started by 2026-10-04T03:15:02.575Z",
+    "reason": "no qualifying play_started by 2026-10-08T03:15:02.575Z",
     "rule_version": 1,
     "signal": null,
     "status": "failed"
@@ -72,13 +61,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-00136"
+    "A-00160",
+    "A-00161"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: no push consent (profile) and no usable WhatsApp (templates are Hindi only)",
+    "in-app message (shown at the next app open) because no push/WhatsApp: no push consent (profile) and no usable WhatsApp (templates are Hindi only)",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -101,11 +91,14 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
-   "confidence": 0.9,
-   "confidence_reason": "weakest deciding fact: unfinished_series (high, source derived)",
+   "confidence": 0.7,
+   "confidence_reason": "weakest deciding fact: subscription_status (medium, source profile, 43h old)",
    "conflicts": [
     {
      "conflicts": [
@@ -123,12 +116,22 @@
     }
    ],
    "content": [
+    "title:T0007",
+    "title:T1523",
+    "title:T1540",
+    "title:T0028",
+    "title:T0031",
+    "title:T0047",
+    "title:T1520",
+    "title:T0063",
+    "title:T0036",
+    "title:T0046",
+    "title:T0051",
     "title:T0005",
     "title:T1502",
     "title:T1503",
     "title:T1505",
     "title:T1506",
-    "title:T0007",
     "title:T1511",
     "title:T0016",
     "title:T1512",
@@ -136,13 +139,14 @@
     "title:T0022",
     "title:T1516",
     "title:T1518",
-    "title:T1523",
-    "title:T1540",
     "title:T1675",
     "title:T0055",
     "title:T0067",
     "title:T0077",
     "title:T0081",
+    "title:T0100",
+    "title:T1533",
+    "title:T1536",
     "title:T0001",
     "title:T1504",
     "title:T0004",
@@ -153,16 +157,6 @@
     "title:T1510",
     "title:T0034",
     "title:T1508",
-    "title:T0028",
-    "title:T0031",
-    "title:T0047",
-    "title:T1520",
-    "title:T0063",
-    "title:T0036",
-    "title:T0046",
-    "title:T0051",
-    "title:T1525",
-    "title:T1527",
     "title:T0030",
     "title:T1513",
     "title:T0226",
@@ -175,7 +169,7 @@
     "title:T0090"
    ],
    "created_at": "2026-10-01T03:15:02.575Z",
-   "decided_in_ms": 409.7,
+   "decided_in_ms": 431.2,
    "decision_id": "D-00226",
    "dialect": {
     "conflicts": [
@@ -187,25 +181,26 @@
    },
    "evidence": [
     {
-     "age_s": 1510701.9,
-     "event": "episode_completed",
-     "received_at": "2026-09-13T15:36:40.714Z",
-     "ref": "event:3be99325-ffaa-4c2b-a86a-cd92706d036a"
+     "age_s": 157174.6,
+     "ref": "profile:U-02004@2026-09-29T07:35:27.992Z"
     },
     {
-     "ref": "catalogue:hama-chudibha-d1"
+     "ref": "goal_rule:G08-elig-v1"
     },
     {
-     "ref": "goal_rule:G07-elig-v1"
+     "ref": "catalogue:T0007"
     },
     {
-     "ref": "catalogue:T0005"
+     "ref": "catalogue:T0028"
     },
     {
-     "ref": "catalogue:T1502"
+     "ref": "catalogue:T0031"
     },
     {
-     "ref": "catalogue:T1503"
+     "ref": "catalogue:T1523"
+    },
+    {
+     "ref": "catalogue:T1540"
     }
    ],
    "goal": {
@@ -243,6 +238,7 @@
      {
       "eligible": true,
       "goal_id": "G07",
+      "skipped": "the unfinished series hama-chudibha-d1 cannot be promoted now (not available, or flagged for injected instructions)",
       "why": "1 unfinished series idle 3+ days"
      },
      {
@@ -272,40 +268,29 @@
      }
     ],
     "continuing": false,
-    "deadline": "2026-10-04T03:15:02.575Z",
-    "id": "G07",
+    "deadline": "2026-10-08T03:15:02.575Z",
+    "id": "G08",
     "instance": "GI-00226",
     "shadow": false,
     "success_signal": {
-     "condition": "same content_slug as the unfinished series",
+     "condition": "a title released in the 30 days before the goal start",
      "event": "play_started",
      "rule_version": 1,
-     "window_hours": 72
+     "window_hours": 168
     },
-    "target": {
-     "content_slug": "hama-chudibha-d1",
-     "episodes_completed": 1,
-     "episodes_total": 36,
-     "furthest_episode": 1,
-     "idle_days": 17.5,
-     "last_played_at": "2026-09-13T15:36:40.714Z",
-     "next_episode_id": "hama-chudibha-d1-s1e2",
-     "title_ids": [
-      "T0002"
-     ]
-    },
-    "why": "1 unfinished series idle 3+ days"
+    "target": null,
+    "why": "84 available releases from the last 30 days in dialect d1"
    },
    "judged_by": {
-    "deadline": "2026-10-04T03:15:02.575Z",
+    "deadline": "2026-10-08T03:15:02.575Z",
     "signal": {
-     "condition": "same content_slug as the unfinished series",
+     "condition": "a title released in the 30 days before the goal start",
      "event": "play_started",
      "rule_version": 1,
-     "window_hours": 72
+     "window_hours": 168
     }
    },
-   "latency_ms": 409.7,
+   "latency_ms": 431.2,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -316,18 +301,26 @@
     "claim": {
      "confidence": 0.6,
      "eligible": true,
-     "goal_id": "G07",
-     "reason": "agrees with rule ranking: 1 unfinished series idle 3+ days"
+     "goal_id": "G08",
+     "reason": "agrees with rule ranking: 84 available releases from the last 30 days in dialect d1"
     },
     "elapsed_s": 0.4,
     "outcome": "agreed",
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 9.71,
-   "published_at": "2026-10-01T03:15:02.984Z",
+   "processing_ms": 31.16,
+   "published_at": "2026-10-01T03:15:03.006Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
+    {
+     "row_type": "hero",
+     "why": "released in the last 30 days"
+    },
+    {
+     "row_type": "new_releases",
+     "why": "released in the last 30 days (the goal)"
+    },
     {
      "row_type": "because_you_watched",
      "why": "shares a genre with what the viewer plays most (Devotional, Action)"
@@ -339,10 +332,6 @@
     {
      "row_type": "popular_in_dialect",
      "why": "most-played in this dialect"
-    },
-    {
-     "row_type": "new_releases",
-     "why": "released in the last 30 days"
     },
     {
      "row_type": "genre",
@@ -663,13 +652,29 @@
  ],
  "actions": [
   {
-   "action_id": "A-00136",
+   "action_id": "A-00160",
    "decision_id": "D-00226",
    "dialect": "d1",
-   "goal_id": "G07",
+   "goal_id": "G08",
    "goal_instance": "GI-00226",
-   "published_at": "2026-10-01T03:15:02.984Z",
+   "hero_title_id": "T0007",
+   "published_at": "2026-10-01T03:15:03.006Z",
    "rows": [
+    {
+     "row_type": "new_releases",
+     "title_ids": [
+      "T1523",
+      "T1540",
+      "T0028",
+      "T0031",
+      "T0047",
+      "T1520",
+      "T0063",
+      "T0036",
+      "T0046",
+      "T0051"
+     ]
+    },
     {
      "row_type": "because_you_watched",
      "title_ids": [
@@ -678,26 +683,26 @@
       "T1503",
       "T1505",
       "T1506",
-      "T0007",
       "T1511",
       "T0016",
       "T1512",
-      "T1509"
+      "T1509",
+      "T0022"
      ]
     },
     {
      "row_type": "genre",
      "title_ids": [
-      "T0022",
       "T1516",
       "T1518",
-      "T1523",
-      "T1540",
       "T1675",
       "T0055",
       "T0067",
       "T0077",
-      "T0081"
+      "T0081",
+      "T0100",
+      "T1533",
+      "T1536"
      ]
     },
     {
@@ -713,21 +718,6 @@
       "T1510",
       "T0034",
       "T1508"
-     ]
-    },
-    {
-     "row_type": "new_releases",
-     "title_ids": [
-      "T0028",
-      "T0031",
-      "T0047",
-      "T1520",
-      "T0063",
-      "T0036",
-      "T0046",
-      "T0051",
-      "T1525",
-      "T1527"
      ]
     },
     {
@@ -749,6 +739,23 @@
    "trigger_event_id": "cc2d4381-37c7-4cbc-8ab4-fd21cc06f307",
    "type": "home_page",
    "user_id": "U-02004"
+  },
+  {
+   "action_id": "A-00161",
+   "decision_id": "D-00226",
+   "deeplink": "ott://title/T0007",
+   "goal_id": "G08",
+   "goal_instance": "GI-00226",
+   "published_at": "2026-10-01T03:15:03.006Z",
+   "send_at": "2026-10-01T03:15:03.006Z",
+   "text": {
+    "body": "A new release in your dialect. Watch now.",
+    "title": "Tiya Bhamaro"
+   },
+   "title_id": "T0007",
+   "trigger_event_id": "cc2d4381-37c7-4cbc-8ab4-fd21cc06f307",
+   "type": "in_app_message",
+   "user_id": "U-02004"
   }
  ],
  "learnings": [
@@ -758,7 +765,7 @@
    "note": {
     "attribution": "failed_without_exposure",
     "effects": {},
-    "goal_id": "G07",
+    "goal_id": "G08",
     "goal_instance_id": "GI-00226",
     "notes": [
      "page was published but never shown (viewer did not reach home while it was live)"

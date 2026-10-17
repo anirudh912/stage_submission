@@ -20,7 +20,7 @@
  ],
  "goals": [
   {
-   "goal_instance_id": "GI-01136",
+   "goal_instance_id": "GI-01137",
    "user_id": "U-03509",
    "goal_id": "G07",
    "status": "failed",
@@ -46,7 +46,7 @@
     "window_hours": 72
    },
    "rule_version": 1,
-   "decision_id": "D-01136",
+   "decision_id": "D-01137",
    "evidence": [
     "event:9f988452-4ca0-4d19-9e7a-b89e653521e8",
     "event:9f988452-4ca0-4d19-9e7a-b89e653521e8",
@@ -72,13 +72,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-00566"
+    "A-00651",
+    "A-00652"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: no push consent (profile) and no usable WhatsApp (no consent)",
+    "in-app message (shown at the next app open) because no push/WhatsApp: no push consent (profile) and no usable WhatsApp (no consent)",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -101,7 +102,10 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.9,
@@ -161,8 +165,8 @@
     "title:T1276"
    ],
    "created_at": "2026-10-01T09:05:15.031Z",
-   "decided_in_ms": 405.5,
-   "decision_id": "D-01136",
+   "decided_in_ms": 409.2,
+   "decision_id": "D-01137",
    "dialect": {
     "conflicts": [],
     "rule": "R-dialect-1",
@@ -258,7 +262,7 @@
     "continuing": false,
     "deadline": "2026-10-04T09:05:15.031Z",
     "id": "G07",
-    "instance": "GI-01136",
+    "instance": "GI-01137",
     "shadow": false,
     "success_signal": {
      "condition": "same content_slug as the unfinished series",
@@ -289,7 +293,7 @@
      "window_hours": 72
     }
    },
-   "latency_ms": 405.5,
+   "latency_ms": 409.2,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -308,8 +312,8 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 5.46,
-   "published_at": "2026-10-01T09:05:15.436Z",
+   "processing_ms": 9.2,
+   "published_at": "2026-10-01T09:05:15.440Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
@@ -355,7 +359,7 @@
   {
    "id": 16607,
    "user_id": "U-03509",
-   "decision_id": "D-01136",
+   "decision_id": "D-01137",
    "name": "profile",
    "value": {
     "stale": true,
@@ -376,7 +380,7 @@
   {
    "id": 16608,
    "user_id": "U-03509",
-   "decision_id": "D-01136",
+   "decision_id": "D-01137",
    "name": "signup_at",
    "value": "2026-05-28T12:32:01.696Z",
    "source": "profile",
@@ -394,7 +398,7 @@
   {
    "id": 16609,
    "user_id": "U-03509",
-   "decision_id": "D-01136",
+   "decision_id": "D-01137",
    "name": "subscription_status",
    "value": "active",
    "source": "profile",
@@ -412,7 +416,7 @@
   {
    "id": 16610,
    "user_id": "U-03509",
-   "decision_id": "D-01136",
+   "decision_id": "D-01137",
    "name": "ever_paid",
    "value": true,
    "source": "event",
@@ -430,7 +434,7 @@
   {
    "id": 16611,
    "user_id": "U-03509",
-   "decision_id": "D-01136",
+   "decision_id": "D-01137",
    "name": "dialect",
    "value": "d5",
    "source": "app_setting",
@@ -448,7 +452,7 @@
   {
    "id": 16612,
    "user_id": "U-03509",
-   "decision_id": "D-01136",
+   "decision_id": "D-01137",
    "name": "language",
    "value": "hin",
    "source": "app_setting",
@@ -466,7 +470,7 @@
   {
    "id": 16613,
    "user_id": "U-03509",
-   "decision_id": "D-01136",
+   "decision_id": "D-01137",
    "name": "consent_push",
    "value": false,
    "source": "profile",
@@ -484,7 +488,7 @@
   {
    "id": 16614,
    "user_id": "U-03509",
-   "decision_id": "D-01136",
+   "decision_id": "D-01137",
    "name": "consent_whatsapp",
    "value": false,
    "source": "profile",
@@ -502,7 +506,7 @@
   {
    "id": 16615,
    "user_id": "U-03509",
-   "decision_id": "D-01136",
+   "decision_id": "D-01137",
    "name": "has_played",
    "value": true,
    "source": "event",
@@ -520,7 +524,7 @@
   {
    "id": 16616,
    "user_id": "U-03509",
-   "decision_id": "D-01136",
+   "decision_id": "D-01137",
    "name": "has_completed_episode",
    "value": true,
    "source": "event",
@@ -538,7 +542,7 @@
   {
    "id": 16617,
    "user_id": "U-03509",
-   "decision_id": "D-01136",
+   "decision_id": "D-01137",
    "name": "play_days_14d",
    "value": 1,
    "source": "derived",
@@ -556,7 +560,7 @@
   {
    "id": 16618,
    "user_id": "U-03509",
-   "decision_id": "D-01136",
+   "decision_id": "D-01137",
    "name": "last_open_before_trigger",
    "value": "2026-09-27T15:46:39.765Z",
    "source": "event",
@@ -574,7 +578,7 @@
   {
    "id": 16619,
    "user_id": "U-03509",
-   "decision_id": "D-01136",
+   "decision_id": "D-01137",
    "name": "recent_lapse",
    "value": null,
    "source": "derived",
@@ -592,7 +596,7 @@
   {
    "id": 16620,
    "user_id": "U-03509",
-   "decision_id": "D-01136",
+   "decision_id": "D-01137",
    "name": "unfinished_series",
    "value": [
     {
@@ -625,7 +629,7 @@
   {
    "id": 16621,
    "user_id": "U-03509",
-   "decision_id": "D-01136",
+   "decision_id": "D-01137",
    "name": "trigger_age_s",
    "value": 0.0,
    "source": "derived",
@@ -643,13 +647,13 @@
  ],
  "actions": [
   {
-   "action_id": "A-00566",
-   "decision_id": "D-01136",
+   "action_id": "A-00651",
+   "decision_id": "D-01137",
    "dialect": "d5",
    "goal_id": "G07",
-   "goal_instance": "GI-01136",
+   "goal_instance": "GI-01137",
    "hero_title_id": "T1185",
-   "published_at": "2026-10-01T09:05:15.436Z",
+   "published_at": "2026-10-01T09:05:15.440Z",
    "rows": [
     {
      "row_type": "because_you_watched",
@@ -730,11 +734,28 @@
    "trigger_event_id": "3aa04842-579f-45ba-afb8-061dcaf423bd",
    "type": "home_page",
    "user_id": "U-03509"
+  },
+  {
+   "action_id": "A-00652",
+   "decision_id": "D-01137",
+   "deeplink": "ott://title/T1185",
+   "goal_id": "G07",
+   "goal_instance": "GI-01137",
+   "published_at": "2026-10-01T09:05:15.440Z",
+   "send_at": "2026-10-01T09:05:15.440Z",
+   "text": {
+    "body": "Aapki kahani wahin ruki hai. Agla episode dekhiye.",
+    "title": "Yaka Naka"
+   },
+   "title_id": "T1185",
+   "trigger_event_id": "3aa04842-579f-45ba-afb8-061dcaf423bd",
+   "type": "in_app_message",
+   "user_id": "U-03509"
   }
  ],
  "learnings": [
   {
-   "goal_instance_id": "GI-01136",
+   "goal_instance_id": "GI-01137",
    "at": "2026-10-15T18:30:00.000Z",
    "note": {
     "attribution": "failed_after_exposure",
@@ -745,7 +766,7 @@
      }
     },
     "goal_id": "G07",
-    "goal_instance_id": "GI-01136",
+    "goal_instance_id": "GI-01137",
     "notes": [
      "G07 failed although the viewer saw our action: try a different goal for 7 days"
     ],

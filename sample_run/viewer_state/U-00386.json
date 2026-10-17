@@ -20,7 +20,7 @@
  ],
  "goals": [
   {
-   "goal_instance_id": "GI-01630",
+   "goal_instance_id": "GI-01631",
    "user_id": "U-00386",
    "goal_id": "G07",
    "status": "failed",
@@ -46,7 +46,7 @@
     "window_hours": 72
    },
    "rule_version": 1,
-   "decision_id": "D-01630",
+   "decision_id": "D-01631",
    "evidence": [
     "event:aa292706-02b3-4f48-88ff-2d7ea7dcea8a",
     "event:5bc69f11-f6f0-4ef4-a706-6d033a002e48",
@@ -72,13 +72,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-00849"
+    "A-00966",
+    "A-00967"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: no push consent (profile) and no usable WhatsApp (no consent)",
+    "in-app message (shown at the next app open) because no push/WhatsApp: no push consent (profile) and no usable WhatsApp (no consent)",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -101,7 +102,10 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.9,
@@ -122,11 +126,12 @@
     }
    ],
    "content": [
-    "title:T0916",
     "title:T0918",
+    "title:T0916",
+    "title:T0924",
+    "title:T0917",
     "title:T0919",
     "title:T0925",
-    "title:T0917",
     "title:T0920",
     "title:T0922",
     "title:T0923",
@@ -143,7 +148,8 @@
     "title:T0978",
     "title:T1019",
     "title:T1041",
-    "title:T0924",
+    "title:T1057",
+    "title:T1076",
     "title:T0932",
     "title:T0933",
     "title:T0926",
@@ -153,6 +159,7 @@
     "title:T0935",
     "title:T0946",
     "title:T0937",
+    "title:T0944",
     "title:T0974",
     "title:T0999",
     "title:T0941",
@@ -162,21 +169,11 @@
     "title:T1011",
     "title:T1014",
     "title:T1017",
-    "title:T1031",
-    "title:T1009",
-    "title:T0953",
-    "title:T0984",
-    "title:T1139",
-    "title:T0947",
-    "title:T0961",
-    "title:T0972",
-    "title:T0975",
-    "title:T0977",
-    "title:T0979"
+    "title:T1031"
    ],
    "created_at": "2026-10-01T13:05:41.272Z",
-   "decided_in_ms": 408.1,
-   "decision_id": "D-01630",
+   "decided_in_ms": 414.2,
+   "decision_id": "D-01631",
    "dialect": {
     "conflicts": [
      "profile:d3"
@@ -205,13 +202,13 @@
      "ref": "goal_rule:G07-elig-v1"
     },
     {
-     "ref": "catalogue:T0916"
-    },
-    {
      "ref": "catalogue:T0918"
     },
     {
-     "ref": "catalogue:T0919"
+     "ref": "catalogue:T0916"
+    },
+    {
+     "ref": "catalogue:T0924"
     }
    ],
    "goal": {
@@ -280,7 +277,7 @@
     "continuing": false,
     "deadline": "2026-10-04T13:05:41.272Z",
     "id": "G07",
-    "instance": "GI-01630",
+    "instance": "GI-01631",
     "shadow": false,
     "success_signal": {
      "condition": "same content_slug as the unfinished series",
@@ -311,7 +308,7 @@
      "window_hours": 72
     }
    },
-   "latency_ms": 408.1,
+   "latency_ms": 414.2,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -330,13 +327,17 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 8.1,
-   "published_at": "2026-10-01T13:05:41.680Z",
+   "processing_ms": 14.21,
+   "published_at": "2026-10-01T13:05:41.686Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
      "row_type": "hero",
-     "why": "the unfinished series this goal is about"
+     "why": "most-played title in this dialect"
+    },
+    {
+     "row_type": "next_episode",
+     "why": "series the viewer has started in this dialect, led by the unfinished series this goal is about"
     },
     {
      "row_type": "because_you_watched",
@@ -353,10 +354,6 @@
     {
      "row_type": "new_releases",
      "why": "released in the last 30 days"
-    },
-    {
-     "row_type": "genre",
-     "why": "genre: Action"
     }
    ],
    "status": "PUBLISHED",
@@ -377,7 +374,7 @@
   {
    "id": 23897,
    "user_id": "U-00386",
-   "decision_id": "D-01630",
+   "decision_id": "D-01631",
    "name": "profile",
    "value": {
     "stale": true,
@@ -398,7 +395,7 @@
   {
    "id": 23898,
    "user_id": "U-00386",
-   "decision_id": "D-01630",
+   "decision_id": "D-01631",
    "name": "signup_at",
    "value": "2024-11-07T10:29:57.844Z",
    "source": "profile",
@@ -416,7 +413,7 @@
   {
    "id": 23899,
    "user_id": "U-00386",
-   "decision_id": "D-01630",
+   "decision_id": "D-01631",
    "name": "subscription_status",
    "value": "active",
    "source": "profile",
@@ -434,7 +431,7 @@
   {
    "id": 23900,
    "user_id": "U-00386",
-   "decision_id": "D-01630",
+   "decision_id": "D-01631",
    "name": "ever_paid",
    "value": true,
    "source": "event",
@@ -452,7 +449,7 @@
   {
    "id": 23901,
    "user_id": "U-00386",
-   "decision_id": "D-01630",
+   "decision_id": "D-01631",
    "name": "dialect",
    "value": "d4",
    "source": "app_setting",
@@ -476,7 +473,7 @@
   {
    "id": 23902,
    "user_id": "U-00386",
-   "decision_id": "D-01630",
+   "decision_id": "D-01631",
    "name": "language",
    "value": "hin",
    "source": "app_setting",
@@ -494,7 +491,7 @@
   {
    "id": 23903,
    "user_id": "U-00386",
-   "decision_id": "D-01630",
+   "decision_id": "D-01631",
    "name": "consent_push",
    "value": false,
    "source": "profile",
@@ -512,7 +509,7 @@
   {
    "id": 23904,
    "user_id": "U-00386",
-   "decision_id": "D-01630",
+   "decision_id": "D-01631",
    "name": "consent_whatsapp",
    "value": false,
    "source": "profile",
@@ -530,7 +527,7 @@
   {
    "id": 23905,
    "user_id": "U-00386",
-   "decision_id": "D-01630",
+   "decision_id": "D-01631",
    "name": "has_played",
    "value": true,
    "source": "event",
@@ -548,7 +545,7 @@
   {
    "id": 23906,
    "user_id": "U-00386",
-   "decision_id": "D-01630",
+   "decision_id": "D-01631",
    "name": "has_completed_episode",
    "value": true,
    "source": "event",
@@ -566,7 +563,7 @@
   {
    "id": 23907,
    "user_id": "U-00386",
-   "decision_id": "D-01630",
+   "decision_id": "D-01631",
    "name": "play_days_14d",
    "value": 5,
    "source": "derived",
@@ -588,7 +585,7 @@
   {
    "id": 23908,
    "user_id": "U-00386",
-   "decision_id": "D-01630",
+   "decision_id": "D-01631",
    "name": "last_open_before_trigger",
    "value": "2026-09-28T09:49:07.396Z",
    "source": "event",
@@ -606,7 +603,7 @@
   {
    "id": 23909,
    "user_id": "U-00386",
-   "decision_id": "D-01630",
+   "decision_id": "D-01631",
    "name": "recent_lapse",
    "value": null,
    "source": "derived",
@@ -624,7 +621,7 @@
   {
    "id": 23910,
    "user_id": "U-00386",
-   "decision_id": "D-01630",
+   "decision_id": "D-01631",
    "name": "unfinished_series",
    "value": [
     {
@@ -657,7 +654,7 @@
   {
    "id": 23911,
    "user_id": "U-00386",
-   "decision_id": "D-01630",
+   "decision_id": "D-01631",
    "name": "trigger_age_s",
    "value": 0.0,
    "source": "derived",
@@ -675,34 +672,40 @@
  ],
  "actions": [
   {
-   "action_id": "A-00849",
-   "decision_id": "D-01630",
+   "action_id": "A-00966",
+   "decision_id": "D-01631",
    "dialect": "d4",
    "goal_id": "G07",
-   "goal_instance": "GI-01630",
-   "hero_title_id": "T0916",
-   "published_at": "2026-10-01T13:05:41.680Z",
+   "goal_instance": "GI-01631",
+   "hero_title_id": "T0918",
+   "published_at": "2026-10-01T13:05:41.686Z",
    "rows": [
+    {
+     "row_type": "next_episode",
+     "title_ids": [
+      "T0916",
+      "T0924",
+      "T0917"
+     ]
+    },
     {
      "row_type": "because_you_watched",
      "title_ids": [
-      "T0918",
       "T0919",
       "T0925",
-      "T0917",
       "T0920",
       "T0922",
       "T0923",
       "T0943",
       "T0942",
-      "T0931"
+      "T0931",
+      "T0939",
+      "T0956"
      ]
     },
     {
      "row_type": "genre",
      "title_ids": [
-      "T0939",
-      "T0956",
       "T0957",
       "T0934",
       "T0940",
@@ -710,13 +713,14 @@
       "T0950",
       "T0978",
       "T1019",
-      "T1041"
+      "T1041",
+      "T1057",
+      "T1076"
      ]
     },
     {
      "row_type": "popular_in_dialect",
      "title_ids": [
-      "T0924",
       "T0932",
       "T0933",
       "T0926",
@@ -725,7 +729,8 @@
       "T0928",
       "T0935",
       "T0946",
-      "T0937"
+      "T0937",
+      "T0944"
      ]
     },
     {
@@ -742,37 +747,39 @@
       "T1017",
       "T1031"
      ]
-    },
-    {
-     "row_type": "genre",
-     "title_ids": [
-      "T1009",
-      "T0953",
-      "T0984",
-      "T1139",
-      "T0947",
-      "T0961",
-      "T0972",
-      "T0975",
-      "T0977",
-      "T0979"
-     ]
     }
    ],
    "trigger_event_id": "e812b9fb-7689-45b4-8ff8-5ee86725415e",
    "type": "home_page",
    "user_id": "U-00386"
+  },
+  {
+   "action_id": "A-00967",
+   "decision_id": "D-01631",
+   "deeplink": "ott://title/T0916",
+   "goal_id": "G07",
+   "goal_instance": "GI-01631",
+   "published_at": "2026-10-01T13:05:41.686Z",
+   "send_at": "2026-10-01T13:05:41.686Z",
+   "text": {
+    "body": "Aapki kahani wahin ruki hai. Agla episode dekhiye.",
+    "title": "Bagi Baya"
+   },
+   "title_id": "T0916",
+   "trigger_event_id": "e812b9fb-7689-45b4-8ff8-5ee86725415e",
+   "type": "in_app_message",
+   "user_id": "U-00386"
   }
  ],
  "learnings": [
   {
-   "goal_instance_id": "GI-01630",
+   "goal_instance_id": "GI-01631",
    "at": "2026-10-15T18:30:00.000Z",
    "note": {
     "attribution": "failed_without_exposure",
     "effects": {},
     "goal_id": "G07",
-    "goal_instance_id": "GI-01630",
+    "goal_instance_id": "GI-01631",
     "notes": [
      "page was published but never shown (viewer did not reach home while it was live)"
     ],

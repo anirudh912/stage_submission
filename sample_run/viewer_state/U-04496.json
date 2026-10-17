@@ -97,7 +97,7 @@
    "conflicts": [],
    "content": [],
    "created_at": "2026-10-01T04:47:29.904Z",
-   "decided_in_ms": 404.3,
+   "decided_in_ms": 410.3,
    "decision_id": "D-00541",
    "dialect": {
     "conflicts": [],
@@ -222,7 +222,7 @@
      "window_hours": 72
     }
    },
-   "latency_ms": 404.3,
+   "latency_ms": 410.3,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -241,7 +241,7 @@
     "provider": "mock"
    },
    "no_action_reason": "trigger is 14.3 h old (buffered offline); the viewer is not in the app now",
-   "processing_ms": 4.33,
+   "processing_ms": 10.25,
    "published_at": null,
    "queue_wait_ms": 0.0,
    "rows_explained": [],
@@ -259,13 +259,14 @@
    "within_budget": true
   },
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-00670"
+    "A-00771",
+    "A-00772"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: no push consent (profile) and no usable WhatsApp (no consent)",
+    "in-app message (shown at the next app open) because no push/WhatsApp: no push consent (profile) and no usable WhatsApp (no consent)",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -287,7 +288,10 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.9,
@@ -347,8 +351,8 @@
     "title:T0608"
    ],
    "created_at": "2026-10-01T10:41:22.344Z",
-   "decided_in_ms": 7.1,
-   "decision_id": "D-01326",
+   "decided_in_ms": 13.9,
+   "decision_id": "D-01327",
    "dialect": {
     "conflicts": [],
     "rule": "R-dialect-1",
@@ -481,7 +485,7 @@
      "window_hours": 72
     }
    },
-   "latency_ms": 7.1,
+   "latency_ms": 13.9,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -494,8 +498,8 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 7.13,
-   "published_at": "2026-10-01T10:41:22.351Z",
+   "processing_ms": 13.94,
+   "published_at": "2026-10-01T10:41:22.357Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
@@ -541,8 +545,8 @@
    "action_ids": [],
    "arm": "agent",
    "assumptions": [
-    "page A-00670 for d2 is still live and unchanged",
-    "no message: no push consent (profile) and no usable WhatsApp (no consent)"
+    "page A-00771 for d2 is still live and unchanged",
+    "no message: no push/WhatsApp: no push consent (profile) and no usable WhatsApp (no consent); an in-app message is already queued today (max 1 per day)"
    ],
    "budget": {
     "model_calls": 1,
@@ -564,8 +568,8 @@
    "conflicts": [],
    "content": [],
    "created_at": "2026-10-01T10:41:26.267Z",
-   "decided_in_ms": 56.8,
-   "decision_id": "D-01327",
+   "decided_in_ms": 61.9,
+   "decision_id": "D-01328",
    "dialect": {
     "conflicts": [],
     "rule": "R-dialect-1",
@@ -689,7 +693,7 @@
      "window_hours": 72
     }
    },
-   "latency_ms": 56.8,
+   "latency_ms": 61.9,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -703,8 +707,8 @@
     "outcome": "unavailable",
     "provider": "mock"
    },
-   "no_action_reason": "personalised page A-00670 is still live for this goal; nothing new to add",
-   "processing_ms": 6.78,
+   "no_action_reason": "personalised page A-00771 is still live for this goal; nothing new to add",
+   "processing_ms": 11.89,
    "published_at": null,
    "queue_wait_ms": 0.0,
    "rows_explained": [],
@@ -726,7 +730,7 @@
   {
    "id": 19427,
    "user_id": "U-04496",
-   "decision_id": "D-01327",
+   "decision_id": "D-01328",
    "name": "profile",
    "value": {
     "stale": true,
@@ -747,7 +751,7 @@
   {
    "id": 19428,
    "user_id": "U-04496",
-   "decision_id": "D-01327",
+   "decision_id": "D-01328",
    "name": "signup_at",
    "value": "2026-06-20T11:29:20.385Z",
    "source": "profile",
@@ -765,7 +769,7 @@
   {
    "id": 19429,
    "user_id": "U-04496",
-   "decision_id": "D-01327",
+   "decision_id": "D-01328",
    "name": "subscription_status",
    "value": "active",
    "source": "profile",
@@ -783,7 +787,7 @@
   {
    "id": 19430,
    "user_id": "U-04496",
-   "decision_id": "D-01327",
+   "decision_id": "D-01328",
    "name": "ever_paid",
    "value": true,
    "source": "event",
@@ -801,7 +805,7 @@
   {
    "id": 19431,
    "user_id": "U-04496",
-   "decision_id": "D-01327",
+   "decision_id": "D-01328",
    "name": "dialect",
    "value": "d2",
    "source": "app_setting",
@@ -819,7 +823,7 @@
   {
    "id": 19432,
    "user_id": "U-04496",
-   "decision_id": "D-01327",
+   "decision_id": "D-01328",
    "name": "language",
    "value": "hin",
    "source": "app_setting",
@@ -837,7 +841,7 @@
   {
    "id": 19433,
    "user_id": "U-04496",
-   "decision_id": "D-01327",
+   "decision_id": "D-01328",
    "name": "consent_push",
    "value": false,
    "source": "profile",
@@ -855,7 +859,7 @@
   {
    "id": 19434,
    "user_id": "U-04496",
-   "decision_id": "D-01327",
+   "decision_id": "D-01328",
    "name": "consent_whatsapp",
    "value": false,
    "source": "profile",
@@ -873,7 +877,7 @@
   {
    "id": 19435,
    "user_id": "U-04496",
-   "decision_id": "D-01327",
+   "decision_id": "D-01328",
    "name": "has_played",
    "value": true,
    "source": "event",
@@ -891,7 +895,7 @@
   {
    "id": 19436,
    "user_id": "U-04496",
-   "decision_id": "D-01327",
+   "decision_id": "D-01328",
    "name": "has_completed_episode",
    "value": true,
    "source": "event",
@@ -909,7 +913,7 @@
   {
    "id": 19437,
    "user_id": "U-04496",
-   "decision_id": "D-01327",
+   "decision_id": "D-01328",
    "name": "play_days_14d",
    "value": 2,
    "source": "derived",
@@ -928,7 +932,7 @@
   {
    "id": 19438,
    "user_id": "U-04496",
-   "decision_id": "D-01327",
+   "decision_id": "D-01328",
    "name": "last_open_before_trigger",
    "value": "2026-10-01T10:41:22.344Z",
    "source": "event",
@@ -946,7 +950,7 @@
   {
    "id": 19439,
    "user_id": "U-04496",
-   "decision_id": "D-01327",
+   "decision_id": "D-01328",
    "name": "recent_lapse",
    "value": null,
    "source": "derived",
@@ -964,7 +968,7 @@
   {
    "id": 19440,
    "user_id": "U-04496",
-   "decision_id": "D-01327",
+   "decision_id": "D-01328",
    "name": "unfinished_series",
    "value": [
     {
@@ -997,7 +1001,7 @@
   {
    "id": 19441,
    "user_id": "U-04496",
-   "decision_id": "D-01327",
+   "decision_id": "D-01328",
    "name": "trigger_age_s",
    "value": 0.0,
    "source": "derived",
@@ -1015,13 +1019,13 @@
  ],
  "actions": [
   {
-   "action_id": "A-00670",
-   "decision_id": "D-01326",
+   "action_id": "A-00771",
+   "decision_id": "D-01327",
    "dialect": "d2",
    "goal_id": "G07",
    "goal_instance": "GI-00541",
    "hero_title_id": "T0521",
-   "published_at": "2026-10-01T10:41:22.351Z",
+   "published_at": "2026-10-01T10:41:22.357Z",
    "rows": [
     {
      "row_type": "because_you_watched",
@@ -1101,6 +1105,23 @@
    ],
    "trigger_event_id": "b891a2ea-1315-47ca-b580-55fddb774f29",
    "type": "home_page",
+   "user_id": "U-04496"
+  },
+  {
+   "action_id": "A-00772",
+   "decision_id": "D-01327",
+   "deeplink": "ott://title/T0521",
+   "goal_id": "G07",
+   "goal_instance": "GI-00541",
+   "published_at": "2026-10-01T10:41:22.357Z",
+   "send_at": "2026-10-01T10:41:22.357Z",
+   "text": {
+    "body": "Aapki kahani wahin ruki hai. Agla episode dekhiye.",
+    "title": "Molo"
+   },
+   "title_id": "T0521",
+   "trigger_event_id": "b891a2ea-1315-47ca-b580-55fddb774f29",
+   "type": "in_app_message",
    "user_id": "U-04496"
   }
  ],

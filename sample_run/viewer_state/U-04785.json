@@ -43,12 +43,12 @@
    "closed_at": "2026-10-15T18:30:00.000Z",
    "judgement": {
     "attribution": "success_after_exposure",
-    "reason": "play_started oua-030527 at 2026-10-01T05:17:07.715Z",
+    "reason": "play_started oua-030590 at 2026-10-01T05:17:07.715Z",
     "rule_version": 1,
     "signal": {
      "at": "2026-10-01T05:17:07.715Z",
      "event": "play_started",
-     "event_id": "oua-030527"
+     "event_id": "oua-030590"
     },
     "status": "succeeded"
    },
@@ -63,13 +63,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-00261"
+    "A-00301",
+    "A-00302"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: next allowed send slot is after the goal deadline",
+    "in-app message (shown at the next app open) because no push/WhatsApp: next allowed send slot is after the goal deadline",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -92,7 +93,10 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.9,
@@ -152,7 +156,7 @@
     "title:T1106"
    ],
    "created_at": "2026-10-01T05:16:28.715Z",
-   "decided_in_ms": 405.3,
+   "decided_in_ms": 410.6,
    "decision_id": "D-00645",
    "dialect": {
     "conflicts": [],
@@ -269,7 +273,7 @@
      "window_hours": 24
     }
    },
-   "latency_ms": 405.3,
+   "latency_ms": 410.6,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -288,8 +292,8 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 5.26,
-   "published_at": "2026-10-01T05:16:29.120Z",
+   "processing_ms": 10.58,
+   "published_at": "2026-10-01T05:16:29.125Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
@@ -604,13 +608,13 @@
  ],
  "actions": [
   {
-   "action_id": "A-00261",
+   "action_id": "A-00301",
    "decision_id": "D-00645",
    "dialect": "d4",
    "goal_id": "G01",
    "goal_instance": "GI-00645",
    "hero_title_id": "T0916",
-   "published_at": "2026-10-01T05:16:29.120Z",
+   "published_at": "2026-10-01T05:16:29.125Z",
    "rows": [
     {
      "row_type": "popular_in_dialect",
@@ -691,6 +695,23 @@
    "trigger_event_id": "80a0f2ea-0bca-4028-91bd-d54d28a101d9",
    "type": "home_page",
    "user_id": "U-04785"
+  },
+  {
+   "action_id": "A-00302",
+   "decision_id": "D-00645",
+   "deeplink": "ott://title/T0916",
+   "goal_id": "G01",
+   "goal_instance": "GI-00645",
+   "published_at": "2026-10-01T05:16:29.125Z",
+   "send_at": "2026-10-01T05:16:29.125Z",
+   "text": {
+    "body": "Aapke liye chuni gayi kahani. Abhi dekhiye.",
+    "title": "Bagi Baya"
+   },
+   "title_id": "T0916",
+   "trigger_event_id": "80a0f2ea-0bca-4028-91bd-d54d28a101d9",
+   "type": "in_app_message",
+   "user_id": "U-04785"
   }
  ],
  "learnings": [
@@ -703,7 +724,7 @@
     "goal_id": "G01",
     "goal_instance_id": "GI-00645",
     "notes": [
-     "G01 reached after exposure (home_page)"
+     "G01 reached after exposure (home_page, in_app_message)"
     ],
     "result": "succeeded"
    }

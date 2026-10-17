@@ -29,7 +29,7 @@ it at each step.
 
 - **Every step was run, not just written.** After each phase the full replay day went through the real simulator, and
   `simulator_report.json` was checked for policy problems (0 in every run) and rejected pages.
-- **Unit tests for every component** (82 at the end), including the four scenarios the brief requires.
+- **Unit tests for every component** (90 at the end), including the four scenarios the brief requires.
 - **Claude read the simulator's source before designing actions**, instead of guessing how pages and messages are
   scored (page TTL, the 3–40 s window before the home screen, what counts as a visit).
 - **The impact number was checked against things that cannot be fooled:** an A/A run with no actions (should be about
@@ -52,6 +52,16 @@ it at each step.
   true; only status-based goals may be abandoned. Found in the replay's revision log; fixed and tested.
 - **Dishonest push copy.** The first version said "a new story" for any title. Replaced with copy tied to a property of
   the named title (short episode, new release, premium, unfinished series).
+- **Page-builder gaps, found by scoring our own pages with the simulator's formula.** d3 pages averaged 2.1 rows
+  (the first row took most of the 13 titles); on 100 pages the series hero left the `next_episode` row one title short
+  and the platform dropped it; 61 pages had no hero because their G07 series was flagged for injected text and could
+  not be shown. Fixed (shorter rows in a thin catalogue, series leads the row, fallback hero, G07 not chosen for a
+  series that cannot be promoted), plus a catalogue-only page when the data store fails. True effect +2.98 → +3.70
+  pts; the headline's larger move is partly a changed baseline gap, which is reported.
+- **In-app messages, added on my request for viewers no other channel reaches.** The independent audit caught the
+  first version queuing them before their publish time; fixed. The true effect then moved +3.70 → +3.94, although the
+  simulator ignores in-app messages: Claude showed the simulator's output is byte-identical with and without them, so
+  the move is click randomness from shifted action ids, and it is reported as noise.
 - **A push sent after the goal was already met.** Found while preparing the walkthrough. Partly fixed (goals met
   during the replay now cancel their pending push); the rest is a documented limitation.
 

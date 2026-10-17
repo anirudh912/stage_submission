@@ -22,41 +22,30 @@
   {
    "goal_instance_id": "GI-00481",
    "user_id": "U-02070",
-   "goal_id": "G07",
+   "goal_id": "G08",
    "status": "failed",
    "started_at": "2026-10-01T04:46:36.486Z",
-   "deadline": "2026-10-04T04:46:36.486Z",
+   "deadline": "2026-10-08T04:46:36.486Z",
    "success_spec": {
-    "condition": "same content_slug as the unfinished series",
+    "condition": "a title released in the 30 days before the goal start",
     "event": "play_started",
-    "goal_id": "G07",
+    "goal_id": "G08",
     "rule_version": 1,
-    "target": {
-     "content_slug": "guka-kosusa-d2",
-     "episodes_completed": 1,
-     "episodes_total": 41,
-     "furthest_episode": 1,
-     "idle_days": 8.0,
-     "last_played_at": "2026-09-23T03:44:01.284Z",
-     "next_episode_id": "guka-kosusa-d2-s1e2",
-     "title_ids": [
-      "T0522"
-     ]
-    },
-    "window_hours": 72
+    "window_hours": 168
    },
    "rule_version": 1,
    "decision_id": "D-00481",
    "evidence": [
-    "event:4fb00652-f14a-4d2b-8a99-9a6bf252d04a",
-    "event:4fb00652-f14a-4d2b-8a99-9a6bf252d04a",
-    "catalogue:guka-kosusa-d2",
-    "goal_rule:G07-elig-v1"
+    "profile:U-02070@2026-09-28T21:00:57.483Z",
+    "goal_rule:G08-elig-v1",
+    "catalogue:T0530",
+    "catalogue:T0535",
+    "catalogue:T0545"
    ],
    "closed_at": "2026-10-15T18:30:00.000Z",
    "judgement": {
     "attribution": "holdout",
-    "reason": "no qualifying play_started by 2026-10-04T04:46:36.486Z",
+    "reason": "no qualifying play_started by 2026-10-08T04:46:36.486Z",
     "rule_version": 1,
     "signal": null,
     "status": "failed"
@@ -92,12 +81,12 @@
      "budget"
     ]
    },
-   "confidence": 0.9,
-   "confidence_reason": "weakest deciding fact: unfinished_series (high, source derived)",
+   "confidence": 0.7,
+   "confidence_reason": "weakest deciding fact: subscription_status (medium, source profile, 55h old)",
    "conflicts": [],
    "content": [],
    "created_at": "2026-10-01T04:46:36.486Z",
-   "decided_in_ms": 403.6,
+   "decided_in_ms": 410.8,
    "decision_id": "D-00481",
    "dialect": {
     "conflicts": [],
@@ -107,16 +96,20 @@
    },
    "evidence": [
     {
-     "age_s": 694955.2,
-     "event": "episode_completed",
-     "received_at": "2026-09-23T03:44:01.284Z",
-     "ref": "event:4fb00652-f14a-4d2b-8a99-9a6bf252d04a"
+     "age_s": 200739.0,
+     "ref": "profile:U-02070@2026-09-28T21:00:57.483Z"
     },
     {
-     "ref": "catalogue:guka-kosusa-d2"
+     "ref": "goal_rule:G08-elig-v1"
     },
     {
-     "ref": "goal_rule:G07-elig-v1"
+     "ref": "catalogue:T0530"
+    },
+    {
+     "ref": "catalogue:T0535"
+    },
+    {
+     "ref": "catalogue:T0545"
     }
    ],
    "goal": {
@@ -154,6 +147,7 @@
      {
       "eligible": true,
       "goal_id": "G07",
+      "skipped": "the unfinished series guka-kosusa-d2 cannot be promoted now (not available, or flagged for injected instructions)",
       "why": "1 unfinished series idle 3+ days"
      },
      {
@@ -183,40 +177,29 @@
      }
     ],
     "continuing": false,
-    "deadline": "2026-10-04T04:46:36.486Z",
-    "id": "G07",
+    "deadline": "2026-10-08T04:46:36.486Z",
+    "id": "G08",
     "instance": "GI-00481",
     "shadow": true,
     "success_signal": {
-     "condition": "same content_slug as the unfinished series",
+     "condition": "a title released in the 30 days before the goal start",
      "event": "play_started",
      "rule_version": 1,
-     "window_hours": 72
+     "window_hours": 168
     },
-    "target": {
-     "content_slug": "guka-kosusa-d2",
-     "episodes_completed": 1,
-     "episodes_total": 41,
-     "furthest_episode": 1,
-     "idle_days": 8.0,
-     "last_played_at": "2026-09-23T03:44:01.284Z",
-     "next_episode_id": "guka-kosusa-d2-s1e2",
-     "title_ids": [
-      "T0522"
-     ]
-    },
-    "why": "1 unfinished series idle 3+ days"
+    "target": null,
+    "why": "62 available releases from the last 30 days in dialect d2"
    },
    "judged_by": {
-    "deadline": "2026-10-04T04:46:36.486Z",
+    "deadline": "2026-10-08T04:46:36.486Z",
     "signal": {
-     "condition": "same content_slug as the unfinished series",
+     "condition": "a title released in the 30 days before the goal start",
      "event": "play_started",
      "rule_version": 1,
-     "window_hours": 72
+     "window_hours": 168
     }
    },
-   "latency_ms": 403.6,
+   "latency_ms": 410.8,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -227,15 +210,15 @@
     "claim": {
      "confidence": 0.6,
      "eligible": true,
-     "goal_id": "G07",
-     "reason": "agrees with rule ranking: 1 unfinished series idle 3+ days"
+     "goal_id": "G08",
+     "reason": "agrees with rule ranking: 62 available releases from the last 30 days in dialect d2"
     },
     "elapsed_s": 0.4,
     "outcome": "agreed",
     "provider": "mock"
    },
    "no_action_reason": "viewer is in the 'holdout' arm: shadow decision only, no action of any kind",
-   "processing_ms": 3.61,
+   "processing_ms": 10.82,
    "published_at": null,
    "queue_wait_ms": 0.0,
    "rows_explained": [],
@@ -552,7 +535,7 @@
    "note": {
     "attribution": "holdout",
     "effects": {},
-    "goal_id": "G07",
+    "goal_id": "G08",
     "goal_instance_id": "GI-00481",
     "notes": [],
     "result": "failed"

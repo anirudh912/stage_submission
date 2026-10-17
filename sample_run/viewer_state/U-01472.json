@@ -20,43 +20,30 @@
  ],
  "goals": [
   {
-   "goal_instance_id": "GI-02083",
+   "goal_instance_id": "GI-02084",
    "user_id": "U-01472",
-   "goal_id": "G07",
+   "goal_id": "G05",
    "status": "failed",
    "started_at": "2026-10-01T15:05:40.403Z",
-   "deadline": "2026-10-04T15:05:40.403Z",
+   "deadline": "2026-10-08T15:05:40.403Z",
    "success_spec": {
-    "condition": "same content_slug as the unfinished series",
-    "event": "play_started",
-    "goal_id": "G07",
+    "condition": "is_trial = false",
+    "event": "purchase_completed",
+    "goal_id": "G05",
     "rule_version": 1,
-    "target": {
-     "content_slug": "hama-chudibha-d1",
-     "episodes_completed": 1,
-     "episodes_total": 36,
-     "furthest_episode": 1,
-     "idle_days": 5.0,
-     "last_played_at": "2026-09-26T15:08:36.974Z",
-     "next_episode_id": "hama-chudibha-d1-s1e2",
-     "title_ids": [
-      "T0002"
-     ]
-    },
-    "window_hours": 72
+    "window_hours": 168
    },
    "rule_version": 1,
-   "decision_id": "D-02083",
+   "decision_id": "D-02084",
    "evidence": [
-    "event:ee216bc5-3ae0-482d-9dba-a8219218565a",
-    "event:ee216bc5-3ae0-482d-9dba-a8219218565a",
-    "catalogue:hama-chudibha-d1",
-    "goal_rule:G07-elig-v1"
+    "profile:U-01472@2026-09-29T02:14:04.905Z",
+    "profile:U-01472@2026-09-29T02:14:04.905Z",
+    "goal_rule:G05-elig-v1"
    ],
    "closed_at": "2026-10-15T18:30:00.000Z",
    "judgement": {
     "attribution": "holdout",
-    "reason": "no qualifying play_started by 2026-10-04T15:05:40.403Z",
+    "reason": "no qualifying purchase_completed by 2026-10-08T15:05:40.403Z",
     "rule_version": 1,
     "signal": null,
     "status": "failed"
@@ -92,13 +79,13 @@
      "budget"
     ]
    },
-   "confidence": 0.9,
-   "confidence_reason": "weakest deciding fact: unfinished_series (high, source derived)",
+   "confidence": 0.7,
+   "confidence_reason": "weakest deciding fact: subscription_status (medium, source profile, 60h old)",
    "conflicts": [],
    "content": [],
    "created_at": "2026-10-01T15:05:40.403Z",
-   "decided_in_ms": 402.2,
-   "decision_id": "D-02083",
+   "decided_in_ms": 403.3,
+   "decision_id": "D-02084",
    "dialect": {
     "conflicts": [],
     "rule": "R-dialect-1",
@@ -107,16 +94,11 @@
    },
    "evidence": [
     {
-     "age_s": 431823.4,
-     "event": "episode_completed",
-     "received_at": "2026-09-26T15:08:36.974Z",
-     "ref": "event:ee216bc5-3ae0-482d-9dba-a8219218565a"
+     "age_s": 219095.5,
+     "ref": "profile:U-01472@2026-09-29T02:14:04.905Z"
     },
     {
-     "ref": "catalogue:hama-chudibha-d1"
-    },
-    {
-     "ref": "goal_rule:G07-elig-v1"
+     "ref": "goal_rule:G05-elig-v1"
     }
    ],
    "goal": {
@@ -154,6 +136,7 @@
      {
       "eligible": true,
       "goal_id": "G07",
+      "skipped": "the unfinished series hama-chudibha-d1 cannot be promoted now (not available, or flagged for injected instructions)",
       "why": "1 unfinished series idle 3+ days"
      },
      {
@@ -183,40 +166,29 @@
      }
     ],
     "continuing": false,
-    "deadline": "2026-10-04T15:05:40.403Z",
-    "id": "G07",
-    "instance": "GI-02083",
+    "deadline": "2026-10-08T15:05:40.403Z",
+    "id": "G05",
+    "instance": "GI-02084",
     "shadow": true,
     "success_signal": {
-     "condition": "same content_slug as the unfinished series",
-     "event": "play_started",
+     "condition": "is_trial = false",
+     "event": "purchase_completed",
      "rule_version": 1,
-     "window_hours": 72
+     "window_hours": 168
     },
-    "target": {
-     "content_slug": "hama-chudibha-d1",
-     "episodes_completed": 1,
-     "episodes_total": 36,
-     "furthest_episode": 1,
-     "idle_days": 5.0,
-     "last_played_at": "2026-09-26T15:08:36.974Z",
-     "next_episode_id": "hama-chudibha-d1-s1e2",
-     "title_ids": [
-      "T0002"
-     ]
-    },
-    "why": "1 unfinished series idle 3+ days"
+    "target": null,
+    "why": "subscription_status=never, ever_paid=False"
    },
    "judged_by": {
-    "deadline": "2026-10-04T15:05:40.403Z",
+    "deadline": "2026-10-08T15:05:40.403Z",
     "signal": {
-     "condition": "same content_slug as the unfinished series",
-     "event": "play_started",
+     "condition": "is_trial = false",
+     "event": "purchase_completed",
      "rule_version": 1,
-     "window_hours": 72
+     "window_hours": 168
     }
    },
-   "latency_ms": 402.2,
+   "latency_ms": 403.3,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -227,15 +199,15 @@
     "claim": {
      "confidence": 0.6,
      "eligible": true,
-     "goal_id": "G07",
-     "reason": "agrees with rule ranking: 1 unfinished series idle 3+ days"
+     "goal_id": "G05",
+     "reason": "agrees with rule ranking: subscription_status=never, ever_paid=False"
     },
     "elapsed_s": 0.4,
     "outcome": "agreed",
     "provider": "mock"
    },
    "no_action_reason": "viewer is in the 'holdout' arm: shadow decision only, no action of any kind",
-   "processing_ms": 2.19,
+   "processing_ms": 3.35,
    "published_at": null,
    "queue_wait_ms": 0.0,
    "rows_explained": [],
@@ -255,9 +227,9 @@
  ],
  "facts_at_last_decision": [
   {
-   "id": 30527,
+   "id": 30542,
    "user_id": "U-01472",
-   "decision_id": "D-02083",
+   "decision_id": "D-02084",
    "name": "profile",
    "value": {
     "stale": true,
@@ -276,9 +248,9 @@
    "recorded_at": "2026-10-01T15:05:40.403Z"
   },
   {
-   "id": 30528,
+   "id": 30543,
    "user_id": "U-01472",
-   "decision_id": "D-02083",
+   "decision_id": "D-02084",
    "name": "signup_at",
    "value": "2025-12-03T09:43:08.879Z",
    "source": "profile",
@@ -294,9 +266,9 @@
    "recorded_at": "2026-10-01T15:05:40.403Z"
   },
   {
-   "id": 30529,
+   "id": 30544,
    "user_id": "U-01472",
-   "decision_id": "D-02083",
+   "decision_id": "D-02084",
    "name": "subscription_status",
    "value": "never",
    "source": "profile",
@@ -312,9 +284,9 @@
    "recorded_at": "2026-10-01T15:05:40.403Z"
   },
   {
-   "id": 30530,
+   "id": 30545,
    "user_id": "U-01472",
-   "decision_id": "D-02083",
+   "decision_id": "D-02084",
    "name": "ever_paid",
    "value": false,
    "source": "profile",
@@ -330,9 +302,9 @@
    "recorded_at": "2026-10-01T15:05:40.403Z"
   },
   {
-   "id": 30531,
+   "id": 30546,
    "user_id": "U-01472",
-   "decision_id": "D-02083",
+   "decision_id": "D-02084",
    "name": "dialect",
    "value": "d1",
    "source": "app_setting",
@@ -348,9 +320,9 @@
    "recorded_at": "2026-10-01T15:05:40.403Z"
   },
   {
-   "id": 30532,
+   "id": 30547,
    "user_id": "U-01472",
-   "decision_id": "D-02083",
+   "decision_id": "D-02084",
    "name": "language",
    "value": "hin",
    "source": "app_setting",
@@ -366,9 +338,9 @@
    "recorded_at": "2026-10-01T15:05:40.403Z"
   },
   {
-   "id": 30533,
+   "id": 30548,
    "user_id": "U-01472",
-   "decision_id": "D-02083",
+   "decision_id": "D-02084",
    "name": "consent_push",
    "value": true,
    "source": "profile",
@@ -384,9 +356,9 @@
    "recorded_at": "2026-10-01T15:05:40.403Z"
   },
   {
-   "id": 30534,
+   "id": 30549,
    "user_id": "U-01472",
-   "decision_id": "D-02083",
+   "decision_id": "D-02084",
    "name": "consent_whatsapp",
    "value": true,
    "source": "profile",
@@ -402,9 +374,9 @@
    "recorded_at": "2026-10-01T15:05:40.403Z"
   },
   {
-   "id": 30535,
+   "id": 30550,
    "user_id": "U-01472",
-   "decision_id": "D-02083",
+   "decision_id": "D-02084",
    "name": "has_played",
    "value": true,
    "source": "event",
@@ -420,9 +392,9 @@
    "recorded_at": "2026-10-01T15:05:40.403Z"
   },
   {
-   "id": 30536,
+   "id": 30551,
    "user_id": "U-01472",
-   "decision_id": "D-02083",
+   "decision_id": "D-02084",
    "name": "has_completed_episode",
    "value": true,
    "source": "event",
@@ -438,9 +410,9 @@
    "recorded_at": "2026-10-01T15:05:40.403Z"
   },
   {
-   "id": 30537,
+   "id": 30552,
    "user_id": "U-01472",
-   "decision_id": "D-02083",
+   "decision_id": "D-02084",
    "name": "play_days_14d",
    "value": 1,
    "source": "derived",
@@ -456,9 +428,9 @@
    "recorded_at": "2026-10-01T15:05:40.403Z"
   },
   {
-   "id": 30538,
+   "id": 30553,
    "user_id": "U-01472",
-   "decision_id": "D-02083",
+   "decision_id": "D-02084",
    "name": "last_open_before_trigger",
    "value": "2026-09-26T16:14:49.659Z",
    "source": "event",
@@ -474,9 +446,9 @@
    "recorded_at": "2026-10-01T15:05:40.403Z"
   },
   {
-   "id": 30539,
+   "id": 30554,
    "user_id": "U-01472",
-   "decision_id": "D-02083",
+   "decision_id": "D-02084",
    "name": "recent_lapse",
    "value": null,
    "source": "derived",
@@ -492,9 +464,9 @@
    "recorded_at": "2026-10-01T15:05:40.403Z"
   },
   {
-   "id": 30540,
+   "id": 30555,
    "user_id": "U-01472",
-   "decision_id": "D-02083",
+   "decision_id": "D-02084",
    "name": "unfinished_series",
    "value": [
     {
@@ -525,9 +497,9 @@
    "recorded_at": "2026-10-01T15:05:40.403Z"
   },
   {
-   "id": 30541,
+   "id": 30556,
    "user_id": "U-01472",
-   "decision_id": "D-02083",
+   "decision_id": "D-02084",
    "name": "trigger_age_s",
    "value": 0.0,
    "source": "derived",
@@ -546,13 +518,13 @@
  "actions": [],
  "learnings": [
   {
-   "goal_instance_id": "GI-02083",
+   "goal_instance_id": "GI-02084",
    "at": "2026-10-15T18:30:00.000Z",
    "note": {
     "attribution": "holdout",
     "effects": {},
-    "goal_id": "G07",
-    "goal_instance_id": "GI-02083",
+    "goal_id": "G05",
+    "goal_instance_id": "GI-02084",
     "notes": [],
     "result": "failed"
    }

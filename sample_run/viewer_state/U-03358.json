@@ -20,7 +20,7 @@
  ],
  "goals": [
   {
-   "goal_instance_id": "GI-02081",
+   "goal_instance_id": "GI-02082",
    "user_id": "U-03358",
    "goal_id": "G01",
    "status": "succeeded",
@@ -34,7 +34,7 @@
     "window_hours": 24
    },
    "rule_version": 1,
-   "decision_id": "D-02081",
+   "decision_id": "D-02082",
    "evidence": [
     "event:587490cf-9d1f-47af-b912-0a8450af8d8c",
     "goal_rule:G01-elig-v1",
@@ -43,12 +43,12 @@
    "closed_at": "2026-10-15T18:30:00.000Z",
    "judgement": {
     "attribution": "success_after_exposure",
-    "reason": "play_started oua-021584 at 2026-10-01T15:06:25.656Z",
+    "reason": "play_started oua-021632 at 2026-10-01T15:06:25.656Z",
     "rule_version": 1,
     "signal": {
      "at": "2026-10-01T15:06:25.656Z",
      "event": "play_started",
-     "event_id": "oua-021584"
+     "event_id": "oua-021632"
     },
     "status": "succeeded"
    },
@@ -63,13 +63,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-01123"
+    "A-01270",
+    "A-01271"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: goal G01 is served by the home page while the viewer is in the app",
+    "in-app message (shown at the next app open) because no push/WhatsApp: next allowed send slot is after the goal deadline",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -92,7 +93,10 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.9,
@@ -152,8 +156,8 @@
     "title:T1308"
    ],
    "created_at": "2026-10-01T15:05:28.656Z",
-   "decided_in_ms": 404.2,
-   "decision_id": "D-02081",
+   "decided_in_ms": 410.2,
+   "decision_id": "D-02082",
    "dialect": {
     "conflicts": [],
     "rule": "R-dialect-1",
@@ -249,7 +253,7 @@
     "continuing": false,
     "deadline": "2026-10-02T15:05:28.656Z",
     "id": "G01",
-    "instance": "GI-02081",
+    "instance": "GI-02082",
     "shadow": false,
     "success_signal": {
      "condition": "any title",
@@ -269,7 +273,7 @@
      "window_hours": 24
     }
    },
-   "latency_ms": 404.2,
+   "latency_ms": 410.2,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -288,8 +292,8 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 4.22,
-   "published_at": "2026-10-01T15:05:29.060Z",
+   "processing_ms": 10.18,
+   "published_at": "2026-10-01T15:05:29.066Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
@@ -333,9 +337,9 @@
  ],
  "facts_at_last_decision": [
   {
-   "id": 30497,
+   "id": 30512,
    "user_id": "U-03358",
-   "decision_id": "D-02081",
+   "decision_id": "D-02082",
    "name": "profile",
    "value": {
     "stale": true,
@@ -354,9 +358,9 @@
    "recorded_at": "2026-10-01T15:05:28.656Z"
   },
   {
-   "id": 30498,
+   "id": 30513,
    "user_id": "U-03358",
-   "decision_id": "D-02081",
+   "decision_id": "D-02082",
    "name": "signup_at",
    "value": "2026-09-28T16:25:40.437Z",
    "source": "event",
@@ -372,9 +376,9 @@
    "recorded_at": "2026-10-01T15:05:28.656Z"
   },
   {
-   "id": 30499,
+   "id": 30514,
    "user_id": "U-03358",
-   "decision_id": "D-02081",
+   "decision_id": "D-02082",
    "name": "subscription_status",
    "value": "never",
    "source": "profile",
@@ -390,9 +394,9 @@
    "recorded_at": "2026-10-01T15:05:28.656Z"
   },
   {
-   "id": 30500,
+   "id": 30515,
    "user_id": "U-03358",
-   "decision_id": "D-02081",
+   "decision_id": "D-02082",
    "name": "ever_paid",
    "value": false,
    "source": "profile",
@@ -408,9 +412,9 @@
    "recorded_at": "2026-10-01T15:05:28.656Z"
   },
   {
-   "id": 30501,
+   "id": 30516,
    "user_id": "U-03358",
-   "decision_id": "D-02081",
+   "decision_id": "D-02082",
    "name": "dialect",
    "value": "d5",
    "source": "app_setting",
@@ -426,9 +430,9 @@
    "recorded_at": "2026-10-01T15:05:28.656Z"
   },
   {
-   "id": 30502,
+   "id": 30517,
    "user_id": "U-03358",
-   "decision_id": "D-02081",
+   "decision_id": "D-02082",
    "name": "language",
    "value": "hin",
    "source": "app_setting",
@@ -444,9 +448,9 @@
    "recorded_at": "2026-10-01T15:05:28.656Z"
   },
   {
-   "id": 30503,
+   "id": 30518,
    "user_id": "U-03358",
-   "decision_id": "D-02081",
+   "decision_id": "D-02082",
    "name": "consent_push",
    "value": true,
    "source": "profile",
@@ -462,9 +466,9 @@
    "recorded_at": "2026-10-01T15:05:28.656Z"
   },
   {
-   "id": 30504,
+   "id": 30519,
    "user_id": "U-03358",
-   "decision_id": "D-02081",
+   "decision_id": "D-02082",
    "name": "consent_whatsapp",
    "value": false,
    "source": "profile",
@@ -480,9 +484,9 @@
    "recorded_at": "2026-10-01T15:05:28.656Z"
   },
   {
-   "id": 30505,
+   "id": 30520,
    "user_id": "U-03358",
-   "decision_id": "D-02081",
+   "decision_id": "D-02082",
    "name": "has_played",
    "value": false,
    "source": "derived",
@@ -498,9 +502,9 @@
    "recorded_at": "2026-10-01T15:05:28.656Z"
   },
   {
-   "id": 30506,
+   "id": 30521,
    "user_id": "U-03358",
-   "decision_id": "D-02081",
+   "decision_id": "D-02082",
    "name": "has_completed_episode",
    "value": false,
    "source": "derived",
@@ -516,9 +520,9 @@
    "recorded_at": "2026-10-01T15:05:28.656Z"
   },
   {
-   "id": 30507,
+   "id": 30522,
    "user_id": "U-03358",
-   "decision_id": "D-02081",
+   "decision_id": "D-02082",
    "name": "play_days_14d",
    "value": 0,
    "source": "derived",
@@ -532,9 +536,9 @@
    "recorded_at": "2026-10-01T15:05:28.656Z"
   },
   {
-   "id": 30508,
+   "id": 30523,
    "user_id": "U-03358",
-   "decision_id": "D-02081",
+   "decision_id": "D-02082",
    "name": "last_open_before_trigger",
    "value": "2026-09-28T21:06:38.482Z",
    "source": "event",
@@ -550,9 +554,9 @@
    "recorded_at": "2026-10-01T15:05:28.656Z"
   },
   {
-   "id": 30509,
+   "id": 30524,
    "user_id": "U-03358",
-   "decision_id": "D-02081",
+   "decision_id": "D-02082",
    "name": "recent_lapse",
    "value": null,
    "source": "derived",
@@ -568,9 +572,9 @@
    "recorded_at": "2026-10-01T15:05:28.656Z"
   },
   {
-   "id": 30510,
+   "id": 30525,
    "user_id": "U-03358",
-   "decision_id": "D-02081",
+   "decision_id": "D-02082",
    "name": "unfinished_series",
    "value": [],
    "source": "derived",
@@ -584,9 +588,9 @@
    "recorded_at": "2026-10-01T15:05:28.656Z"
   },
   {
-   "id": 30511,
+   "id": 30526,
    "user_id": "U-03358",
-   "decision_id": "D-02081",
+   "decision_id": "D-02082",
    "name": "trigger_age_s",
    "value": 0.0,
    "source": "derived",
@@ -604,13 +608,13 @@
  ],
  "actions": [
   {
-   "action_id": "A-01123",
-   "decision_id": "D-02081",
+   "action_id": "A-01270",
+   "decision_id": "D-02082",
    "dialect": "d5",
    "goal_id": "G01",
-   "goal_instance": "GI-02081",
+   "goal_instance": "GI-02082",
    "hero_title_id": "T1177",
-   "published_at": "2026-10-01T15:05:29.060Z",
+   "published_at": "2026-10-01T15:05:29.066Z",
    "rows": [
     {
      "row_type": "popular_in_dialect",
@@ -691,19 +695,36 @@
    "trigger_event_id": "5b9957c9-a188-44b3-b58f-3fe262b09336",
    "type": "home_page",
    "user_id": "U-03358"
+  },
+  {
+   "action_id": "A-01271",
+   "decision_id": "D-02082",
+   "deeplink": "ott://title/T1177",
+   "goal_id": "G01",
+   "goal_instance": "GI-02082",
+   "published_at": "2026-10-01T15:05:29.066Z",
+   "send_at": "2026-10-01T15:05:29.066Z",
+   "text": {
+    "body": "Aapke liye chuni gayi kahani. Abhi dekhiye.",
+    "title": "Gubava Gihaya"
+   },
+   "title_id": "T1177",
+   "trigger_event_id": "5b9957c9-a188-44b3-b58f-3fe262b09336",
+   "type": "in_app_message",
+   "user_id": "U-03358"
   }
  ],
  "learnings": [
   {
-   "goal_instance_id": "GI-02081",
+   "goal_instance_id": "GI-02082",
    "at": "2026-10-15T18:30:00.000Z",
    "note": {
     "attribution": "success_after_exposure",
     "effects": {},
     "goal_id": "G01",
-    "goal_instance_id": "GI-02081",
+    "goal_instance_id": "GI-02082",
     "notes": [
-     "G01 reached after exposure (home_page)"
+     "G01 reached after exposure (home_page, in_app_message)"
     ],
     "result": "succeeded"
    }

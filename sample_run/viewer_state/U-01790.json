@@ -20,43 +20,30 @@
  ],
  "goals": [
   {
-   "goal_instance_id": "GI-02721",
+   "goal_instance_id": "GI-02722",
    "user_id": "U-01790",
-   "goal_id": "G07",
+   "goal_id": "G05",
    "status": "failed",
    "started_at": "2026-10-01T18:24:39.769Z",
-   "deadline": "2026-10-04T18:24:39.769Z",
+   "deadline": "2026-10-08T18:24:39.769Z",
    "success_spec": {
-    "condition": "same content_slug as the unfinished series",
-    "event": "play_started",
-    "goal_id": "G07",
+    "condition": "is_trial = false",
+    "event": "purchase_completed",
+    "goal_id": "G05",
     "rule_version": 1,
-    "target": {
-     "content_slug": "guka-kosusa-d2",
-     "episodes_completed": 1,
-     "episodes_total": 41,
-     "furthest_episode": 1,
-     "idle_days": 27.3,
-     "last_played_at": "2026-09-04T12:07:39.628Z",
-     "next_episode_id": "guka-kosusa-d2-s1e2",
-     "title_ids": [
-      "T0522"
-     ]
-    },
-    "window_hours": 72
+    "window_hours": 168
    },
    "rule_version": 1,
-   "decision_id": "D-02721",
+   "decision_id": "D-02722",
    "evidence": [
-    "event:3d430123-1d99-49e0-8cf2-acd6a0387bb7",
-    "event:3d430123-1d99-49e0-8cf2-acd6a0387bb7",
-    "catalogue:guka-kosusa-d2",
-    "goal_rule:G07-elig-v1"
+    "profile:U-01790@2026-09-29T00:40:23.287Z",
+    "profile:U-01790@2026-09-29T00:40:23.287Z",
+    "goal_rule:G05-elig-v1"
    ],
    "closed_at": "2026-10-15T18:30:00.000Z",
    "judgement": {
     "attribution": "holdout",
-    "reason": "no qualifying play_started by 2026-10-04T18:24:39.769Z",
+    "reason": "no qualifying purchase_completed by 2026-10-08T18:24:39.769Z",
     "rule_version": 1,
     "signal": null,
     "status": "failed"
@@ -92,13 +79,13 @@
      "budget"
     ]
    },
-   "confidence": 0.9,
-   "confidence_reason": "weakest deciding fact: unfinished_series (high, source derived)",
+   "confidence": 0.7,
+   "confidence_reason": "weakest deciding fact: subscription_status (medium, source profile, 65h old)",
    "conflicts": [],
    "content": [],
    "created_at": "2026-10-01T18:24:39.769Z",
-   "decided_in_ms": 402.2,
-   "decision_id": "D-02721",
+   "decided_in_ms": 402.9,
+   "decision_id": "D-02722",
    "dialect": {
     "conflicts": [],
     "rule": "R-dialect-1",
@@ -107,16 +94,11 @@
    },
    "evidence": [
     {
-     "age_s": 2355420.1,
-     "event": "episode_completed",
-     "received_at": "2026-09-04T12:07:39.628Z",
-     "ref": "event:3d430123-1d99-49e0-8cf2-acd6a0387bb7"
+     "age_s": 236656.5,
+     "ref": "profile:U-01790@2026-09-29T00:40:23.287Z"
     },
     {
-     "ref": "catalogue:guka-kosusa-d2"
-    },
-    {
-     "ref": "goal_rule:G07-elig-v1"
+     "ref": "goal_rule:G05-elig-v1"
     }
    ],
    "goal": {
@@ -154,6 +136,7 @@
      {
       "eligible": true,
       "goal_id": "G07",
+      "skipped": "the unfinished series guka-kosusa-d2 cannot be promoted now (not available, or flagged for injected instructions)",
       "why": "1 unfinished series idle 3+ days"
      },
      {
@@ -183,40 +166,29 @@
      }
     ],
     "continuing": false,
-    "deadline": "2026-10-04T18:24:39.769Z",
-    "id": "G07",
-    "instance": "GI-02721",
+    "deadline": "2026-10-08T18:24:39.769Z",
+    "id": "G05",
+    "instance": "GI-02722",
     "shadow": true,
     "success_signal": {
-     "condition": "same content_slug as the unfinished series",
-     "event": "play_started",
+     "condition": "is_trial = false",
+     "event": "purchase_completed",
      "rule_version": 1,
-     "window_hours": 72
+     "window_hours": 168
     },
-    "target": {
-     "content_slug": "guka-kosusa-d2",
-     "episodes_completed": 1,
-     "episodes_total": 41,
-     "furthest_episode": 1,
-     "idle_days": 27.3,
-     "last_played_at": "2026-09-04T12:07:39.628Z",
-     "next_episode_id": "guka-kosusa-d2-s1e2",
-     "title_ids": [
-      "T0522"
-     ]
-    },
-    "why": "1 unfinished series idle 3+ days"
+    "target": null,
+    "why": "subscription_status=never, ever_paid=False"
    },
    "judged_by": {
-    "deadline": "2026-10-04T18:24:39.769Z",
+    "deadline": "2026-10-08T18:24:39.769Z",
     "signal": {
-     "condition": "same content_slug as the unfinished series",
-     "event": "play_started",
+     "condition": "is_trial = false",
+     "event": "purchase_completed",
      "rule_version": 1,
-     "window_hours": 72
+     "window_hours": 168
     }
    },
-   "latency_ms": 402.2,
+   "latency_ms": 402.9,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -227,15 +199,15 @@
     "claim": {
      "confidence": 0.6,
      "eligible": true,
-     "goal_id": "G07",
-     "reason": "agrees with rule ranking: 1 unfinished series idle 3+ days"
+     "goal_id": "G05",
+     "reason": "agrees with rule ranking: subscription_status=never, ever_paid=False"
     },
     "elapsed_s": 0.4,
     "outcome": "agreed",
     "provider": "mock"
    },
    "no_action_reason": "viewer is in the 'holdout' arm: shadow decision only, no action of any kind",
-   "processing_ms": 2.24,
+   "processing_ms": 2.9,
    "published_at": null,
    "queue_wait_ms": 0.0,
    "rows_explained": [],
@@ -255,9 +227,9 @@
  ],
  "facts_at_last_decision": [
   {
-   "id": 39952,
+   "id": 39967,
    "user_id": "U-01790",
-   "decision_id": "D-02721",
+   "decision_id": "D-02722",
    "name": "profile",
    "value": {
     "stale": true,
@@ -276,9 +248,9 @@
    "recorded_at": "2026-10-01T18:24:39.769Z"
   },
   {
-   "id": 39953,
+   "id": 39968,
    "user_id": "U-01790",
-   "decision_id": "D-02721",
+   "decision_id": "D-02722",
    "name": "signup_at",
    "value": "2025-02-21T12:17:43.353Z",
    "source": "profile",
@@ -294,9 +266,9 @@
    "recorded_at": "2026-10-01T18:24:39.769Z"
   },
   {
-   "id": 39954,
+   "id": 39969,
    "user_id": "U-01790",
-   "decision_id": "D-02721",
+   "decision_id": "D-02722",
    "name": "subscription_status",
    "value": "never",
    "source": "profile",
@@ -312,9 +284,9 @@
    "recorded_at": "2026-10-01T18:24:39.769Z"
   },
   {
-   "id": 39955,
+   "id": 39970,
    "user_id": "U-01790",
-   "decision_id": "D-02721",
+   "decision_id": "D-02722",
    "name": "ever_paid",
    "value": false,
    "source": "profile",
@@ -330,9 +302,9 @@
    "recorded_at": "2026-10-01T18:24:39.769Z"
   },
   {
-   "id": 39956,
+   "id": 39971,
    "user_id": "U-01790",
-   "decision_id": "D-02721",
+   "decision_id": "D-02722",
    "name": "dialect",
    "value": "d2",
    "source": "app_setting",
@@ -348,9 +320,9 @@
    "recorded_at": "2026-10-01T18:24:39.769Z"
   },
   {
-   "id": 39957,
+   "id": 39972,
    "user_id": "U-01790",
-   "decision_id": "D-02721",
+   "decision_id": "D-02722",
    "name": "language",
    "value": "hin",
    "source": "app_setting",
@@ -366,9 +338,9 @@
    "recorded_at": "2026-10-01T18:24:39.769Z"
   },
   {
-   "id": 39958,
+   "id": 39973,
    "user_id": "U-01790",
-   "decision_id": "D-02721",
+   "decision_id": "D-02722",
    "name": "consent_push",
    "value": true,
    "source": "profile",
@@ -384,9 +356,9 @@
    "recorded_at": "2026-10-01T18:24:39.769Z"
   },
   {
-   "id": 39959,
+   "id": 39974,
    "user_id": "U-01790",
-   "decision_id": "D-02721",
+   "decision_id": "D-02722",
    "name": "consent_whatsapp",
    "value": true,
    "source": "profile",
@@ -402,9 +374,9 @@
    "recorded_at": "2026-10-01T18:24:39.769Z"
   },
   {
-   "id": 39960,
+   "id": 39975,
    "user_id": "U-01790",
-   "decision_id": "D-02721",
+   "decision_id": "D-02722",
    "name": "has_played",
    "value": true,
    "source": "event",
@@ -420,9 +392,9 @@
    "recorded_at": "2026-10-01T18:24:39.769Z"
   },
   {
-   "id": 39961,
+   "id": 39976,
    "user_id": "U-01790",
-   "decision_id": "D-02721",
+   "decision_id": "D-02722",
    "name": "has_completed_episode",
    "value": true,
    "source": "event",
@@ -438,9 +410,9 @@
    "recorded_at": "2026-10-01T18:24:39.769Z"
   },
   {
-   "id": 39962,
+   "id": 39977,
    "user_id": "U-01790",
-   "decision_id": "D-02721",
+   "decision_id": "D-02722",
    "name": "play_days_14d",
    "value": 0,
    "source": "derived",
@@ -454,9 +426,9 @@
    "recorded_at": "2026-10-01T18:24:39.769Z"
   },
   {
-   "id": 39963,
+   "id": 39978,
    "user_id": "U-01790",
-   "decision_id": "D-02721",
+   "decision_id": "D-02722",
    "name": "last_open_before_trigger",
    "value": "2026-09-27T16:24:30.638Z",
    "source": "event",
@@ -472,9 +444,9 @@
    "recorded_at": "2026-10-01T18:24:39.769Z"
   },
   {
-   "id": 39964,
+   "id": 39979,
    "user_id": "U-01790",
-   "decision_id": "D-02721",
+   "decision_id": "D-02722",
    "name": "recent_lapse",
    "value": null,
    "source": "derived",
@@ -490,9 +462,9 @@
    "recorded_at": "2026-10-01T18:24:39.769Z"
   },
   {
-   "id": 39965,
+   "id": 39980,
    "user_id": "U-01790",
-   "decision_id": "D-02721",
+   "decision_id": "D-02722",
    "name": "unfinished_series",
    "value": [
     {
@@ -523,9 +495,9 @@
    "recorded_at": "2026-10-01T18:24:39.769Z"
   },
   {
-   "id": 39966,
+   "id": 39981,
    "user_id": "U-01790",
-   "decision_id": "D-02721",
+   "decision_id": "D-02722",
    "name": "trigger_age_s",
    "value": 0.0,
    "source": "derived",
@@ -544,13 +516,13 @@
  "actions": [],
  "learnings": [
   {
-   "goal_instance_id": "GI-02721",
+   "goal_instance_id": "GI-02722",
    "at": "2026-10-15T18:30:00.000Z",
    "note": {
     "attribution": "holdout",
     "effects": {},
-    "goal_id": "G07",
-    "goal_instance_id": "GI-02721",
+    "goal_id": "G05",
+    "goal_instance_id": "GI-02722",
     "notes": [],
     "result": "failed"
    }

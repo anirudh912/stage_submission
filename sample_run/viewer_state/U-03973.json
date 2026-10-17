@@ -58,13 +58,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-00180"
+    "A-00212",
+    "A-00213"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: no push consent (profile) and no usable WhatsApp (templates are Hindi only)",
+    "in-app message (shown at the next app open) because no push/WhatsApp: no push consent (profile) and no usable WhatsApp (templates are Hindi only)",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -87,7 +88,10 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.9,
@@ -147,7 +151,7 @@
     "title:T1278"
    ],
    "created_at": "2026-10-01T04:01:15.822Z",
-   "decided_in_ms": 405.3,
+   "decided_in_ms": 410.6,
    "decision_id": "D-00287",
    "dialect": {
     "conflicts": [],
@@ -258,7 +262,7 @@
      "window_hours": 72
     }
    },
-   "latency_ms": 405.3,
+   "latency_ms": 410.6,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -277,8 +281,8 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 5.34,
-   "published_at": "2026-10-01T04:01:16.227Z",
+   "processing_ms": 10.58,
+   "published_at": "2026-10-01T04:01:16.232Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
@@ -593,13 +597,13 @@
  ],
  "actions": [
   {
-   "action_id": "A-00180",
+   "action_id": "A-00212",
    "decision_id": "D-00287",
    "dialect": "d5",
    "goal_id": "G02",
    "goal_instance": "GI-00287",
    "hero_title_id": "T1177",
-   "published_at": "2026-10-01T04:01:16.227Z",
+   "published_at": "2026-10-01T04:01:16.232Z",
    "rows": [
     {
      "row_type": "because_you_watched",
@@ -679,6 +683,23 @@
    ],
    "trigger_event_id": "255939ee-cba8-4d5d-a9dd-cf1f71ca205f",
    "type": "home_page",
+   "user_id": "U-03973"
+  },
+  {
+   "action_id": "A-00213",
+   "decision_id": "D-00287",
+   "deeplink": "ott://title/T1177",
+   "goal_id": "G02",
+   "goal_instance": "GI-00287",
+   "published_at": "2026-10-01T04:01:16.232Z",
+   "send_at": "2026-10-01T04:01:16.232Z",
+   "text": {
+    "body": "Short episodes in your dialect. Watch now.",
+    "title": "Gubava Gihaya"
+   },
+   "title_id": "T1177",
+   "trigger_event_id": "255939ee-cba8-4d5d-a9dd-cf1f71ca205f",
+   "type": "in_app_message",
    "user_id": "U-03973"
   }
  ],

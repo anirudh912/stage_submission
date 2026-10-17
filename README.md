@@ -12,15 +12,16 @@ default **mock provider** runs locally, needs no API key, reproduces the pack's 
 
 | | |
 |---|---|
-| Decisions | 2,679 (90 duplicate deliveries ignored); 907 published, 444 no action with a reason, 1,321 holdout shadow |
-| Policy problems | **0** in the simulator; the independent audit passes every check for all 522 messages (363 push, 159 WhatsApp) |
-| Latency | p50 404 ms, max 39.9 s, **0 over 60 s** (processing p50 3.6 ms) |
+| Decisions | 2,679 (90 duplicate deliveries ignored); 908 published, 1 catalogue-only fallback page, 444 no action with a reason, 1,321 holdout shadow |
+| Policy problems | **0** in the simulator; the independent audit passes every check for all 691 messages (391 push, 167 WhatsApp, 133 in-app) |
+| Latency | p50 407 ms, max 48.1 s, **0 over 60 s** (processing p50 6.6 ms) |
 | Injected faults | all 3 unsupported "on trial" model claims rejected; outage, timeout, malformed output and slow data store handled safely |
-| **Impact, agent vs holdout** | **+2.13 pts** goals reached (13.6% vs 11.4%), 95% CI −1.01 to +5.27, p = 0.18 |
-| Simulator ground truth | +2.98 pts (same viewers with vs without our actions); 0 holdout viewers affected |
+| **Impact, agent vs holdout** | **+3.95 pts** goals reached (16.0% vs 12.0%), 95% CI +0.66 to +7.25, p = 0.019 |
+| Simulator ground truth | +3.94 pts (same viewers with vs without our actions); 0 holdout viewers affected |
 
-The effect is positive but not significant at this sample size; `sample_run/impact_report.md` explains why, and why
-the simpler comparisons (served vs rest: +5.5; the pilot's +22.4) mislead.
+The interval excludes zero on this seed, but only just: other seeds give +1.9 to +4.3, two of the three adjusted estimators'
+intervals include zero, and the test has about 65% power for an effect this size. `sample_run/impact_report.md` explains this, and
+why the simpler comparisons (served vs rest: +8.1; the pilot's +22.4) mislead.
 
 ## Requirements
 
@@ -69,7 +70,7 @@ To use another replay day or seed, point `--pack` at it or pass `--seeds`.
 ## Tests
 
 ```bash
-python3 -m unittest discover -s tests -v      # 82 tests, about 0.2 s
+python3 -m unittest discover -s tests -v      # 90 tests, about 0.6 s
 ```
 
 The four scenarios the brief requires (late or duplicate trigger, conflicting source, tool failure, corrected goal

@@ -72,13 +72,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-00239"
+    "A-00275",
+    "A-00276"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: no push consent (profile) and no usable WhatsApp (templates are Hindi only)",
+    "in-app message (shown at the next app open) because no push/WhatsApp: no push consent (profile) and no usable WhatsApp (templates are Hindi only)",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -101,18 +102,21 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.9,
    "confidence_reason": "weakest deciding fact: unfinished_series (high, source derived)",
    "conflicts": [],
    "content": [
+    "title:T1811",
     "title:T0932",
     "title:T1812",
     "title:T0915",
     "title:T1822",
-    "title:T1811",
     "title:T1814",
     "title:T0920",
     "title:T0922",
@@ -122,6 +126,7 @@
     "title:T0955",
     "title:T1825",
     "title:T0985",
+    "title:T0949",
     "title:T1829",
     "title:T1834",
     "title:T0976",
@@ -154,7 +159,7 @@
     "title:T1893"
    ],
    "created_at": "2026-10-01T05:02:50.259Z",
-   "decided_in_ms": 404.7,
+   "decided_in_ms": 410.0,
    "decision_id": "D-00601",
    "dialect": {
     "conflicts": [],
@@ -176,13 +181,13 @@
      "ref": "goal_rule:G07-elig-v1"
     },
     {
+     "ref": "catalogue:T1811"
+    },
+    {
      "ref": "catalogue:T0932"
     },
     {
      "ref": "catalogue:T1812"
-    },
-    {
-     "ref": "catalogue:T0915"
     }
    ],
    "goal": {
@@ -282,7 +287,7 @@
      "window_hours": 72
     }
    },
-   "latency_ms": 404.7,
+   "latency_ms": 410.0,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -301,17 +306,17 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 4.69,
-   "published_at": "2026-10-01T05:02:50.663Z",
+   "processing_ms": 10.04,
+   "published_at": "2026-10-01T05:02:50.669Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
      "row_type": "hero",
-     "why": "the unfinished series this goal is about"
+     "why": "most-played title in this dialect"
     },
     {
      "row_type": "next_episode",
-     "why": "series the viewer has started in this dialect"
+     "why": "series the viewer has started in this dialect, led by the unfinished series this goal is about"
     },
     {
      "row_type": "because_you_watched",
@@ -637,17 +642,18 @@
  ],
  "actions": [
   {
-   "action_id": "A-00239",
+   "action_id": "A-00275",
    "decision_id": "D-00601",
    "dialect": "d4",
    "goal_id": "G07",
    "goal_instance": "GI-00601",
-   "hero_title_id": "T0932",
-   "published_at": "2026-10-01T05:02:50.663Z",
+   "hero_title_id": "T1811",
+   "published_at": "2026-10-01T05:02:50.669Z",
    "rows": [
     {
      "row_type": "next_episode",
      "title_ids": [
+      "T0932",
       "T1812",
       "T0915",
       "T1822"
@@ -656,7 +662,6 @@
     {
      "row_type": "because_you_watched",
      "title_ids": [
-      "T1811",
       "T1814",
       "T0920",
       "T0922",
@@ -665,7 +670,8 @@
       "T0939",
       "T0955",
       "T1825",
-      "T0985"
+      "T0985",
+      "T0949"
      ]
     },
     {
@@ -716,6 +722,23 @@
    ],
    "trigger_event_id": "f4753fb5-9a52-4e3b-9064-96493d872156",
    "type": "home_page",
+   "user_id": "U-04490"
+  },
+  {
+   "action_id": "A-00276",
+   "decision_id": "D-00601",
+   "deeplink": "ott://title/T0932",
+   "goal_id": "G07",
+   "goal_instance": "GI-00601",
+   "published_at": "2026-10-01T05:02:50.669Z",
+   "send_at": "2026-10-01T05:02:50.669Z",
+   "text": {
+    "body": "Pick up where you left off: your next episode is waiting.",
+    "title": "Tiko Subava"
+   },
+   "title_id": "T0932",
+   "trigger_event_id": "f4753fb5-9a52-4e3b-9064-96493d872156",
+   "type": "in_app_message",
    "user_id": "U-04490"
   }
  ],

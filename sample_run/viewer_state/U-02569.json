@@ -28,12 +28,12 @@
    "closed_at": "2026-10-15T18:30:00.000Z",
    "judgement": {
     "attribution": "success_after_exposure",
-    "reason": "play_started oua-016487 at 2026-10-01T03:28:58.234Z",
+    "reason": "play_started oua-016527 at 2026-10-01T03:28:58.234Z",
     "rule_version": 1,
     "signal": {
      "at": "2026-10-01T03:28:58.234Z",
      "event": "play_started",
-     "event_id": "oua-016487"
+     "event_id": "oua-016527"
     },
     "status": "succeeded"
    },
@@ -48,13 +48,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-00143"
+    "A-00171",
+    "A-00172"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: next allowed send slot is after the goal deadline",
+    "in-app message (shown at the next app open) because no push/WhatsApp: next allowed send slot is after the goal deadline",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -77,7 +78,10 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.8,
@@ -137,7 +141,7 @@
     "title:T0615"
    ],
    "created_at": "2026-10-01T03:25:27.234Z",
-   "decided_in_ms": 405.2,
+   "decided_in_ms": 413.6,
    "decision_id": "D-00237",
    "dialect": {
     "conflicts": [],
@@ -256,7 +260,7 @@
      "window_hours": 24
     }
    },
-   "latency_ms": 405.2,
+   "latency_ms": 413.6,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -275,8 +279,8 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 5.15,
-   "published_at": "2026-10-01T03:25:27.639Z",
+   "processing_ms": 13.58,
+   "published_at": "2026-10-01T03:25:27.647Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
@@ -320,11 +324,11 @@
   {
    "action": "HOME_PAGE",
    "action_ids": [
-    "A-00144"
+    "A-00173"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: next allowed send slot is after the goal deadline",
+    "no message: no push/WhatsApp: next allowed send slot is after the goal deadline; an in-app message is already queued today (max 1 per day)",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -406,7 +410,7 @@
     "title:T0615"
    ],
    "created_at": "2026-10-01T03:25:27.321Z",
-   "decided_in_ms": 405.0,
+   "decided_in_ms": 408.1,
    "decision_id": "D-00238",
    "dialect": {
     "conflicts": [],
@@ -528,7 +532,7 @@
      "window_hours": 24
     }
    },
-   "latency_ms": 405.0,
+   "latency_ms": 408.1,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -547,8 +551,8 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 5.03,
-   "published_at": "2026-10-01T03:25:27.726Z",
+   "processing_ms": 8.11,
+   "published_at": "2026-10-01T03:25:27.729Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
@@ -850,13 +854,13 @@
  ],
  "actions": [
   {
-   "action_id": "A-00143",
+   "action_id": "A-00171",
    "decision_id": "D-00237",
    "dialect": "d2",
    "goal_id": "G01",
    "goal_instance": "GI-00237",
    "hero_title_id": "T0523",
-   "published_at": "2026-10-01T03:25:27.639Z",
+   "published_at": "2026-10-01T03:25:27.647Z",
    "rows": [
     {
      "row_type": "popular_in_dialect",
@@ -939,13 +943,30 @@
    "user_id": "U-02569"
   },
   {
-   "action_id": "A-00144",
+   "action_id": "A-00172",
+   "decision_id": "D-00237",
+   "deeplink": "ott://title/T0521",
+   "goal_id": "G01",
+   "goal_instance": "GI-00237",
+   "published_at": "2026-10-01T03:25:27.647Z",
+   "send_at": "2026-10-01T03:25:27.647Z",
+   "text": {
+    "body": "Aapke liye chuni gayi kahani. Abhi dekhiye.",
+    "title": "Molo"
+   },
+   "title_id": "T0521",
+   "trigger_event_id": "8cbe2807-5e33-496a-8c37-2ba2d5e75e7d",
+   "type": "in_app_message",
+   "user_id": "U-02569"
+  },
+  {
+   "action_id": "A-00173",
    "decision_id": "D-00238",
    "dialect": "d2",
    "goal_id": "G01",
    "goal_instance": "GI-00237",
    "hero_title_id": "T0523",
-   "published_at": "2026-10-01T03:25:27.726Z",
+   "published_at": "2026-10-01T03:25:27.729Z",
    "rows": [
     {
      "row_type": "popular_in_dialect",
@@ -1038,7 +1059,7 @@
     "goal_id": "G01",
     "goal_instance_id": "GI-00237",
     "notes": [
-     "G01 reached after exposure (home_page, home_page)"
+     "G01 reached after exposure (home_page, home_page, in_app_message)"
     ],
     "result": "succeeded"
    }

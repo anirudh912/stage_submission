@@ -49,8 +49,8 @@ and replays the pack's model faults.
    - G06 "recently lapsed" = a `subscription_lapsed` event within 30 days (lapsed profiles carry no plan dates).
    - G07 "unfinished series" = furthest episode < episodes in the `content_slug`, no play for 3+ days (goals.json),
      **plus our policy: at least one completed episode** of that series. This narrows goals.json, never widens it.
-4. **Actionable:** G07 is skipped if the series is not in the dialect the app shows; G08 only if a recent release
-   exists in that dialect. The next goal is used and the skip reason recorded.
+4. **Actionable:** G07 is skipped if the series is not in the dialect the app shows, or cannot be promoted there
+   (unavailable, or flagged for injected instructions); G08 only if a recent release exists in that dialect. The next goal is used and the skip reason recorded.
 5. **Revision on new evidence** (`agent.handle_live_event`): a purchase, renewal, lapse, opt-out or an event that
    matches the open goal's success signal re-checks the plan. Success seen → goal closed (provisional) and its pending
    messages cancelled. A status goal that no longer applies (e.g. G05 after a purchase) → abandoned. Start conditions
@@ -59,7 +59,15 @@ and replays the pack's model faults.
    app shows. At most one message, at 19:00 IST the next day, for every goal except G01 (its 24 h window closes first):
    WhatsApp `wa_recommend_title_v1` when the viewer consented and the app is in Hindi (the only template language),
    otherwise push with copy that is true of the named title; plus an honest trial-ending WhatsApp for G04 when the trial
-   end date is known. One message per IST day across both channels. **Doing nothing is a normal, recorded outcome.**
+   end date is known. One message per IST day across both channels. When neither push nor WhatsApp can be used (no
+   consent, no profile, or the next evening slot is after the goal deadline, as for G01), an **in-app message**
+   instead: it needs no consent, is shown at the next app open, max 1 per IST day, same title and copy rules as a
+   push. It stays cancellable until the viewer's next app open. **Doing nothing is a normal, recorded outcome.**
+   Page shape: a hero, then up to 6 rows of 3–10 titles. When a series leads the goal and the viewer has 3+ titles in
+   progress, the series leads the `next_episode` row and the hero is the most-played title (one slug per page, so as
+   hero it would leave that row short and the platform would drop it). If the goal's hero cannot be shown, the
+   most-played title is the hero. In a thin catalogue (d3 has about a dozen titles) rows are shorter, so the titles
+   fill several rows instead of one or two long ones.
 
 ## Memory (durable per-viewer state)
 
@@ -111,7 +119,7 @@ billing" claims were rejected because every profile row says `never`.
 - The replay runs faster than real time on a **virtual clock**: latency = queue wait (4 workers) + measured
   processing + simulated dependency waits; `published_at = deliver_at + latency`.
 - Measured (`sample_run/latency_report.json`): processing p50 3.6 ms, p99 13.4 ms; end-to-end p50 404 ms (the mock's
-  0.4 s), max 39.9 s inside the data-store degradation window; **0 decisions over 60 s**. The evening spike (163
+  0.4 s), max 48.1 s inside the data-store degradation window; **0 decisions over 60 s**. The evening spike (163
   triggers in 10 minutes) had no queueing.
 - **Overload:** if a trigger waited more than 15 s in the queue, the advisor is skipped (fast path).
 - **Stale triggers:** a trigger more than 10 minutes old (buffered offline) updates state but takes no action: the viewer
@@ -125,9 +133,9 @@ billing" claims were rejected because every profile row says `never`.
 | Model timeout | Cut at 5 s, rules only |
 | Malformed model output | Defensive parse, ignored, rules only |
 | Unsupported model claim | Checked against data, rejected, recorded with the reason |
-| Data store slow / timing out | Each distinct read is one tool call, cached per decision, retried once, 10 s per attempt; after 40 s of waiting the decision stops → `DEGRADED_NO_ACTION` (never act on partial data) |
+| Data store slow / timing out | Each distinct read is one tool call, cached per decision, retried once, 10 s per attempt; after 40 s of waiting the decision stops. Nothing personal is used: no goal, no message. If the arm was already read as agent, the trigger is fresh, the app dialect has content and no page of ours is live (in-process memory, not a store read), a catalogue-only page (most-played in that dialect) is published after catalogue checks → `DEGRADED_FALLBACK_PAGE`; otherwise `DEGRADED_NO_ACTION` |
 | Duplicate trigger | Ignored (counted) |
-| Title withdrawn | Live pages that contain it are republished without it; pending messages about it are cancelled (5 pages, 6 messages in the replay) |
+| Title withdrawn | Live pages that contain it are republished without it; pending messages about it are cancelled (6 pages, 9 messages in the replay) |
 | Goal rule corrected | New rule version; **only open goals of that goal type** are re-pointed and logged; closed goals keep the rule they were judged under; no other viewer is reprocessed |
 | Crash / restart | All state is in SQLite; decisions are idempotent on trigger id, so a replay can be resumed or re-run safely |
 

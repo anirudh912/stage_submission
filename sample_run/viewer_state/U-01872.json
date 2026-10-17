@@ -72,13 +72,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-00311"
+    "A-00359",
+    "A-00360"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: no push consent (profile) and no usable WhatsApp (no consent)",
+    "in-app message (shown at the next app open) because no push/WhatsApp: no push consent (profile) and no usable WhatsApp (no consent)",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -101,7 +102,10 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.9,
@@ -161,7 +165,7 @@
     "title:T0056"
    ],
    "created_at": "2026-10-01T05:58:04.283Z",
-   "decided_in_ms": 410.9,
+   "decided_in_ms": 418.4,
    "decision_id": "D-00737",
    "dialect": {
     "conflicts": [],
@@ -289,7 +293,7 @@
      "window_hours": 72
     }
    },
-   "latency_ms": 410.9,
+   "latency_ms": 418.4,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -308,8 +312,8 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 10.87,
-   "published_at": "2026-10-01T05:58:04.693Z",
+   "processing_ms": 18.42,
+   "published_at": "2026-10-01T05:58:04.701Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
@@ -648,13 +652,13 @@
  ],
  "actions": [
   {
-   "action_id": "A-00311",
+   "action_id": "A-00359",
    "decision_id": "D-00737",
    "dialect": "d1",
    "goal_id": "G07",
    "goal_instance": "GI-00737",
    "hero_title_id": "T0005",
-   "published_at": "2026-10-01T05:58:04.693Z",
+   "published_at": "2026-10-01T05:58:04.701Z",
    "rows": [
     {
      "row_type": "because_you_watched",
@@ -734,6 +738,23 @@
    ],
    "trigger_event_id": "5f54f2e7-9e84-45b5-b8da-feeccdef1e7a",
    "type": "home_page",
+   "user_id": "U-01872"
+  },
+  {
+   "action_id": "A-00360",
+   "decision_id": "D-00737",
+   "deeplink": "ott://title/T0005",
+   "goal_id": "G07",
+   "goal_instance": "GI-00737",
+   "published_at": "2026-10-01T05:58:04.701Z",
+   "send_at": "2026-10-01T05:58:04.701Z",
+   "text": {
+    "body": "Aapki kahani wahin ruki hai. Agla episode dekhiye.",
+    "title": "Tidha Dakachu"
+   },
+   "title_id": "T0005",
+   "trigger_event_id": "5f54f2e7-9e84-45b5-b8da-feeccdef1e7a",
+   "type": "in_app_message",
    "user_id": "U-01872"
   }
  ],

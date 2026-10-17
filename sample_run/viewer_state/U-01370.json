@@ -20,7 +20,7 @@
  ],
  "goals": [
   {
-   "goal_instance_id": "GI-02284",
+   "goal_instance_id": "GI-02285",
    "user_id": "U-01370",
    "goal_id": "G07",
    "status": "failed",
@@ -46,7 +46,7 @@
     "window_hours": 72
    },
    "rule_version": 1,
-   "decision_id": "D-02284",
+   "decision_id": "D-02285",
    "evidence": [
     "event:01f7b1c9-491f-4e05-a407-a75c089c2570",
     "event:be991485-53cd-4ebd-bc2f-6bbf375dc3ae",
@@ -72,13 +72,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-01237"
+    "A-01396",
+    "A-01397"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: no push consent (profile) and no usable WhatsApp (no consent)",
+    "in-app message (shown at the next app open) because no push/WhatsApp: no push consent (profile) and no usable WhatsApp (no consent)",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -101,14 +102,19 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.9,
    "confidence_reason": "weakest deciding fact: unfinished_series (high, source derived)",
    "conflicts": [],
    "content": [
+    "title:T0003",
     "title:T0005",
+    "title:T0040",
     "title:T0014",
     "title:T0011",
     "title:T0012",
@@ -119,6 +125,7 @@
     "title:T0049",
     "title:T0023",
     "title:T0058",
+    "title:T0061",
     "title:T0070",
     "title:T0168",
     "title:T0028",
@@ -129,7 +136,6 @@
     "title:T0100",
     "title:T0142",
     "title:T0157",
-    "title:T0003",
     "title:T0009",
     "title:T0004",
     "title:T0006",
@@ -139,6 +145,7 @@
     "title:T0013",
     "title:T0015",
     "title:T0035",
+    "title:T0034",
     "title:T0127",
     "title:T0047",
     "title:T0060",
@@ -148,21 +155,11 @@
     "title:T0051",
     "title:T0072",
     "title:T0075",
-    "title:T0076",
-    "title:T0016",
-    "title:T0038",
-    "title:T0022",
-    "title:T0030",
-    "title:T0041",
-    "title:T0518",
-    "title:T0226",
-    "title:T0273",
-    "title:T0352",
-    "title:T0520"
+    "title:T0076"
    ],
    "created_at": "2026-10-01T15:44:56.784Z",
-   "decided_in_ms": 410.1,
-   "decision_id": "D-02284",
+   "decided_in_ms": 418.6,
+   "decision_id": "D-02285",
    "dialect": {
     "conflicts": [],
     "rule": "R-dialect-1",
@@ -189,13 +186,13 @@
      "ref": "goal_rule:G07-elig-v1"
     },
     {
+     "ref": "catalogue:T0003"
+    },
+    {
      "ref": "catalogue:T0005"
     },
     {
-     "ref": "catalogue:T0014"
-    },
-    {
-     "ref": "catalogue:T0011"
+     "ref": "catalogue:T0040"
     }
    ],
    "goal": {
@@ -264,7 +261,7 @@
     "continuing": false,
     "deadline": "2026-10-04T15:44:56.784Z",
     "id": "G07",
-    "instance": "GI-02284",
+    "instance": "GI-02285",
     "shadow": false,
     "success_signal": {
      "condition": "same content_slug as the unfinished series",
@@ -295,7 +292,7 @@
      "window_hours": 72
     }
    },
-   "latency_ms": 410.1,
+   "latency_ms": 418.6,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -314,13 +311,17 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 10.09,
-   "published_at": "2026-10-01T15:44:57.194Z",
+   "processing_ms": 18.55,
+   "published_at": "2026-10-01T15:44:57.202Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
      "row_type": "hero",
-     "why": "the unfinished series this goal is about"
+     "why": "most-played title in this dialect"
+    },
+    {
+     "row_type": "next_episode",
+     "why": "series the viewer has started in this dialect, led by the unfinished series this goal is about"
     },
     {
      "row_type": "because_you_watched",
@@ -337,10 +338,6 @@
     {
      "row_type": "new_releases",
      "why": "released in the last 30 days"
-    },
-    {
-     "row_type": "genre",
-     "why": "genre: Action"
     }
    ],
    "status": "PUBLISHED",
@@ -359,9 +356,9 @@
  ],
  "facts_at_last_decision": [
   {
-   "id": 33500,
+   "id": 33515,
    "user_id": "U-01370",
-   "decision_id": "D-02284",
+   "decision_id": "D-02285",
    "name": "profile",
    "value": {
     "stale": true,
@@ -380,9 +377,9 @@
    "recorded_at": "2026-10-01T15:44:56.784Z"
   },
   {
-   "id": 33501,
+   "id": 33516,
    "user_id": "U-01370",
-   "decision_id": "D-02284",
+   "decision_id": "D-02285",
    "name": "signup_at",
    "value": "2025-09-18T20:45:42.164Z",
    "source": "profile",
@@ -398,9 +395,9 @@
    "recorded_at": "2026-10-01T15:44:56.784Z"
   },
   {
-   "id": 33502,
+   "id": 33517,
    "user_id": "U-01370",
-   "decision_id": "D-02284",
+   "decision_id": "D-02285",
    "name": "subscription_status",
    "value": "active",
    "source": "profile",
@@ -416,9 +413,9 @@
    "recorded_at": "2026-10-01T15:44:56.784Z"
   },
   {
-   "id": 33503,
+   "id": 33518,
    "user_id": "U-01370",
-   "decision_id": "D-02284",
+   "decision_id": "D-02285",
    "name": "ever_paid",
    "value": true,
    "source": "event",
@@ -434,9 +431,9 @@
    "recorded_at": "2026-10-01T15:44:56.784Z"
   },
   {
-   "id": 33504,
+   "id": 33519,
    "user_id": "U-01370",
-   "decision_id": "D-02284",
+   "decision_id": "D-02285",
    "name": "dialect",
    "value": "d1",
    "source": "app_setting",
@@ -452,9 +449,9 @@
    "recorded_at": "2026-10-01T15:44:56.784Z"
   },
   {
-   "id": 33505,
+   "id": 33520,
    "user_id": "U-01370",
-   "decision_id": "D-02284",
+   "decision_id": "D-02285",
    "name": "language",
    "value": "hin",
    "source": "app_setting",
@@ -470,9 +467,9 @@
    "recorded_at": "2026-10-01T15:44:56.784Z"
   },
   {
-   "id": 33506,
+   "id": 33521,
    "user_id": "U-01370",
-   "decision_id": "D-02284",
+   "decision_id": "D-02285",
    "name": "consent_push",
    "value": false,
    "source": "profile",
@@ -488,9 +485,9 @@
    "recorded_at": "2026-10-01T15:44:56.784Z"
   },
   {
-   "id": 33507,
+   "id": 33522,
    "user_id": "U-01370",
-   "decision_id": "D-02284",
+   "decision_id": "D-02285",
    "name": "consent_whatsapp",
    "value": false,
    "source": "profile",
@@ -506,9 +503,9 @@
    "recorded_at": "2026-10-01T15:44:56.784Z"
   },
   {
-   "id": 33508,
+   "id": 33523,
    "user_id": "U-01370",
-   "decision_id": "D-02284",
+   "decision_id": "D-02285",
    "name": "has_played",
    "value": true,
    "source": "event",
@@ -524,9 +521,9 @@
    "recorded_at": "2026-10-01T15:44:56.784Z"
   },
   {
-   "id": 33509,
+   "id": 33524,
    "user_id": "U-01370",
-   "decision_id": "D-02284",
+   "decision_id": "D-02285",
    "name": "has_completed_episode",
    "value": true,
    "source": "event",
@@ -542,9 +539,9 @@
    "recorded_at": "2026-10-01T15:44:56.784Z"
   },
   {
-   "id": 33510,
+   "id": 33525,
    "user_id": "U-01370",
-   "decision_id": "D-02284",
+   "decision_id": "D-02285",
    "name": "play_days_14d",
    "value": 6,
    "source": "derived",
@@ -565,9 +562,9 @@
    "recorded_at": "2026-10-01T15:44:56.784Z"
   },
   {
-   "id": 33511,
+   "id": 33526,
    "user_id": "U-01370",
-   "decision_id": "D-02284",
+   "decision_id": "D-02285",
    "name": "last_open_before_trigger",
    "value": "2026-09-30T03:00:40.848Z",
    "source": "event",
@@ -583,9 +580,9 @@
    "recorded_at": "2026-10-01T15:44:56.784Z"
   },
   {
-   "id": 33512,
+   "id": 33527,
    "user_id": "U-01370",
-   "decision_id": "D-02284",
+   "decision_id": "D-02285",
    "name": "recent_lapse",
    "value": null,
    "source": "derived",
@@ -601,9 +598,9 @@
    "recorded_at": "2026-10-01T15:44:56.784Z"
   },
   {
-   "id": 33513,
+   "id": 33528,
    "user_id": "U-01370",
-   "decision_id": "D-02284",
+   "decision_id": "D-02285",
    "name": "unfinished_series",
    "value": [
     {
@@ -634,9 +631,9 @@
    "recorded_at": "2026-10-01T15:44:56.784Z"
   },
   {
-   "id": 33514,
+   "id": 33529,
    "user_id": "U-01370",
-   "decision_id": "D-02284",
+   "decision_id": "D-02285",
    "name": "trigger_age_s",
    "value": 0.0,
    "source": "derived",
@@ -654,18 +651,25 @@
  ],
  "actions": [
   {
-   "action_id": "A-01237",
-   "decision_id": "D-02284",
+   "action_id": "A-01396",
+   "decision_id": "D-02285",
    "dialect": "d1",
    "goal_id": "G07",
-   "goal_instance": "GI-02284",
-   "hero_title_id": "T0005",
-   "published_at": "2026-10-01T15:44:57.194Z",
+   "goal_instance": "GI-02285",
+   "hero_title_id": "T0003",
+   "published_at": "2026-10-01T15:44:57.202Z",
    "rows": [
+    {
+     "row_type": "next_episode",
+     "title_ids": [
+      "T0005",
+      "T0040",
+      "T0014"
+     ]
+    },
     {
      "row_type": "because_you_watched",
      "title_ids": [
-      "T0014",
       "T0011",
       "T0012",
       "T0029",
@@ -674,7 +678,8 @@
       "T0027",
       "T0049",
       "T0023",
-      "T0058"
+      "T0058",
+      "T0061"
      ]
     },
     {
@@ -695,7 +700,6 @@
     {
      "row_type": "popular_in_dialect",
      "title_ids": [
-      "T0003",
       "T0009",
       "T0004",
       "T0006",
@@ -704,7 +708,8 @@
       "T0007",
       "T0013",
       "T0015",
-      "T0035"
+      "T0035",
+      "T0034"
      ]
     },
     {
@@ -721,31 +726,33 @@
       "T0075",
       "T0076"
      ]
-    },
-    {
-     "row_type": "genre",
-     "title_ids": [
-      "T0016",
-      "T0038",
-      "T0022",
-      "T0030",
-      "T0041",
-      "T0518",
-      "T0226",
-      "T0273",
-      "T0352",
-      "T0520"
-     ]
     }
    ],
    "trigger_event_id": "58ce5796-a954-49dd-bdf6-a7fc1cf66efb",
    "type": "home_page",
    "user_id": "U-01370"
+  },
+  {
+   "action_id": "A-01397",
+   "decision_id": "D-02285",
+   "deeplink": "ott://title/T0005",
+   "goal_id": "G07",
+   "goal_instance": "GI-02285",
+   "published_at": "2026-10-01T15:44:57.202Z",
+   "send_at": "2026-10-01T15:44:57.202Z",
+   "text": {
+    "body": "Aapki kahani wahin ruki hai. Agla episode dekhiye.",
+    "title": "Tidha Dakachu"
+   },
+   "title_id": "T0005",
+   "trigger_event_id": "58ce5796-a954-49dd-bdf6-a7fc1cf66efb",
+   "type": "in_app_message",
+   "user_id": "U-01370"
   }
  ],
  "learnings": [
   {
-   "goal_instance_id": "GI-02284",
+   "goal_instance_id": "GI-02285",
    "at": "2026-10-15T18:30:00.000Z",
    "note": {
     "attribution": "failed_after_exposure",
@@ -756,7 +763,7 @@
      }
     },
     "goal_id": "G07",
-    "goal_instance_id": "GI-02284",
+    "goal_instance_id": "GI-02285",
     "notes": [
      "G07 failed although the viewer saw our action: try a different goal for 7 days"
     ],

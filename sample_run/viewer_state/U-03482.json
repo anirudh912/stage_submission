@@ -58,13 +58,14 @@
  ],
  "decisions": [
   {
-   "action": "HOME_PAGE",
+   "action": "HOME_PAGE+IN_APP_MESSAGE",
    "action_ids": [
-    "A-00063"
+    "A-00069",
+    "A-00070"
    ],
    "arm": "agent",
    "assumptions": [
-    "no message: no push consent (profile) and no usable WhatsApp (templates are Hindi only)",
+    "in-app message (shown at the next app open) because no push/WhatsApp: no push consent (profile) and no usable WhatsApp (templates are Hindi only)",
     "viewer reaches the home page within seconds of this app open"
    ],
    "budget": {
@@ -87,7 +88,10 @@
      "availability",
      "dialect",
      "injection",
-     "duplicate_page"
+     "duplicate_page",
+     "in_app_cap",
+     "message_title",
+     "copy"
     ]
    },
    "confidence": 0.9,
@@ -147,7 +151,7 @@
     "title:T1162"
    ],
    "created_at": "2026-10-01T00:49:43.920Z",
-   "decided_in_ms": 404.8,
+   "decided_in_ms": 413.3,
    "decision_id": "D-00092",
    "dialect": {
     "conflicts": [],
@@ -258,7 +262,7 @@
      "window_hours": 72
     }
    },
-   "latency_ms": 404.8,
+   "latency_ms": 413.3,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -277,8 +281,8 @@
     "provider": "mock"
    },
    "no_action_reason": null,
-   "processing_ms": 4.79,
-   "published_at": "2026-10-01T00:49:44.324Z",
+   "processing_ms": 13.29,
+   "published_at": "2026-10-01T00:49:44.333Z",
    "queue_wait_ms": 0.0,
    "rows_explained": [
     {
@@ -344,8 +348,8 @@
    "conflicts": [],
    "content": [],
    "created_at": "2026-10-01T10:22:24.974Z",
-   "decided_in_ms": 401.6,
-   "decision_id": "D-01293",
+   "decided_in_ms": 403.0,
+   "decision_id": "D-01294",
    "dialect": {
     "conflicts": [],
     "rule": "R-dialect-1",
@@ -449,7 +453,7 @@
      "window_hours": 72
     }
    },
-   "latency_ms": 401.6,
+   "latency_ms": 403.0,
    "lessons_applied": {
     "avoid_goals": [],
     "push_ok": true
@@ -468,7 +472,7 @@
     "provider": "mock"
    },
    "no_action_reason": "trigger is 135.7 h old (buffered offline); the viewer is not in the app now",
-   "processing_ms": 1.55,
+   "processing_ms": 2.99,
    "published_at": null,
    "queue_wait_ms": 0.0,
    "rows_explained": [],
@@ -490,7 +494,7 @@
   {
    "id": 18932,
    "user_id": "U-03482",
-   "decision_id": "D-01293",
+   "decision_id": "D-01294",
    "name": "profile",
    "value": {
     "stale": true,
@@ -511,7 +515,7 @@
   {
    "id": 18933,
    "user_id": "U-03482",
-   "decision_id": "D-01293",
+   "decision_id": "D-01294",
    "name": "signup_at",
    "value": "2025-08-04T09:00:23.584Z",
    "source": "profile",
@@ -529,7 +533,7 @@
   {
    "id": 18934,
    "user_id": "U-03482",
-   "decision_id": "D-01293",
+   "decision_id": "D-01294",
    "name": "subscription_status",
    "value": "never",
    "source": "profile",
@@ -547,7 +551,7 @@
   {
    "id": 18935,
    "user_id": "U-03482",
-   "decision_id": "D-01293",
+   "decision_id": "D-01294",
    "name": "ever_paid",
    "value": false,
    "source": "profile",
@@ -565,7 +569,7 @@
   {
    "id": 18936,
    "user_id": "U-03482",
-   "decision_id": "D-01293",
+   "decision_id": "D-01294",
    "name": "dialect",
    "value": "d4",
    "source": "app_setting",
@@ -583,7 +587,7 @@
   {
    "id": 18937,
    "user_id": "U-03482",
-   "decision_id": "D-01293",
+   "decision_id": "D-01294",
    "name": "language",
    "value": "en",
    "source": "app_setting",
@@ -601,7 +605,7 @@
   {
    "id": 18938,
    "user_id": "U-03482",
-   "decision_id": "D-01293",
+   "decision_id": "D-01294",
    "name": "consent_push",
    "value": false,
    "source": "profile",
@@ -619,7 +623,7 @@
   {
    "id": 18939,
    "user_id": "U-03482",
-   "decision_id": "D-01293",
+   "decision_id": "D-01294",
    "name": "consent_whatsapp",
    "value": true,
    "source": "profile",
@@ -637,7 +641,7 @@
   {
    "id": 18940,
    "user_id": "U-03482",
-   "decision_id": "D-01293",
+   "decision_id": "D-01294",
    "name": "has_played",
    "value": true,
    "source": "event",
@@ -655,7 +659,7 @@
   {
    "id": 18941,
    "user_id": "U-03482",
-   "decision_id": "D-01293",
+   "decision_id": "D-01294",
    "name": "has_completed_episode",
    "value": false,
    "source": "derived",
@@ -673,7 +677,7 @@
   {
    "id": 18942,
    "user_id": "U-03482",
-   "decision_id": "D-01293",
+   "decision_id": "D-01294",
    "name": "play_days_14d",
    "value": 0,
    "source": "derived",
@@ -689,7 +693,7 @@
   {
    "id": 18943,
    "user_id": "U-03482",
-   "decision_id": "D-01293",
+   "decision_id": "D-01294",
    "name": "last_open_before_trigger",
    "value": "2026-09-24T16:56:41.023Z",
    "source": "event",
@@ -707,7 +711,7 @@
   {
    "id": 18944,
    "user_id": "U-03482",
-   "decision_id": "D-01293",
+   "decision_id": "D-01294",
    "name": "recent_lapse",
    "value": null,
    "source": "derived",
@@ -725,7 +729,7 @@
   {
    "id": 18945,
    "user_id": "U-03482",
-   "decision_id": "D-01293",
+   "decision_id": "D-01294",
    "name": "unfinished_series",
    "value": [],
    "source": "derived",
@@ -741,7 +745,7 @@
   {
    "id": 18946,
    "user_id": "U-03482",
-   "decision_id": "D-01293",
+   "decision_id": "D-01294",
    "name": "trigger_age_s",
    "value": 488592.6,
    "source": "derived",
@@ -759,13 +763,13 @@
  ],
  "actions": [
   {
-   "action_id": "A-00063",
+   "action_id": "A-00069",
    "decision_id": "D-00092",
    "dialect": "d4",
    "goal_id": "G02",
    "goal_instance": "GI-00092",
    "hero_title_id": "T1811",
-   "published_at": "2026-10-01T00:49:44.324Z",
+   "published_at": "2026-10-01T00:49:44.333Z",
    "rows": [
     {
      "row_type": "because_you_watched",
@@ -845,6 +849,23 @@
    ],
    "trigger_event_id": "dfc8dc99-8385-4bb6-be3e-04e0beb48822",
    "type": "home_page",
+   "user_id": "U-03482"
+  },
+  {
+   "action_id": "A-00070",
+   "decision_id": "D-00092",
+   "deeplink": "ott://title/T1811",
+   "goal_id": "G02",
+   "goal_instance": "GI-00092",
+   "published_at": "2026-10-01T00:49:44.333Z",
+   "send_at": "2026-10-01T00:49:44.333Z",
+   "text": {
+    "body": "Short episodes in your dialect. Watch now.",
+    "title": "Bagi Baya (English)"
+   },
+   "title_id": "T1811",
+   "trigger_event_id": "dfc8dc99-8385-4bb6-be3e-04e0beb48822",
+   "type": "in_app_message",
    "user_id": "U-03482"
   }
  ],
