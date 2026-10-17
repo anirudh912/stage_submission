@@ -8,6 +8,8 @@ import csv
 import math
 from collections import Counter, defaultdict
 
+from .timeutil import ts
+
 
 def diff(s1, n1, s0, n0):
     """Difference of two proportions (arm 1 - arm 0) with a 95% normal CI and a two-sided z-test p-value."""
@@ -42,9 +44,11 @@ def pre_covariates(store):
           MAX(event IN ('subscription_renewed') OR (event = 'purchase_completed')),
           MIN(received_at)
         FROM events WHERE source = 'history' GROUP BY user_id""").fetchall()
+    # history ends where the replay starts: the first trigger (no fixed dates, so any replay day works)
+    start = store.db.execute("SELECT MIN(received_at) FROM events WHERE source = 'trigger'").fetchone()[0]
     out = {}
     for u, ad, pd, comp, paid, first in rows:
-        known = 30 - int(first[8:10]) + 1 if first and first.startswith("2026-09") else 30
+        known = min(30, int((ts(start) - ts(first)).total_seconds() // 86400) + 1) if first and start else 30
         out[u] = {"active_days": ad or 0, "play_days": pd or 0, "completions": math.log1p(comp or 0),
                   "ever_paid": 1.0 if paid else 0.0, "days_known": known}
     return out

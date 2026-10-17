@@ -5,10 +5,10 @@ What is intentionally incomplete or simplified, and why.
 ## Measurement
 
 - **The effect is significant on this seed, but not robustly.** Agent vs holdout is +3.95 pts (95% CI +0.66 to
-  +7.25, p = 0.019), close to the simulator's true effect (+3.94). Other seeds give +1.9 to +4.3; CUPED gives +3.38
-  (CI +0.15 to +6.60), but the stratified estimates (+3.06, +2.84) have intervals that include zero. With about 850
+  +7.25, p = 0.019), close to the simulator's true effect (+3.94). Other seeds give +1.9 to +4.3; CUPED gives +3.39
+  (CI +0.17 to +6.61), but the stratified estimates (+3.06, +2.86) have intervals that include zero. With about 850
   viewers per arm the test reliably detects only about 4.7 pts, so an effect of this size is found about 65% of the
-  time (it would need about 1,200 viewers per arm). CUPED and goal stratification remove only about 4% of the variance here, because
+  time (it would need about 1,200 viewers per arm). CUPED and goal stratification remove only about 5% of the variance here, because
   pre-replay activity barely predicts goal success in this simulator.
 - **Part of the jump from the earlier +2.13 is chance, not the agent.** The page fixes raised the true effect from
   +2.98 to +3.45 pts; skipping G07 when its series cannot be promoted raised it to +3.70. That second change also

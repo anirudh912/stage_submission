@@ -23,14 +23,14 @@ The question is unchanged (agent vs holdout, first goal reached). These estimato
 | Estimator | Effect | 95% CI | p | A/A (no actions) |
 |---|---|---|---|---|
 | Plain difference | +3.95 pts | +0.66 to +7.25 | 0.0188 | +0.02 |
-| Adjusted for pre-replay activity (CUPED) | +3.38 pts | +0.15 to +6.60 | 0.04 | -0.38 |
+| Adjusted for pre-replay activity (CUPED) | +3.39 pts | +0.17 to +6.61 | 0.0392 | -0.37 |
 | Stratified by goal | +3.06 pts | -0.08 to +6.21 | 0.0564 | -0.72 |
-| Both | +2.84 pts | -0.32 to +6.00 | 0.0778 | -0.86 |
+| Both | +2.86 pts | -0.30 to +6.02 | 0.0762 | -0.85 |
 
-- Covariates (history before the replay day, unaffected by the agent): active_days, play_days, completions, ever_paid, days_known. Variance removed by CUPED: 4%.
-- Baseline balance (agent / holdout): active_days 7.284 / 7.493; play_days 3.714 / 3.796; completions 0.812 / 0.855; ever_paid 0.368 / 0.384; days_known 22.81 / 23.642
+- Covariates (history before the replay day, unaffected by the agent): active_days, play_days, completions, ever_paid, days_known. Variance removed by CUPED: 5%.
+- Baseline balance (agent / holdout): active_days 7.284 / 7.493; play_days 3.714 / 3.796; completions 0.812 / 0.855; ever_paid 0.368 / 0.384; days_known 22.751 / 23.56
 - Simulator ground truth for comparison: +3.94 pts.
-- **Power:** with 838/864 viewers the smallest effect this test can reliably detect (80% power, 5% level) is about 4.7 pts. An effect of +3.9 pts is found only about 65% of the time; it needs about 1218 viewers per arm. Better estimators cannot close that gap here (they removed only 4% of the variance): it needs more viewers or a longer run.
+- **Power:** with 838/864 viewers the smallest effect this test can reliably detect (80% power, 5% level) is about 4.7 pts. An effect of +3.9 pts is found only about 65% of the time; it needs about 1218 viewers per arm. Better estimators cannot close that gap here (they removed only 5% of the variance): it needs more viewers or a longer run.
 - The plain number stays the headline. The adjusted ones are reported next to it, never instead of it, and the A/A column shows each method gives about zero when nothing was done.
 
 ## 2. By goal (first goal per viewer)

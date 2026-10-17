@@ -118,9 +118,10 @@ billing" claims were rejected because every profile row says `never`.
   (`LATE_NO_ACTION`). Limits of 8 model and 20 tool calls per decision are configurable and checked by the verifier.
 - The replay runs faster than real time on a **virtual clock**: latency = queue wait (4 workers) + measured
   processing + simulated dependency waits; `published_at = deliver_at + latency`.
-- Measured (`sample_run/latency_report.json`): processing p50 3.6 ms, p99 13.4 ms; end-to-end p50 404 ms (the mock's
-  0.4 s), max 48.1 s inside the data-store degradation window; **0 decisions over 60 s**. The evening spike (163
-  triggers in 10 minutes) had no queueing.
+- Measured (`sample_run/latency_report.json`): processing p50 3.7 ms, p99 14.9 ms; end-to-end p50 404 ms (the mock's
+  0.4 s), max 48.1 s inside the data-store degradation window; **0 decisions over 60 s**. The busiest 10 minutes are
+  found from the data, not hard-coded: the evening peak (164 triggers from 14:59Z) had no queueing; the busiest
+  window overall (239 triggers from 04:39Z, 10:09 IST) queued at most 189 ms.
 - **Overload:** if a trigger waited more than 15 s in the queue, the advisor is skipped (fast path).
 - **Stale triggers:** a trigger more than 10 minutes old (buffered offline) updates state but takes no action: the viewer
   is not in the app, and a page would be wasted.

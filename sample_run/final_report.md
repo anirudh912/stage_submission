@@ -13,7 +13,7 @@ Produced by `python3 src/replay.py --pack ../data_pack/one_user_one_agent_pack -
 | Actions published | 915 home pages, 391 pushes, 167 WhatsApp, 133 in-app messages; 13 messages cancelled before sending |
 | Simulator | 915 pages accepted, 828 personalised pages shown; push 341 delivered, 50 to dead tokens, 6 clicked; WhatsApp 167 delivered, 5 clicked; 133 in-app queued (no effect in the simulator) |
 | **Policy problems** | **0** in the simulator (consent, quiet hours, frequency cap, holdout, templates); the independent audit (`src/audit_messages.py`, raw pack files only) passes every check for all 691 messages |
-| Latency | processing p50 6.6 ms; end-to-end p50 407 ms, max 48.1 s; **0 over 60 s** |
+| Latency | processing p50 3.7 ms; end-to-end p50 404 ms, max 48.1 s; **0 over 60 s** |
 | Budget | max 1 model call and 9 tool calls in any decision (limits 8 / 20) |
 
 ### Why the agent did nothing (444 agent-arm decisions)
@@ -36,7 +36,7 @@ The main reasons, all recorded per decision in `decisions.jsonl` (`no_action_rea
 | Catalogue text tells the agent to message every viewer | T0002 and T0522 flagged at prep and never promoted (their viewers get another goal, not a G07 that cannot be served); descriptions are never used as instructions |
 | Model unavailable 10:35–10:42Z | 7 calls failed, then the circuit breaker skipped 14; decisions continued on rules |
 | Data store slow 13:10–13:17Z | Reads retried and capped; no personal data used on a failed read. 1 agent-arm viewer got a catalogue-only page (`DEGRADED_FALLBACK_PAGE`); 5 stopped with no action (3 holdout, 1 arm unreadable, 1 stale trigger); slowest 48.1 s, under 60 s |
-| Traffic triples at the evening peak | 163 triggers in 10 minutes, p99 411 ms, no queueing |
+| Traffic triples at the evening peak | Found from the data, not hard-coded: 164 triggers in 10 minutes from 14:59Z, p99 414 ms, no queueing (the busiest window overall, 239 triggers at 10:09 IST, queued at most 189 ms) |
 | T0001 withdrawn at 07:00Z | 6 live pages republished without it; 9 pending messages about it cancelled |
 | Advisor timeout (45 s) and malformed JSON | Cut at 5 s / ignored; rules decided |
 
@@ -49,7 +49,7 @@ The main reasons, all recorded per decision in `decisions.jsonl` (`no_action_rea
 | A/A run (no actions at all) | +0.02 pts: the arms start level on this goal mix |
 | Simulator ground truth (same viewers, with vs without our actions) | **+3.94 pts**: 101 → 134 goals reached, 33 gained, 0 lost |
 | Holdout with vs without our actions | 0 changed: nothing leaked into the holdout |
-| CUPED / stratified by goal / both | +3.38 (CI +0.15 to +6.60) / +3.06 / +2.84 pts; the last two CIs include 0; only ~4% of the variance removed |
+| CUPED / stratified by goal / both | +3.39 (CI +0.17 to +6.61) / +3.06 / +2.86 pts; the last two CIs include 0; only ~5% of the variance removed |
 | Power | Detectable effect ≈ 4.7 pts; a +3.9 pt effect is found ~65% of the time and needs ~1,200 viewers per arm |
 
 **Verdict:** the agent improves goal completion by about 3.7–3.9 points (about 30% relative) in the simulator, with no
@@ -83,8 +83,8 @@ from +2.98 to +3.70 (KNOWN_LIMITATIONS.md).
 6. **Checks.** 17 passed, 0 failed (arm, duplicate trigger, evidence, eligibility, single goal, budget, page dialect,
    page rules, availability, dialect, injection, duplicate page, consent, quiet hours, frequency cap, message title,
    template).
-7. **Published.** Decision D-00039, actions A-00035 (page) and A-00036 (WhatsApp), published 20:30:33.479Z,
-   **417.4 ms** after delivery.
+7. **Published.** Decision D-00039, actions A-00035 (page) and A-00036 (WhatsApp), published 20:30:33.471Z,
+   **409.0 ms** after delivery.
 8. **Observed.** The personalised page was shown 25 s later (20:30:58Z). The viewer completed an episode at 20:49:56Z.
    The WhatsApp message was delivered on Oct 2.
 9. **Judged.** G02 **succeeded** (signal oua-002483 `episode_completed`, inside the window), attribution

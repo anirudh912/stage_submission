@@ -18,6 +18,7 @@ import re
 import subprocess
 import sys
 from collections import Counter
+from datetime import timedelta
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
@@ -135,7 +136,22 @@ def main():
 
     lat = [d["latency_ms"] for d in decisions]
     pub = [d for d in decisions if d["status"] in ("PUBLISHED", "DEGRADED_FALLBACK_PAGE")]
-    spike = [d for d in decisions if "2026-10-01T15:00" <= d["trigger"]["deliver_at"] < "2026-10-01T15:10"]
+    def busiest_10_min(ds):
+        """Busiest 10 minutes, found from the data (the replay day and its peaks are not known in advance)."""
+        starts = sorted(ts(d["trigger"]["deliver_at"]) for d in ds)
+        j, best = 0, (0, None)
+        for i, s in enumerate(starts):
+            while starts[j] <= s - timedelta(minutes=10):
+                j += 1
+            if i - j + 1 > best[0]:
+                best = (i - j + 1, starts[j])
+        frm = best[1]
+        win = [d for d in ds if frm and frm <= ts(d["trigger"]["deliver_at"]) < frm + timedelta(minutes=10)]
+        return {"from": frm and iso(frm), "decisions": len(win),
+                "latency_ms_p99": pct([d["latency_ms"] for d in win], 99) if win else None,
+                "max_queue_wait_ms": max([d["queue_wait_ms"] for d in win] or [0])}
+
+    evening = [d for d in decisions if 17 <= ts(d["trigger"]["deliver_at"]).astimezone(IST).hour < 23]
     by_hour = Counter(ts(d["trigger"]["deliver_at"]).astimezone(IST).strftime("%H") for d in decisions)
     in_window = lambda win: [d for d in decisions if win(d["trigger"]["deliver_at"])]
     report = {
@@ -159,9 +175,8 @@ def main():
                 "status": dict(Counter(d["status"] for d in in_window(store_slow))),
                 "latency_ms_p95": pct([d["latency_ms"] for d in in_window(store_slow)], 95),
                 "latency_ms_max": max([d["latency_ms"] for d in in_window(store_slow)] or [0])},
-            "evening_spike_15:00-15:10Z": {"decisions": len(spike),
-                                           "latency_ms_p99": pct([d["latency_ms"] for d in spike], 99),
-                                           "max_queue_wait_ms": max([d["queue_wait_ms"] for d in spike] or [0])},
+            "busiest_10_minutes": busiest_10_min(decisions),
+            "busiest_10_minutes_evening_17_23_ist": busiest_10_min(evening),
         },
         "decisions_per_ist_hour": dict(sorted(by_hour.items())),
         "workers": a.workers,

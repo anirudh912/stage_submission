@@ -14,7 +14,7 @@ default **mock provider** runs locally, needs no API key, reproduces the pack's 
 |---|---|
 | Decisions | 2,679 (90 duplicate deliveries ignored); 908 published, 1 catalogue-only fallback page, 444 no action with a reason, 1,321 holdout shadow |
 | Policy problems | **0** in the simulator; the independent audit passes every check for all 691 messages (391 push, 167 WhatsApp, 133 in-app) |
-| Latency | p50 407 ms, max 48.1 s, **0 over 60 s** (processing p50 6.6 ms) |
+| Latency | p50 404 ms, max 48.1 s, **0 over 60 s** (processing p50 3.7 ms) |
 | Injected faults | all 3 unsupported "on trial" model claims rejected; outage, timeout, malformed output and slow data store handled safely |
 | **Impact, agent vs holdout** | **+3.95 pts** goals reached (16.0% vs 12.0%), 95% CI +0.66 to +7.25, p = 0.019 |
 | Simulator ground truth | +3.94 pts (same viewers with vs without our actions); 0 holdout viewers affected |
