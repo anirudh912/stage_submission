@@ -247,6 +247,51 @@ def ground_truth(with_actions, no_actions):
     return out
 
 
+def goal_fit(decisions, events_with, events_without, store, pack, registry, obs_end):
+    """Simulator-only: for agent-arm viewers, the true lift of our actions on the goal we chose, and on every OTHER
+    goal they were eligible for at the same moment (same outcome streams). Shows whether we picked goals our
+    actions can move. Not used to tune the agent: it relies on the simulator's counterfactual."""
+    from .judge import index_outcomes, judge_goal
+    from .timeutil import iso, ts
+    from datetime import timedelta
+    W, N = index_outcomes(events_with), index_outcomes(events_without)
+
+    def reached(u, gid, start, events, target=None):
+        spec = registry.success_spec(gid)
+        if target:
+            spec["target"] = target
+        g = {"goal_instance_id": "fit", "user_id": u, "goal_id": gid, "status": "open", "started_at": start,
+             "deadline": iso(ts(start) + timedelta(hours=spec["window_hours"])), "success_spec": spec,
+             "rule_version": spec["rule_version"]}
+        return judge_goal(g, "agent", [], events.get(u, []), pack, obs_end)["status"] == "succeeded"
+
+    first = {}
+    for d in decisions:
+        g = d.get("goal") or {}
+        if g.get("instance") and not g.get("continuing") and d.get("arm") == "agent":
+            first.setdefault(d["viewer_id"], d)
+    chosen = defaultdict(lambda: [0, 0, 0])
+    alt = defaultdict(lambda: [0, 0, 0])
+    for u, d in first.items():
+        gid, start = d["goal"]["id"], d["created_at"]
+        c = chosen[gid]
+        c[0] += 1
+        c[1] += reached(u, gid, start, W, d["goal"].get("target"))
+        c[2] += reached(u, gid, start, N, d["goal"].get("target"))
+        for cand in d["goal"]["considered"]:
+            a = cand["goal_id"]
+            if cand["eligible"] and a != gid and a != "G07":      # G07 needs a target series; skip as alternative
+                x = alt[(gid, a)]
+                x[0] += 1
+                x[1] += reached(u, a, start, W)
+                x[2] += reached(u, a, start, N)
+    row = lambda n, w, wo: {"n": n, "without_pct": round(100 * wo / n, 1), "with_pct": round(100 * w / n, 1),
+                            "lift_pts": round(100 * (w - wo) / n, 1), "viewers_gained": w - wo}
+    return {"chosen": {g: row(*v) for g, v in sorted(chosen.items(), key=lambda x: -x[1][0])},
+            "alternatives": [{"chosen": g, "alternative": a, **row(*v)}
+                             for (g, a), v in sorted(alt.items(), key=lambda x: -x[1][0]) if v[0] >= 15]}
+
+
 def exposure_rate(outcomes):
     first = first_goals(outcomes)
     agent = [o for o in first.values() if o["arm"] == "agent"]
@@ -263,7 +308,7 @@ def _fmt(d):
 
 
 def report_md(main, seeds, aa, beh, mis, pil, goals, exp_rate, status_counts, sim_counts, truth=None, adj=None,
-              adj_aa=None):
+              adj_aa=None, fit=None):
     cace = (main["diff_pts"] / exp_rate) if exp_rate else None
     L = []
     L.append("# Impact report\n")
@@ -335,6 +380,29 @@ def report_md(main, seeds, aa, beh, mis, pil, goals, exp_rate, status_counts, si
             L.append(f"| {gid} | {100 * d['rate_1']:.1f}% (n={d['n_1']}) | {100 * d['rate_0']:.1f}% (n={d['n_0']}) | "
                      f"{d['diff_pts']:+.1f} | {d['ci95_pts'][0]:+.1f} to {d['ci95_pts'][1]:+.1f} | {d['p_value']} |")
     L.append("\nSmall groups have wide intervals; do not read a per-goal winner from them.\n")
+    if fit:
+        L.append("### Goal fit: are we choosing goals our actions can move? (simulator ground truth)\n")
+        L.append("Same agent-arm viewers with vs without our actions. *Chosen* = the goal the agent picked; "
+                 "*alternative* = another goal the same viewer was eligible for at that moment, judged on the same "
+                 "outcomes (our actions were built for the chosen goal, not for the alternative).\n")
+        L.append("| Chosen goal | Viewers | Without us | With us | True lift |")
+        L.append("|---|---|---|---|---|")
+        for g, r in fit["chosen"].items():
+            L.append(f"| {g} | {r['n']} | {r['without_pct']}% | {r['with_pct']}% | {r['lift_pts']:+.1f} pts "
+                     f"({r['viewers_gained']:+d}) |")
+        L.append("\n| Chose | Also eligible | Viewers | Alternative reached, without → with us | Lift |")
+        L.append("|---|---|---|---|---|")
+        for r in fit["alternatives"]:
+            L.append(f"| {r['chosen']} | {r['alternative']} | {r['n']} | {r['without_pct']}% → {r['with_pct']}% | "
+                     f"{r['lift_pts']:+.1f} pts |")
+        L.append("\n- **Why goals differ:** in the simulator a home page raises the chance that a viewer plays "
+                 "*something*; the title played is drawn from the dialect's catalogue. Goals counted on any play or "
+                 "completion (G01, G02, G08, G09) respond; G07 needs one specific series, which only a push click "
+                 "delivers; payment goals (G05, G06) respond only through tiny purchase odds.")
+        L.append("- **Finding:** active subscribers with an unfinished series get G07 by priority, but our actions "
+                 "move their G08 (new release) outcome more. We **kept** the priority: a hero for the series a viewer "
+                 "left is the right real-world choice, and re-ranking goals on this simulator's quirk (one seed, one "
+                 "day, small groups) would be tuning to the test. Documented in KNOWN_LIMITATIONS.md.\n")
     L.append("## 3. Behaviour over 14 days (every triggered viewer)\n")
     for k, d in beh.items():
         if k == "mean_active_days":

@@ -279,6 +279,10 @@ class Verifier:
             out.append(("template", *self._template(a)))
         return out
 
+    def _current_language(self):
+        ls = [e["app_language"] for e in self.events if e.get("app_language")]
+        return ls[-1] if ls else None
+
     def _current_dialect(self):
         ds = [e["app_dialect"] for e in self.events if e.get("app_dialect")]
         return ds[-1] if ds else None
@@ -316,4 +320,10 @@ class Verifier:
             t = self.pack.titles.get(a.get("title_id"))
             if not t or v["title_name"] != t["title"]:
                 return False, "title_name must be the catalogue title of title_id"
+        if "dialect_name" in v:
+            t = self.pack.titles.get(a.get("title_id"))
+            if not t or v["dialect_name"] != t["dialect"]:
+                return False, "dialect_name must come from the catalogue row of title_id (no free text)"
+        if tpl.get("language") and tpl["language"] != self._current_language():
+            return False, f"template language {tpl['language']} does not match the app language"
         return True, None

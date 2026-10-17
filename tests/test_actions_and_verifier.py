@@ -243,3 +243,30 @@ class VerifierTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class WhatsAppTests(unittest.TestCase):
+    def test_whatsapp_replaces_push_when_consented_and_app_is_hindi(self):
+        h = Harness(profiles=[profile("U1", push=True, wa=True)], events=series_events("U1"))
+        _, _, approved, checks = h.decide(h.trigger())
+        self.assertEqual(checks["failed"], [])
+        self.assertEqual([a["type"] for a in approved], ["home_page", "whatsapp"])     # one message, not two
+        wa = approved[1]
+        self.assertEqual(wa["template_id"], "wa_recommend_title_v1")
+        t = h.pack.titles[wa["title_id"]]
+        self.assertEqual(wa["variables"], {"title_name": t["title"], "dialect_name": t["dialect"]})
+
+    def test_english_app_gets_push_not_a_hindi_template(self):
+        h = Harness(profiles=[profile("U1", push=True, wa=True)], events=series_events("U1"))
+        t = h.trigger()
+        t["app_language"] = "en"
+        h.store.ingest_event(dict(t, event_id="lang-" + t["event_id"]), "trigger")
+        _, _, approved, _ = h.decide(t)
+        self.assertEqual([a["type"] for a in approved], ["home_page", "push"])
+
+    def test_free_text_dialect_name_is_rejected(self):
+        h = Harness(profiles=[profile("U1", wa=True)])
+        wa = {"type": "whatsapp", "send_at": "2026-10-02T13:30:00.000Z", "template_id": "wa_recommend_title_v1",
+              "title_id": "F1", "variables": {"title_name": "Title F1", "dialect_name": "Bhojpuri (best ever!)"}}
+        _, c = h.check([wa])
+        self.assertIn("template", failed(c))

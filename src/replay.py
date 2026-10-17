@@ -179,7 +179,7 @@ def main():
                                        "over_target_60s", "model")}
 
     if not a.no_simulate:
-        summary["impact"] = measure(a, pack_dir, pack, store, all_decisions)
+        summary["impact"] = measure(a, pack_dir, pack, store, all_decisions, registry)
 
     vs = os.path.join(a.out, "viewer_state")
     for f in os.listdir(vs):
@@ -201,7 +201,7 @@ def simulate(pack_dir, actions_path, out_dir, seed):
         json.load(open(os.path.join(out_dir, "simulator_report.json")))
 
 
-def measure(a, pack_dir, pack, store, decisions):
+def measure(a, pack_dir, pack, store, decisions, registry):
     """Simulate, judge every goal (both arms), write outcomes.jsonl and the impact report."""
     seeds = [x for x in a.seeds.split(",") if x]
     actions_path = os.path.join(a.out, "actions.jsonl")
@@ -227,6 +227,7 @@ def measure(a, pack_dir, pack, store, decisions):
     os.makedirs(tmp, exist_ok=True)
     open(empty, "w").close()
     ev_aa, _ = simulate(pack_dir, empty, tmp, seeds[0])
+    fit = impact.goal_fit(decisions, events, ev_aa, store, pack, registry, obs_end)
     aa_records = judge_records(store, pack, ev_aa, obs_end, no_actions=True)
     aa = impact.itt(aa_records)
     truth = impact.ground_truth(outcomes, aa_records)
@@ -248,14 +249,14 @@ def measure(a, pack_dir, pack, store, decisions):
     with open(os.path.join(a.out, "impact.json"), "w") as f:
         json.dump({"itt_first_goal": main, "seeds": seeds_info, "aa_check_no_actions": aa,
                    "simulator_ground_truth": truth, "adjusted_estimates": adj,
-                   "adjusted_estimates_aa": adj_aa, "by_goal": goals,
+                   "adjusted_estimates_aa": adj_aa, "goal_fit": fit, "by_goal": goals,
                    "behaviour_14d": beh, "misleading_comparisons": mis, "pilot": pil,
                    "agent_arm_exposure_rate": exp_rate, "goal_status_counts": status_counts,
                    "simulator_counts": sim_rep["counts"], "simulator_policy_problems": sim_rep["policy_problem_count"],
                    "observation_end": iso(obs_end)}, f, indent=1)
     with open(os.path.join(a.out, "impact_report.md"), "w") as f:
         f.write(impact.report_md(main, seeds_info, aa, beh, mis, pil, goals, exp_rate, status_counts,
-                                 sim_rep["counts"], truth, adj, adj_aa))
+                                 sim_rep["counts"], truth, adj, adj_aa, fit))
     return {"itt_diff_pts": main["diff_pts"], "ci95_pts": main["ci95_pts"], "p_value": main["p_value"],
             "seed_effects": effects, "aa_diff_pts": aa["diff_pts"],
             "true_effect_pts": truth["agent"]["true_effect_pts"],

@@ -2,7 +2,8 @@
 
 Design rules:
   * The viewer is in the app right now, so the main lever is the home page for the dialect the app shows.
-  * At most one message: a push the next evening for the goals in MESSAGE_GOALS, or an honest trial-ending
+  * At most one message, the next evening, for the goals in MESSAGE_GOALS: WhatsApp (wa_recommend_title_v1, variables
+    from the catalogue) when the viewer consented and the app is in Hindi, otherwise push; or an honest trial-ending
     WhatsApp (G04, only when the trial end date is known). Never during quiet hours, never twice on one IST day.
     Push copy only says what is true of the named title (short episode, new release, premium, unfinished).
   * Doing nothing is a normal outcome with a recorded reason (stale trigger, unknown dialect, too little content,
@@ -327,15 +328,25 @@ def build_message(view, goal, pack, catalog, store, dialect, at):
                 "evidence": ["pricing:P_MONTH"]}, None
     if gid not in MESSAGE_GOALS:
         return None, f"goal {gid} is served by the home page while the viewer is in the app"
-    if not view.value("consent_push"):
-        return None, f"no push consent ({view.f('consent_push').source})"
+    hin = view.value("language") == "hin"
+    # WhatsApp first where it is allowed: approved templates are Hindi only, and it clicks more than push.
+    # One message per IST day across both channels, so it replaces the push, never adds to it.
+    use_wa = bool(view.value("consent_whatsapp")) and hin
+    if not use_wa and not view.value("consent_push"):
+        return None, (f"no push consent ({view.f('consent_push').source}) and no usable WhatsApp "
+                      f"({'no consent' if not view.value('consent_whatsapp') else 'templates are Hindi only'})")
     if messages_on_day(store, view.user_id, ist_day(send_at), at):
         return None, "a message is already planned or delivered that IST day"
     tid, kind = _message_title(view, goal, pack, catalog, dialect, send_at)
     if not tid or not catalog.available(tid, send_at):
         return None, "no suitable title in the viewer's dialect is available at the send time"
     title = pack.titles[tid]["title"]
-    hin = view.value("language") == "hin"
+    if use_wa:
+        # both variables come straight from the catalogue row, as the template rules require;
+        # the pack has dialect codes only (e.g. "d3"), so that is what dialect_name carries
+        return {"type": "whatsapp", "send_at": send_at, "template_id": "wa_recommend_title_v1",
+                "variables": {"title_name": title, "dialect_name": pack.titles[tid]["dialect"]},
+                "title_id": tid, "goal_id": gid, "evidence": [f"catalogue:{tid}"]}, None
     body = PUSH_COPY[kind][0 if hin else 1]
     return {"type": "push", "send_at": send_at, "title_id": tid,
             "text": {"title": _clip(title, PUSH_TITLE_MAX), "body": body},
