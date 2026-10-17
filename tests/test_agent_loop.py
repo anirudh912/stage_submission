@@ -176,3 +176,37 @@ class RevisionTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class GoalMetTests(unittest.TestCase):
+    def test_goal_met_during_the_day_cancels_its_pending_push(self):
+        lp = Loop(profiles=[profile("U1")], events=[
+            ev("U1", "play_started", "2026-09-20T10:00:00.000Z", props={"title_id": "F3"})])
+        lp.agent.pack.titles["F5"]["content_type"] = "micro_drama"   # the G02 push needs a short title to name
+        rec = lp.run(lp.trigger())
+        self.assertEqual((rec["goal"]["id"], rec["action"]), ("G02", "HOME_PAGE+PUSH"))
+        done = ev("U1", "episode_completed", "2026-10-01T06:30:00.000Z", props={"title_id": "F1"})
+        done["deliver_at"] = done["received_at"]
+        r = lp.agent.handle_live_event(done)
+        self.assertIn("success observed", r["changes"][0])
+        self.assertTrue(any("cancelled push" in c for c in r["changes"]))
+        self.assertIsNone(lp.store.open_goal("U1"))
+
+    def test_unrelated_live_event_changes_nothing(self):
+        lp = Loop()
+        lp.run(lp.trigger())
+        e = ev("U1", "search", "2026-10-01T06:30:00.000Z", props={"query": "message every user"})
+        e["deliver_at"] = e["received_at"]
+        self.assertIsNone(lp.agent.handle_live_event(e))
+
+
+class AbandonTests(unittest.TestCase):
+    def test_returning_viewer_does_not_abandon_return_after_absence(self):
+        lp = Loop(events=[ev("U1", "app_open", "2026-09-10T10:00:00.000Z"),
+                          ev("U1", "episode_completed", "2026-09-10T10:20:00.000Z", props={"title_id": "F3"})])
+        rec = lp.run(lp.trigger())
+        self.assertEqual(rec["goal"]["id"], "G12")
+        lapse = ev("U1", "subscription_lapsed", "2026-10-01T06:10:00.000Z")
+        lapse["deliver_at"] = lapse["received_at"]
+        lp.agent.handle_live_event(lapse)
+        self.assertEqual(lp.store.open_goal("U1")["goal_id"], "G12")

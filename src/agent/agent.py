@@ -21,6 +21,7 @@ from .verifier import Verifier
 MODEL_TIMEOUT_S = 5.0
 LATENCY_TARGET_S, LATENCY_FAIL_S = 60, 300
 OVERLOAD_SKIP_MODEL_S = 15       # if a trigger waited this long in the queue, skip the advisor (fast path)
+STATUS_GOALS = {"G04", "G05", "G06", "G08", "G09"}
 DECISION_CHECKS = {"arm", "duplicate_trigger", "evidence", "eligibility", "single_goal", "budget"}
 
 
@@ -232,10 +233,14 @@ class Agent:
     def handle_live_event(self, e):
         """A non-trigger event arrives. Status changes may make the current plan obsolete."""
         self.store.ingest_event(e, "live")
-        if e["event"] not in ("purchase_completed", "subscription_renewed", "subscription_lapsed",
-                              "notification_opt_out"):
-            return None
         uid, now = e["user_id"], e["deliver_at"]
+        status_change = e["event"] in ("purchase_completed", "subscription_renewed", "subscription_lapsed",
+                                       "notification_opt_out")
+        if not status_change:
+            # any other event only matters if it could be the open goal's success signal
+            og = self.store.open_goal(uid)
+            if not og or og["success_spec"].get("event") != e["event"]:
+                return None
         out = {"decision_id": self._did("R"), "viewer_id": uid, "created_at": now, "kind": "REVISION",
                "trigger": {"event": e["event"], "event_id": e["event_id"], "received_at": e["received_at"]},
                "changes": []}
@@ -248,7 +253,10 @@ class Agent:
             self.io.begin(out["decision_id"], now)
             view = resolve(self.store, self.pack, uid, now)
             hit = success_event(og, view.events, self.pack)
-            elig = eligibility(view, self.registry, self.pack).get(og["goal_id"])
+            # Only goals that rest on subscription status can stop applying mid-window. A start condition such as
+            # "no app open in 14 days" (G12) or "never played" (G01) is SUPPOSED to stop being true.
+            elig = eligibility(view, self.registry, self.pack).get(og["goal_id"]) \
+                if status_change and og["goal_id"] in STATUS_GOALS else None
             if hit:
                 self.store.close_goal(og["goal_instance_id"], "succeeded", now,
                                       {"by": "success_event", "signal_event": hit["event_id"], "provisional": True})
